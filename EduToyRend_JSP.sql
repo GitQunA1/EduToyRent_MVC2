@@ -1,6 +1,7 @@
 
 select * from dbo.[User]
 select * from dbo.[Customer]
+select * from dbo.Cart
 
 
 
@@ -145,7 +146,7 @@ CREATE TABLE [Reply] (
 GO
 
 CREATE TABLE [Order] (
-  [OID] integer PRIMARY KEY,
+  [OID] integer IDENTITY(1,1) PRIMARY KEY,
   [UID] integer,
   [CreationDate] date,
   [Price] float
@@ -301,7 +302,6 @@ INSERT INTO [Shop_Owner] (UID, SOID, Avatar, Name, Citizen_code, Warehouse, Type
 (10000002, 30000002, N'avatar_owner2.png', N'Vương Quốc Đồ Chơi', N'9876543210', N'Số 25, Đường Nguyễn Tất Thành, Quận Hải Châu, Đà Nẵng', N'công ty'),
 (10000003, 30000003, N'avatar_owner3.png', N'Chơi Là Học', N'1234567890', N'Số 50, Đường Nguyễn Văn Linh, Quận 7, TP. Hồ Chí Minh', N'cửa hàng');
 
-
 INSERT INTO [Product] (PID, SOID, Image, Name, Price, QSell, QRent, Age, Brand, Origin, Description, Category, Status) VALUES
 (1000000001, 30000001, N'https://thebookland.vn/contents/1670045337198_Mathlink%20Cubes%20Numberblocks%20%201-10%20(1).jpg', N'Bộ học toán Mathlink Cubes Numberblocks số đếm 1-10', 650000, 20, 30, 3, N'Educational Insights', N'Mỹ', N'Numberblocks là chương trình truyền hình đạt hàng loạt giải thưởng danh giá giúp trẻ nhỏ học toán một cách sinh động và dễ dàng. Mathlink Cubes Numberblocks 1-10 Activity Set dựa trên series nổi tiếng này để sáng tạo nên bộ trò chơi học toán cho trẻ với các khối số đầy màu sắc nhằm giúp trẻ em xây dựng các kỹ năng toán học quan trọng trong những năm đầu đời.', N'Ttoán học', N'Thành công'),
 (1000000002, 30000001, N'https://thebookland.vn/images/1689223695931_BrainBolt%20Genius%20(2).jpg', N'Máy chơi luyện trí nhớ và giải đố: BrainBolt® Genius (phiên bản nâng cao)', 702000, 20, 30, 7, N'Educational Insights', N'Mỹ', N'Brainbolt Genius thiết kế như máy chơi game cầm tay với các nút chức năng nằm ở 2 cạnh quanh máy, cùng chế độ 1 người chơi và 2 người chơi. Trò chơi yêu cầu người chơi ghi nhớ chuỗi ánh sáng và lặp lại chúng theo thứ tự để không phá vỡ mô hình.', N'Giải đố', N'Thành công'),
@@ -341,8 +341,30 @@ INSERT INTO [Income] (SOID, PID, IncSell, QSell, IncRent, QRent, Date) VALUES
 (30000001, 1000000003, 0, 0, 14000, 2, N'2024-10-22'),
 (30000001, 1000000010, 98000, 1, 0, 0, N'2024-10-22');
 GO
-
-
 INSERT INTO [Fee_Policy] (Platform, Week, BiWeek, Month)
 VALUES (10, 10, 18, 30)
 GO
+INSERT INTO Cart (UID, PID, Quantity, Total, RentTime) VALUES
+(10000004, 1000000001, 2, 1300000, 0),
+(10000004, 1000000002, 1, 702000, 0),
+(10000004, 1000000003, 3, 210000, 0),
+(10000004, 1000000004, 1, 56000, 0),
+(10000004, 1000000005, 2, 360000, 0),
+(10000004, 1000000006, 4, 800000, 0),
+(10000004, 1000000007, 2, 280000, 0),
+(10000005, 1000000008, 1, 66000, 0),
+(10000005, 1000000009, 3, 30000, 0),
+(10000005, 1000000010, 2, 196000, 0),
+(10000005, 1000000011, 1, 585000, 0),
+(10000005, 1000000012, 1, 529000, 0),
+(10000005, 1000000013, 2, 1222000, 0);
+GO
+INSERT INTO [Income] (SOID, PID, IncSell, QSell, IncRent, QRent, Date) VALUES
+(1, 2, 702000, 1, 14040, 2, N'2024-10-22'),
+(1, 6, 80000, 4, 0, 0, N'2024-10-22'),
+(1,7,  280000, 2, 42000, 1, N'2024-10-22'),
+(1,3, 0, 0, 14000, 2, N'2024-10-22'),
+(1,10, 98000, 1, 0, 0, N'2024-10-22')
+GO
+INSERT INTO [Order] ( UID, CreationDate, Price) VALUES
+(4, N'2024-10-01', 1300000)
