@@ -24,14 +24,14 @@ public class OrderDAO {
         LocalDate date = LocalDate.now();
 
         try (Connection con = util.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {  //Statement.RETURN_GENERATED_KEYS để lấy khóa tự động sinh ra
 
             ps.setInt(1, uid);
             ps.setDate(2, Date.valueOf(date));
             ps.setFloat(3, price);
             ps.executeUpdate();
 
-            try (ResultSet generate = ps.getGeneratedKeys()) {
+            try (ResultSet generate = ps.getGeneratedKeys()) {  
                 if (generate.next()) {
                     return generate.getInt(1); 
                 } else {
