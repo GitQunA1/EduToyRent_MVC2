@@ -5,16 +5,20 @@
  */
 package Controller;
 
+import DAO.GetShopOwner;
 import DAO.OrderDAO;
 import Entity.OrderDetail;
+import Entity.ShopOwner;
+import Entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,11 +40,36 @@ public class GetOrderDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            int status = Integer.parseInt(request.getParameter("txtcontent"));
+            String txtcontent = request.getParameter("txtcontent");
+            int status = 0;
+
+            if (txtcontent != null && !txtcontent.isEmpty()) {
+                try {
+                    status = Integer.parseInt(txtcontent);
+                } catch (NumberFormatException e) {
+                    status = 0; 
+                }
+            }
+
             OrderDAO od = new OrderDAO();
-            List<OrderDetail> orderList = od.GetOrderByStatus(status);
+            HttpSession ss = request.getSession();
+            User user = (User) ss.getAttribute("UserAccount");
             
+            List<OrderDetail> orderList = od.GetOrderByStatus(user.getUid(),status);
+            
+            
+            List<Integer> shopIds = new ArrayList<>();
+            for (OrderDetail orderDetail : orderList) {
+                shopIds.add(orderDetail.getSoid());
+            }
+
+            GetShopOwner shopOwnerDAO = new GetShopOwner();
+            List<ShopOwner> shopOwners = shopOwnerDAO.getShopsByIds(shopIds);
+            
+            
+            request.setAttribute("shop", shopOwners);
             request.setAttribute("orderList", orderList);
+            request.getRequestDispatcher("MainOrderPage.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }
