@@ -14,6 +14,6 @@
     <body>
         
         <%@include file="UserNavigation.jsp" %>
-        
+        <a></a>
     </body>
 </html>

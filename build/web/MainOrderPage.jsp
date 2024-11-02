@@ -56,6 +56,6 @@
         </div>
         
         
-        <script src="ButtonAuto.js"></script>
+        <script src="JS/ButtonAuto.js"></script>
     </body>
 </html>

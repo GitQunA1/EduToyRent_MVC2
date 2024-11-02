@@ -4,6 +4,8 @@
     Author     : Quyền
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="Entity.Customer"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +26,7 @@
                 height: 120px; 
                 position: relative;
                 position: fixed;   
+                z-index: 1000;
             }
             .navigation_first{
                 display: flex;
@@ -160,15 +163,16 @@
                 text-decoration: none;
                 display: inline-table; 
             }
+          
         </style>
         
     </head>
     
     <body>
-          
+        
         <div class="backgrount_navigation">
             <div class="navigation_first">
-                <a href="MainPage.jsp">
+                <a href="MainController?action=home">
                     <img class="logo_Navigation" src="Image/Logo.jpg" /> 
                 </a>
  
@@ -195,13 +199,13 @@
                 <%-- vào giỏ hàng. xử lý MainContronller: value="CartPage" name="action" --%>
                 <div class="Cart_navigation">
                     <form action="MainController" method="post">
+                        <input type="hidden" value="CartPage" name="action"/>
                         
                         <button type="submit">
                             <img class="Cart_navigation_img" src="Image/Cart.png"/>
                             
                             <span class="content_cart">Giỏ hàng</span> 
-                        </button>  
-                        <input type="hidden" value="CartPage" name="action"/>
+                        </button>                          
                     </form>
                 </div>
 
@@ -218,16 +222,17 @@
                 <div class="search_Gender">
                     <button id="showGenresBtn">Thể loại</button>
                     <div id="genreList" class="genre-list" style="display: none;"> 
-                        <a href="MainController?action=SearchGender&txtgender=Toán học">Toán học</a>                                        
-                        <a href="MainController?action=SearchGender&txtgender=Giải đố">Giải đố</a><br>                                      
-                        <a href="MainController?action=SearchGender&txtgender=Ngôn ngữ">Ngôn ngữ</a>
-                        <a href="MainController?action=SearchGender&txtgender=Kĩ thuật">Kĩ thuật</a><br>  
-                        <a href="MainController?action=SearchGender&txtgender=Khoa học">Khoa học</a>
-                        <a href="MainController?action=SearchGender&txtgender=Nghệ thuật">Nghệ thuật</a><br>
-                        <a href="MainController?action=SearchGender&txtgender=Xếp hình">Xếp hình</a>
-                        <a href="MainController?action=SearchGender&txtgender=Giải đố">Giải đố</a><br>
-                        <a href="MainController?action=SearchGender&txtgender=Thiên văn học">Thiên văn học</a>
-
+                        <a href="MainController?action=SearchGender&txtcategory=Toán học">Toán học</a>                                        
+                        <a href="MainController?action=SearchGender&txtcategory=Giải đố">Giải đố</a><br>                                      
+                        <a href="MainController?action=SearchGender&txtcategory=Ngôn ngữ">Ngôn ngữ</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Kĩ thuật">Kĩ thuật</a><br>  
+                        <a href="MainController?action=SearchGender&txtcategory=Khoa học">Khoa học</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Nghệ thuật">Nghệ thuật</a><br>
+                        <a href="MainController?action=SearchGender&txtcategory=Xếp hình">Xếp hình</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Mô phỏng">Mô phỏng</a><br>
+                        <a href="MainController?action=SearchGender&txtcategory=Thiên văn">Thiên văn</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Địa lý">Địa lý</a><br>
+                        <a href="MainController?action=SearchGender&txtcategory=Thể chất">Thể chất</a>
                     </div>
                 </div>
 
@@ -241,10 +246,14 @@
                         <a href="MainController?action=SearchAge&txtMinAge=7&txtMaxAge=10">7-10 tuổi</a>
                     </div>
                 </div>
-            </div>        
+            </div>
+               
+                   
+                
+            
         </div>
         
-        <script src="ListGender.js"></script>
+                <script src="JS/ListGender.js"></script>
     </body>
 </html>
 
