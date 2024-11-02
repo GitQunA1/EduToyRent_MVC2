@@ -18,14 +18,14 @@ public class OrderDetail {
     private int pid;
     private int quantity;
     private int rentTime;
-    private Date dateStart;
-    private Date dateEnd;
+    private String dateStart;
+    private String dateEnd;
     private int Status;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(int odid, int oid, int soid, int pid, int quantity, int rentTime, Date dateStart, Date dateEnd, int Status) {
+    public OrderDetail(int odid, int oid, int soid, int pid, int quantity, int rentTime, String dateStart, String dateEnd, int Status) {
         this.odid = odid;
         this.oid = oid;
         this.soid = soid;
@@ -36,9 +36,7 @@ public class OrderDetail {
         this.dateEnd = dateEnd;
         this.Status = Status;
     }
-
-
-
+    
     public int getOdid() {
         return odid;
     }
@@ -87,19 +85,19 @@ public class OrderDetail {
         this.rentTime = rentTime;
     }
 
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 

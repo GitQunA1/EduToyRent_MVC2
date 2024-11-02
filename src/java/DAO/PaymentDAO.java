@@ -8,12 +8,13 @@ package DAO;
 import DB.DBUtils;
 import Entity.Cart;
 import Entity.FeePolicy;
+import Entity.PaymentDetail;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class PaymentDAO {
             ps.setFloat(2, price);
             ps.setFloat(3, point);
             ps.setString(4, method);
-            ps.setDate(5, Date.valueOf(currentDate));
+            ps.setString(5, String.valueOf(currentDate));
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
@@ -66,7 +67,7 @@ public class PaymentDAO {
                 ps.setInt(2, odid);
                 ps.setFloat(3, c.getTotal());
                 ps.setFloat(4, deposit);
-                ps.setDate(5, java.sql.Date.valueOf(currentDate));
+                ps.setString(5, String.valueOf(currentDate));
                 ps.setString(6, status);
                 ps.executeUpdate();
             } catch (Exception e) {
@@ -108,5 +109,32 @@ public class PaymentDAO {
         } catch (Exception e) {
         }
         return 0;
+    }
+    
+    public PaymentDetail getPDetail(int odid){
+        String sql = "SELECT * FROM [PDetail] WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, odid);
+            rs = ps.executeQuery();
+            if (rs.next()) {                
+                int pdid = rs.getInt("PDID");
+                int paid = rs.getInt("PAID");
+                int did = rs.getInt("ODID");
+                float price = rs.getFloat("Price");
+                float deposit = rs.getFloat("Deposit");
+                float refShop = rs.getFloat("Refund_Shop");
+                float refCus = rs.getFloat("Refund_Cus");
+                float flatformFee = rs.getFloat("platform_fee");
+                String date = rs.getString("Date");
+                String status = rs.getString("Status");
+                
+                PaymentDetail pd = new PaymentDetail(pdid, paid, did, price, price, deposit, refShop, refCus, flatformFee, date, status);
+                return pd;
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }
