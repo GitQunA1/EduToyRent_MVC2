@@ -7,7 +7,9 @@ package Controller;
 
 import DAO.GetShopOwner;
 import DAO.OrderDAO;
+import DAO.PaymentDAO;
 import Entity.OrderDetail;
+import Entity.PaymentDetail;
 import Entity.ShopOwner;
 import Entity.User;
 import java.io.IOException;
@@ -52,11 +54,15 @@ public class GetOrderDetail extends HttpServlet {
             }
 
             OrderDAO od = new OrderDAO();
+            PaymentDAO pd = new PaymentDAO();
             HttpSession ss = request.getSession();
             User user = (User) ss.getAttribute("UserAccount");
             
             List<OrderDetail> orderList = od.GetOrderByStatus(user.getUid(),status);
-            
+            List<PaymentDetail> pdetailList = new ArrayList<>();
+            for (OrderDetail odd : orderList) {
+                pdetailList.add(pd.getPDetail(odd.getOdid()));
+            }
             
             List<Integer> shopIds = new ArrayList<>();
             for (OrderDetail orderDetail : orderList) {
