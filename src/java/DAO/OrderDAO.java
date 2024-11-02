@@ -7,15 +7,17 @@ package DAO;
 
 import DB.DBUtils;
 import Entity.Cart;
+import Entity.Order;
+import Entity.OrderDetail;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,5 +92,38 @@ public class OrderDAO {
         } catch (Exception e) {
         }
         return soid;
+    }
+    
+    public List<OrderDetail> GetOrderByStatus(int status){
+        List<OrderDetail> orderList = new ArrayList<>();
+            String sql = "SELECT * FROM [Order_Detail] WHERE Status = ?";
+        if(status == 0){
+            sql = "SELECT * FROM [Order_Detail]"; 
+        }
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            if(status!=0){
+                ps.setInt(1, status);
+            }
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                int odid = rs.getInt("ODID");
+                int oid = rs.getInt("OID");
+                int soid = rs.getInt("SOID");
+                int pid = rs.getInt("PID");
+                int quantity = rs.getInt("Quantity");
+                int rentTime = rs.getInt("TimeRent");
+                Date dateStart = rs.getDate("DateStart");
+                Date dateEnd = rs.getDate("DateEnd");
+                int sta = rs.getInt("Status");
+                
+                OrderDetail od = new OrderDetail(odid, oid, soid, pid, quantity, rentTime, dateStart, dateEnd, sta);
+                orderList.add(od);
+                return orderList;
+            }
+        } catch (Exception e) {
+        }
+        return orderList;
     }
 }
