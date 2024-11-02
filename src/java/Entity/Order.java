@@ -1,62 +1,61 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Entity;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 /**
  *
- * @author LENOVO
+ * @author Quyền
  */
 public class Order {
-    private int OID;
-    private int UID;
-    private LocalDate CreationDate;
-    private float Price;
+    private int oid;
+    private int uid;
+    private String creationDate;
+    private float price;
 
     public Order() {
     }
 
-    public Order(int OID, int UID, LocalDate CreationDate, float Price) {
-        this.OID = OID;
-        this.UID = UID;
-        this.CreationDate = CreationDate;
-        this.Price = Price;
+    public Order(int oid, int uid, String creationDate, float price) {
+        this.oid = oid;
+        this.uid = uid;
+        this.creationDate = creationDate;
+        this.price = price;
     }
 
-    public int getOID() {
-        return OID;
+    public int getOid() {
+        return oid;
     }
 
-    public void setOID(int OID) {
-        this.OID = OID;
+    public void setOid(int oid) {
+        this.oid = oid;
     }
 
-    public int getUID() {
-        return UID;
+    public int getUid() {
+        return uid;
     }
 
-    public void setUID(int UID) {
-        this.UID = UID;
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
-    public LocalDate getCreationDate() {
-        return CreationDate;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreationDate(LocalDate CreationDate) {
-        this.CreationDate = CreationDate;
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 
     public float getPrice() {
-        return Price;
+        return price;
     }
 
-    public void setPrice(float Price) {
-        this.Price = Price;
+    public void setPrice(float price) {
+        this.price = price;
     }
+    
     
 }

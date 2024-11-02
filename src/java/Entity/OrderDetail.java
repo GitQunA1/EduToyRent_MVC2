@@ -1,93 +1,102 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Entity;
 
-import java.util.Date;
-
 /**
  *
- * @author LENOVO
+ * @author Quyền
  */
 public class OrderDetail {
-    private int ODID;
-    private int SOID;
-    private int PID;
-    private int Quantity;
-    private int TimeRent;
-    private Date DateStart;
-    private Date DateEnd;
+    private int odid;
+    private int oid;
+    private int soid;
+    private int pid;
+    private int quantity;
+    private int rentTime;
+    private String dateStart;
+    private String dateEnd;
     private String Status;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(int ODID, int SOID, int PID, int Quantity, int TimeRent, Date DateStart, Date DateEnd, String Status) {
-        this.ODID = ODID;
-        this.SOID = SOID;
-        this.PID = PID;
-        this.Quantity = Quantity;
-        this.TimeRent = TimeRent;
-        this.DateStart = DateStart;
-        this.DateEnd = DateEnd;
+    public OrderDetail(int odid, int oid, int soid, int pid, int quantity, int rentTime, String dateStart, String dateEnd, String Status) {
+        this.odid = odid;
+        this.oid = oid;
+        this.soid = soid;
+        this.pid = pid;
+        this.quantity = quantity;
+        this.rentTime = rentTime;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
         this.Status = Status;
     }
 
-    public int getODID() {
-        return ODID;
+    public int getOdid() {
+        return odid;
     }
 
-    public void setODID(int ODID) {
-        this.ODID = ODID;
+    public void setOdid(int odid) {
+        this.odid = odid;
     }
 
-    public int getSOID() {
-        return SOID;
+    public int getOid() {
+        return oid;
     }
 
-    public void setSOID(int SOID) {
-        this.SOID = SOID;
+    public void setOid(int oid) {
+        this.oid = oid;
     }
 
-    public int getPID() {
-        return PID;
+    public int getSoid() {
+        return soid;
     }
 
-    public void setPID(int PID) {
-        this.PID = PID;
+    public void setSoid(int soid) {
+        this.soid = soid;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
-    public void setQuantity(int Quantity) {
-        this.Quantity = Quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public int getTimeRent() {
-        return TimeRent;
+    public int getRentTime() {
+        return rentTime;
     }
 
-    public void setTimeRent(int TimeRent) {
-        this.TimeRent = TimeRent;
+    public void setRentTime(int rentTime) {
+        this.rentTime = rentTime;
     }
 
-    public Date getDateStart() {
-        return DateStart;
+    public String getDateStart() {
+        return dateStart;
     }
 
-    public void setDateStart(Date DateStart) {
-        this.DateStart = DateStart;
+    public void setDateStart(String dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
-        return DateEnd;
+    public String getDateEnd() {
+        return dateEnd;
     }
 
-    public void setDateEnd(Date DateEnd) {
-        this.DateEnd = DateEnd;
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getStatus() {
@@ -97,5 +106,6 @@ public class OrderDetail {
     public void setStatus(String Status) {
         this.Status = Status;
     }
+    
     
 }

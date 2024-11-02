@@ -1,69 +1,82 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Entity;
 
 /**
  *
- * @author LENOVO
+ * @author HagiLee
  */
 public class Cart {
-    private int UID;
-    private int PID;
-    private int Quantity;
-    private float Total;
-    private int RentTime;
+    private int caid;
+    private int uid;
+    private int pid;
+    private int quantity;
+    private float total;
+    private int rentTime;
 
     public Cart() {
     }
 
-    public Cart(int UID, int PID, int Quantity, float Total, int RentTime) {
-        this.UID = UID;
-        this.PID = PID;
-        this.Quantity = Quantity;
-        this.Total = Total;
-        this.RentTime = RentTime;
+    public Cart(int caid, int uid, int pid, int quantity, float total, int rentTime) {
+        this.caid = caid;
+        this.uid = uid;
+        this.pid = pid;
+        this.quantity = quantity;
+        this.total = total;
+        this.rentTime = rentTime;
     }
 
-    public int getUID() {
-        return UID;
+    public int getCaid() {
+        return caid;
     }
 
-    public void setUID(int UID) {
-        this.UID = UID;
+    public void setCaid(int caid) {
+        this.caid = caid;
     }
 
-    public int getPID() {
-        return PID;
+    public int getUid() {
+        return uid;
     }
 
-    public void setPID(int PID) {
-        this.PID = PID;
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
-    public void setQuantity(int Quantity) {
-        this.Quantity = Quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public float getTotal() {
-        return Total;
+        return total;
     }
 
-    public void setTotal(float Total) {
-        this.Total = Total;
+    public void setTotal(float total) {
+        this.total = total;
     }
 
     public int getRentTime() {
-        return RentTime;
+        return rentTime;
     }
 
-    public void setRentTime(int RentTime) {
-        this.RentTime = RentTime;
+    public void setRentTime(int rentTime) {
+        this.rentTime = rentTime;
     }
+
+    
     
 }

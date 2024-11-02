@@ -6,7 +6,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +31,66 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String action = request.getParameter("action");
-
-        if ("registerAccount".equals(action)) { 
-            RegisterController registerController = new RegisterController();
-            registerController.doPost(request, response);
-        } else {
-            request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
+        String url = "ViewAdvertisingProducts";
+        if(action == null) action = "home";
+        switch(action){
+            case "home":
+                url="ViewAdvertisingProducts";
+                break;
+            case "SearchProduct":
+                url="SearchByName";
+                break;
+            case "SearchGender":
+                url="SearchByCategory";
+                break;
+            case "SearchAge":
+                url="SearchByAge";
+                break;
+            case "viewProduct":
+                url="GetProductDetail";
+                break;
+            case "AccountPage":
+                url="MainAccount";
+                break;
+            case "Login":
+                url="LoginControllers";
+                break;
+            case "AddToCart":
+                url="AddToCart";
+                break;
+            case "CartPage":
+                url="LetToCart";
+                break;
+            case "updateCart":
+                url = "UpdateCart";
+                break;
+            case "DeleteCart":
+                url = "DeleteCart";
+                break;
+            case "Letpayment":
+                url = "LetToPayment";
+                break;
+            case "Payment":
+                url = "Payment";
+                break;
+            case "addProduct":
+                url = "test_AddProduct";
+                break;
         }
+        request.getRequestDispatcher(url).forward(request, response);
+
+        
+        
+      /*  String action = request.getParameter("action");
+        String url = "MainPage.jsp";
+        if(action == null) action = "Home";
+        
+        switch(action){
+            case "Home":
+                url = "MainPage.jsp";
+                break;
+        }
+       request.getRequestDispatcher(url).forward(request, response); */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

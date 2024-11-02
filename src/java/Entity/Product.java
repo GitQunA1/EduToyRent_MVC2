@@ -1,16 +1,15 @@
-
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Entity;
 
 /**
  *
- * @author LENOVO
+ * @author HagiLee
  */
 public class Product {
-
     private int pid;
     private int soid;
     private String image;
@@ -23,7 +22,7 @@ public class Product {
     private String origin;
     private String description;
     private String category;
-    private int type;  //1 là Shop; 2 là cá nhân
+    private int type;
     private String status;
 
     public Product() {
@@ -45,6 +44,8 @@ public class Product {
         this.type = type;
         this.status = status;
     }
+
+    
 
     public int getPid() {
         return pid;
@@ -142,14 +143,6 @@ public class Product {
         this.category = category;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -157,5 +150,14 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+    
     
 }
