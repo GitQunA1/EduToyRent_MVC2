@@ -68,8 +68,8 @@ public class OrderDAO {
                 ps.setInt(3, c.getPid());
                 ps.setInt(4, c.getQuantity());
                 ps.setInt(5, c.getRentTime());
-                ps.setNull(6, Types.DATE);
-                ps.setNull(7, Types.DATE);
+                ps.setNull(6, Types.NVARCHAR);
+                ps.setNull(7, Types.NVARCHAR);
                 ps.setInt(8, 1);
                 ps.executeUpdate();
             } catch (Exception e) {
@@ -140,8 +140,8 @@ public class OrderDAO {
                     int pid = rs.getInt("PID");
                     int quantity = rs.getInt("Quantity");
                     int rentTime = rs.getInt("TimeRent");
-                    Date dateStart = rs.getDate("DateStart");
-                    Date dateEnd = rs.getDate("DateEnd");
+                    String dateStart = rs.getString("DateStart");
+                    String dateEnd = rs.getString("DateEnd");
                     int sta = rs.getInt("Status");
 
                     OrderDetail od = new OrderDetail(odid, oid, soid, pid, quantity, rentTime, dateStart, dateEnd, sta);
