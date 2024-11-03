@@ -39,13 +39,11 @@ public class Payment extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            
             request.setCharacterEncoding("utf-8");            
             String txtpoint = request.getParameter("txtUsedPoints");
             String txtBank = request.getParameter("txtBank");
-            if(txtBank.isEmpty()){
-                request.setAttribute("sms", "Chọn phương thức thanh toán !!");
-                request.getRequestDispatcher("LetToPayment").forward(request, response);
-            }
+
             String txtPayment = request.getParameter("txtPayment");
             String bank = null;
             if(txtBank.equals("1")){
@@ -66,6 +64,8 @@ public class Payment extends HttpServlet {
             PaymentDAO pd = new PaymentDAO();
             int paid = pd.insertPayment(oid, total, point, bank);
             pd.insertPDetail(paid, oid, cart);
+            
+            request.getRequestDispatcher("GetOrderDetail").forward(request, response);
         } catch (Exception e) {
         }
     }

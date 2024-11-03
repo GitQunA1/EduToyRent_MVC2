@@ -14,7 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -29,7 +30,9 @@ public class PaymentDAO {
 
     public int insertPayment(int oid, float price, float point, String method) {
         try {
-            LocalDate currentDate = LocalDate.now();
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String formattedDateTime = currentDateTime.format(formatter);
 
             String query = " INSERT INTO [Payment] (OID, Amount, points, Method, Date) VALUES (?, ?, ?, ?, ?) ";
             conn = new DBUtils().getConnection();
@@ -38,7 +41,7 @@ public class PaymentDAO {
             ps.setFloat(2, price);
             ps.setFloat(3, point);
             ps.setString(4, method);
-            ps.setString(5, String.valueOf(currentDate));
+            ps.setString(5, formattedDateTime);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
@@ -59,7 +62,11 @@ public class PaymentDAO {
                 int odid = getODID(oid, c.getPid(), c.getRentTime());
                 float deposit = Deposit(c.getTotal(), c.getRentTime());
                 String status = "Đã thanh toán";
-                LocalDate currentDate = LocalDate.now();
+                
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String formattedDateTime = currentDateTime.format(formatter);
+                
                 String sql = "INSERT INTO [PDetail] (PAID, ODID, Price, Deposit, Refund_Shop, Refund_Cus, platform_fee, Date, Status) VALUES (?, ?, ?, ?, 0, 0, 0 ,? ,?)";
                 conn = new DBUtils().getConnection();
                 ps = conn.prepareStatement(sql);
@@ -67,7 +74,7 @@ public class PaymentDAO {
                 ps.setInt(2, odid);
                 ps.setFloat(3, c.getTotal());
                 ps.setFloat(4, deposit);
-                ps.setString(5, String.valueOf(currentDate));
+                ps.setString(5, formattedDateTime);
                 ps.setString(6, status);
                 ps.executeUpdate();
             } catch (Exception e) {
@@ -121,7 +128,6 @@ public class PaymentDAO {
             if (rs.next()) {                
                 int pdid = rs.getInt("PDID");
                 int paid = rs.getInt("PAID");
-                int did = rs.getInt("ODID");
                 float price = rs.getFloat("Price");
                 float deposit = rs.getFloat("Deposit");
                 float refShop = rs.getFloat("Refund_Shop");
@@ -130,11 +136,12 @@ public class PaymentDAO {
                 String date = rs.getString("Date");
                 String status = rs.getString("Status");
                 
-                PaymentDetail pd = new PaymentDetail(pdid, paid, did, price, price, deposit, refShop, refCus, flatformFee, date, status);
+                PaymentDetail pd = new PaymentDetail(pdid, paid, odid, price, deposit, refShop, refCus, flatformFee, date, status);
                 return pd;
             }
         } catch (Exception e) {
         }
         return null;
     }
+    
 }

@@ -720,7 +720,7 @@
                                         <a>Thẻ tín dụng / thẻ ghi nợ</a>
                                     </div>
                                     <div class="payment_choose_radio">      
-                                        <input type="radio" name="txtBank" value="1"><br><br>
+                                        <input type="radio" name="txtBank" value="1" checked><br><br>
                                         <input type="radio" name="txtBank" value="2">
                                     </div>
                                 </div>        

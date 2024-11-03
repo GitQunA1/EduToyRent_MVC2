@@ -73,6 +73,9 @@ public class MainController extends HttpServlet {
             case "Payment":
                 url = "Payment";
                 break;
+            case "InformationOrder":
+                url = "GetOrderDetail";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 

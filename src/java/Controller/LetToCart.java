@@ -54,15 +54,15 @@ public class LetToCart extends HttpServlet {
             List<Integer> productIds = new ArrayList<>();
             for (Cart item : cartItems) {
                 productIds.add(item.getPid());
-            }
+            }            
             GetProductDAO productDAO = new GetProductDAO();
             List<Product> products = productDAO.getProductsByIds(productIds);
 
+            
             List<Integer> shopIds = new ArrayList<>();
             for (Product product : products) {
                 shopIds.add(product.getSoid());
             }
-
             GetShopOwner shopOwnerDAO = new GetShopOwner();
             List<ShopOwner> shopOwners = shopOwnerDAO.getShopsByIds(shopIds);
             

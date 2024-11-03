@@ -5,11 +5,13 @@
  */
 package Controller;
 
+import DAO.GetProductDAO;
 import DAO.GetShopOwner;
 import DAO.OrderDAO;
 import DAO.PaymentDAO;
 import Entity.OrderDetail;
 import Entity.PaymentDetail;
+import Entity.Product;
 import Entity.ShopOwner;
 import Entity.User;
 import java.io.IOException;
@@ -42,6 +44,12 @@ public class GetOrderDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession ss = request.getSession();
+            User user = (User) ss.getAttribute("UserAccount");
+            if (user == null) {
+                request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
+            }
+            
             String txtcontent = request.getParameter("txtcontent");
             int status = 0;
 
@@ -52,29 +60,42 @@ public class GetOrderDetail extends HttpServlet {
                     status = 0; 
                 }
             }
-
+           
             OrderDAO od = new OrderDAO();
             PaymentDAO pd = new PaymentDAO();
-            HttpSession ss = request.getSession();
-            User user = (User) ss.getAttribute("UserAccount");
+                     
+            List<OrderDetail> orderDetail = od.GetOrderByStatus(user.getUid(),status);
             
-            List<OrderDetail> orderList = od.GetOrderByStatus(user.getUid(),status);
-            List<PaymentDetail> pdetailList = new ArrayList<>();
-            for (OrderDetail odd : orderList) {
-                pdetailList.add(pd.getPDetail(odd.getOdid()));
+            
+    
+            
+            List<PaymentDetail> pdetail = new ArrayList<>();
+            for (OrderDetail odd : orderDetail) {
+                pdetail.add(pd.getPDetail(odd.getOdid()));
             }
             
             List<Integer> shopIds = new ArrayList<>();
-            for (OrderDetail orderDetail : orderList) {
-                shopIds.add(orderDetail.getSoid());
+            for (OrderDetail Detail : orderDetail) {
+                shopIds.add(Detail.getSoid());
             }
-
             GetShopOwner shopOwnerDAO = new GetShopOwner();
             List<ShopOwner> shopOwners = shopOwnerDAO.getShopsByIds(shopIds);
             
             
+            List<Integer> productIds = new ArrayList<>();
+            for (OrderDetail Detail : orderDetail) {
+                productIds.add(Detail.getPid());
+            }            
+            GetProductDAO productDAO = new GetProductDAO();
+            List<Product> product = productDAO.getProductsByIds(productIds);
+            
+            
+            
+            
+            request.setAttribute("product", product);
+            request.setAttribute("pdetail", pdetail);
             request.setAttribute("shop", shopOwners);
-            request.setAttribute("orderList", orderList);
+            request.setAttribute("orderDetail", orderDetail);
             request.getRequestDispatcher("MainOrderPage.jsp").forward(request, response);
         } catch (Exception e) {
         }

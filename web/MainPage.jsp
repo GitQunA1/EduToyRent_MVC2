@@ -65,8 +65,6 @@
                 height: 360px;
             }
             
-            
-            
             /* Bố cục chính của các sản phẩm */
             .Show_product {
                 display: grid;
@@ -168,10 +166,54 @@
         </style>
         
     </head>
-    <body>
-        
+    <body> 
         <%@include file="UserNavigation.jsp" %>
+
         <div class="Advertising">
+            
+            <div>
+                <div class="Show_product">
+                    <c:forEach var="listRented" items="${listRented}">
+                        <div class="product-box">
+                            <a href="MainController?txtPID=${listRented.pid}&action=viewProduct">
+                                <img src="${listRented.image}"/>
+                                <p>${listRented.name}</p>
+                                <a>Giá: <fmt:formatNumber value="${listRented.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                                </a>
+                                <form action="MainController" method="post">
+                                    <input type="hidden" value="${listRented.pid}" name="txtPID"/>   
+                                <input type="hidden" value="AddCart" name="action"/>
+                                <input type="submit" value="Thêm vào giỏ hàng" />
+                            </form>
+                        </div>
+                    </c:forEach>                       
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="Second_hand_product">
+                <div class="Show_product">
+                    <c:forEach var="SecondHand" items="${SecondHand}">
+                        <div class="product-box">
+                            <a href="MainController?txtPID=${SecondHand.pid}&action=viewProduct">
+                                <img src="${SecondHand.image}"/>
+                                <p>${SecondHand.name}</p>
+                                <a>Giá: <fmt:formatNumber value="${SecondHand.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                                </a>
+                                <form action="MainController" method="post">
+                                    <input type="hidden" value="${SecondHand.pid}" name="txtPID"/>   
+                                <input type="hidden" value="AddCart" name="action"/>
+                                <input type="submit" value="Thêm vào giỏ hàng" />
+                            </form>
+                        </div>
+                    </c:forEach>                       
+                </div>
+            </div>
+            
+            
             <c:if test="${not empty listNgonNgu}">
                 <div class="background_first">
                     <h1 class="toppic_content">Đồ chơi ngôn ngữ</h1>
@@ -188,7 +230,6 @@
                     </div>
 
                     <div class="Show_product">
-
                         <c:forEach var="procuct1" items="${listNgonNgu}">
                             <div class="product-box">
                                 <a href="MainController?txtPID=${procuct1.pid}&action=viewProduct">

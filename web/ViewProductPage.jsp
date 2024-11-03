@@ -60,8 +60,8 @@
 
             }
             .buttont_add input{
-                width: 160px;
-                height: 30px;
+                width: 170px;
+                height: 35px;
                 border-radius: 10px;
                 margin-top: 30px;
                 background-color: white;
@@ -69,7 +69,7 @@
             } 
             .buttont_add input[type="submit"]{
                 margin-left: 150px;
-                background-color: #FF74B8;
+                background-color: #FFBD68;
             }
             .Advertising_Content p{
                 padding-left: 20px;
@@ -315,62 +315,62 @@
         <%@include file="UserNavigation.jsp" %>
 
         <div class="Advertising">
-
             <div class="img_product">
                 <img  src="${productDetail.image}"/>  
             </div>
-
             <div class="body_product">
                 <p>${productDetail.name}</p> 
                 <div class="body_and_buttom">
-                    <c:if test="${productDetail.qSell > 0}">
-                        <div class="body_buy_product" id="buy_section" style="display: block;">
-                            <form class="buttont_add" action="MainController" method="post">
-                                <div class="quantity-container" style="margin-bottom: 145px;">
-                                    <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
-                                        <a>Số lượng:</a>
-                                        <button type="button" class="quantity-btn" onclick="decreaseQuantity()">-</button>
-                                        <input type="text" id="quantity" value="1" name="txtQuantity" readonly>
-                                        <button type="button" class="quantity-btn" onclick="increaseQuantity()">+</button>
+                    <c:choose>
+                        <c:when test="${productDetail.qRent > 0}">
+                            <div class="body_buy_product">
+                                <div class="rental-duration">
+                                    <button class="duration-button active" onclick="selectDuration(this, '7')">1 Tuần</button>
+                                    <button class="duration-button" onclick="selectDuration(this, '14')">2 Tuần</button>
+                                    <button class="duration-button" onclick="selectDuration(this, '30')">1 Tháng</button>
                                 </div>
-                                    <input type="hidden" value="${productDetail.price}" name="txtPrice">
-                                <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
-                                <input type="hidden" name="selectedDuration" value="0">  
-                                <input type="hidden" value="AddToCart" name="action"/>
-                                <a class="Notification">${success}</a>
-                                <input type="submit" value="Thêm vào giỏ hàng"/>                              
-                            </form>
-                        </div>    
-                    </c:if>
-                    
-                    <c:if test="${productDetail.qRent > 0}">
-                        <div class="body_buy_product" id="rent_section" style="display: none;">
-                            <div class="rental-duration">
-                                <button class="duration-button active" onclick="selectDuration(this, '7')">1 Tuần</button>
-                                <button class="duration-button" onclick="selectDuration(this, '14')">2 Tuần</button>
-                                <button class="duration-button" onclick="selectDuration(this, '30')">1 Tháng</button>
+
+                                <form class="buttont_add" action="MainController" method="post">
+
+                                    <div class="quantity-container-Rent" style="margin-bottom: 145px;">
+                                        <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
+                                            <a>Số lượng:</a>
+
+                                            <button type="button" class="quantity-btn" onclick="decreaseQuantityRent()">-</button>
+                                            <input type="text" id="quantityRent" value="1" name="txtQuantity" readonly>
+                                            <button type="button" class="quantity-btn" onclick="increaseQuantityRent()">+</button>
+                                            <input type="hidden" value="${productDetail.price}" name="txtPrice">
+                                        <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
+                                        <input type="hidden" id="selectedDuration" name="selectedDuration" value="7"> 
+                                        <input type="hidden" value="AddToCart" name="action"/>
+                                    </div>
+                                    <a class="Notification">${success}</a>
+                                    <input type="submit" value="Thêm vào giỏ hàng"/>
+                                </form>
                             </div>
 
-                            <form class="buttont_add" action="MainController" method="post">
-
-                                <div class="quantity-container-Rent" style="margin-bottom: 145px;">
-                                    <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
-                                        <a>Số lượng:</a>
-
-                                        <button type="button" class="quantity-btn" onclick="decreaseQuantityRent()">-</button>
-                                        <input type="text" id="quantityRent" value="1" name="txtQuantity" readonly>
-                                        <button type="button" class="quantity-btn" onclick="increaseQuantityRent()">+</button>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="body_buy_product">
+                                <form class="buttont_add" action="MainController" method="post">
+                                    <div class="quantity-container" style="margin-bottom: 145px;">
+                                        <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
+                                            <a>Số lượng:</a>
+                                            <button type="button" class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                                            <input type="text" id="quantity" value="1" name="txtQuantity" readonly>
+                                            <button type="button" class="quantity-btn" onclick="increaseQuantity()">+</button>
+                                        </div>
                                         <input type="hidden" value="${productDetail.price}" name="txtPrice">
                                     <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
-
+                                    <input type="hidden" name="selectedDuration" value="0">  
                                     <input type="hidden" value="AddToCart" name="action"/>
-                                    <input type="hidden" id="selectedDuration" name="selectedDuration" value="7">      
-                                </div>
-                                <a class="Notification">${success}</a>
-                                <input type="submit" value="Thêm vào giỏ hàng"/>
-                            </form>
-                        </div>
-                    </c:if>
+                                    <a class="Notification">${success}</a>
+                                    <input type="submit" value="Thêm vào giỏ hàng"/>                              
+                                </form>
+                            </div>    
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>       
             </div>
         </div>
@@ -431,7 +431,6 @@
         </div>
 
         <script src="JS/ViewAndUpdate.js"></script> 
-        <script src="JS/BuyOrRent.js"></script>
         <script src="JS/TimeRent.js"></script> 
     </body>
 </html>

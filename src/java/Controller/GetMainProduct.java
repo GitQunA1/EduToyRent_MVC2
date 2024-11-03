@@ -36,11 +36,10 @@ public class GetMainProduct extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            /* TODO output your page here. You may use following sample code. */
-
-            // nameList
+            
             GetProductDAO get = new GetProductDAO();
             List<Product> successfulProducts = get.getSuccessList();
+            
             List<Product> mainProductList = new ArrayList<>();
             int count = 0;
             for (Product product : successfulProducts) {
@@ -51,8 +50,32 @@ public class GetMainProduct extends HttpServlet {
                     }
                 }
             }
-
+            count = 0;
+            List<Product> SecondHand = new ArrayList<>();
+            for (Product product : successfulProducts){
+                if(product.getqSell() == 1 && product.getType() == 2){
+                    count++;
+                    if (count <= 70) {
+                        SecondHand.add(product);
+                    }
+                }
+            }
+            count = 0;
+            List<Product> listRented = new ArrayList<>();
+            for (Product product : successfulProducts){
+                if(product.getqRent() == 1 && product.getType() == 2){
+                    count++;
+                    if (count <= 70) {
+                        listRented.add(product);
+                    }
+                }
+            }
+            
+            
+            
             request.setAttribute("mainProductList", mainProductList);
+            request.setAttribute("SecondHand", SecondHand);
+            request.setAttribute("listRented", listRented);
             request.getRequestDispatcher("MainPage.jsp").forward(request, response);
         } catch (Exception e) {
 

@@ -13,16 +13,18 @@ public class Payment {
     private int paid;
     private int oid;
     private float amount;
+    private float points;
     private String method;
     private String date;
 
     public Payment() {
     }
 
-    public Payment(int paid, int oid, float amount, String method, String date) {
+    public Payment(int paid, int oid, float amount, float points, String method, String date) {
         this.paid = paid;
         this.oid = oid;
         this.amount = amount;
+        this.points = points;
         this.method = method;
         this.date = date;
     }
@@ -51,6 +53,14 @@ public class Payment {
         this.amount = amount;
     }
 
+    public float getPoints() {
+        return points;
+    }
+
+    public void setPoints(float points) {
+        this.points = points;
+    }
+
     public String getMethod() {
         return method;
     }
@@ -66,6 +76,7 @@ public class Payment {
     public void setDate(String date) {
         this.date = date;
     }
+
     
     
 }

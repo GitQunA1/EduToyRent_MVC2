@@ -190,7 +190,7 @@
                 <%-- vào trang đơn hàng. xử lý MainContronller: value="OrderPage" name="action" --%>
                 <div class="Order_navigation">
                     <form action="MainController" method="post">
-                        <input type="hidden" value="OrderPage" name="action" />
+                        <input type="hidden" value="InformationOrder" name="action" />
                         <input type="submit" value="Đơn hàng" />
                     </form>
                 </div>

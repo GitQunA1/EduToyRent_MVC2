@@ -10,7 +10,6 @@ import Entity.Cart;
 import Entity.Order;
 import Entity.OrderDetail;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -125,8 +124,9 @@ public class OrderDAO {
             sql = "SELECT * FROM [Order_Detail] WHERE OID = ?";
         }
         try {
+            conn = new DBUtils().getConnection();
             for (Order order : oList) {
-                conn = new DBUtils().getConnection();
+                
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, order.getOid());
                 if (status != 0) {
@@ -153,4 +153,6 @@ public class OrderDAO {
         }
         return orderList;
     }
+    
+    
 }
