@@ -5,11 +5,14 @@
  */
 package Controller;
 
+import DAO.GetShopOwner;
+import Entity.ShopOwner;
 import DAO.LoginDAO;
 import DAO.ProfileDAO;
 import Entity.Customer;
 import Entity.User;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,41 +40,51 @@ public class LoginControllers extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            
-            String Email=request.getParameter("txtEmail");
-            String Password=request.getParameter("txtPassword");
-            LoginDAO login = new LoginDAO ();
-            boolean check=login.checkEmail(Email);
-            if (check){
+
+            String Email = request.getParameter("txtEmail");
+            String Password = request.getParameter("txtPassword");
+            LoginDAO login = new LoginDAO();
+            boolean check = login.checkEmail(Email);
+            if (check) {
                 User user = login.checkLogin(Email, Password);
-                
-                if (user !=null) {
+
+                if (user != null) {
                     HttpSession ss = request.getSession();
                     ss.setAttribute("UserAccount", user);
-                    
-                    ProfileDAO profile = new ProfileDAO();            
-                    Customer cus= profile.ShowCustomer(user);
+
+                    ProfileDAO profile = new ProfileDAO();
+                    Customer cus = profile.ShowCustomer(user);
                     HttpSession customer = request.getSession();
-                    customer.setAttribute("Customer", cus);                   
-                    
-                    
-                    
-                    if(user.getRole().equals("C")){
+                    customer.setAttribute("Customer", cus);
+
+                    if (user.getRole().equals("C")) {
                         request.getRequestDispatcher("ViewAdvertisingProducts").forward(request, response);
-                    }else if(user.getRole().equals("O")){
-                        
-                    }else if(user.getRole().equals("S")){
-                        
+                    } else if (user.getRole().equals("O")) {
+                        GetShopOwner shopDAO = new GetShopOwner();
+                        List<ShopOwner> shop = shopDAO.getShopList();
+                        ShopOwner sa = new ShopOwner();
+                        for (ShopOwner shopOwner : shop) {
+                            if (shopOwner.getUid() == cus.getUid()){
+                                sa = shopOwner;
+                            }
+                        }
+                        if (sa != null) {
+                            HttpSession shopOwnerSession = request.getSession();
+                            shopOwnerSession.setAttribute("ShopOwner", sa);
+                        }
+                        request.getRequestDispatcher("test_AddProduct.jsp").forward(request, response);
+                    } else if (user.getRole().equals("S")) {
+
                     }
-                    
-                }else {
+
+                } else {
                     request.setAttribute("ERROR", "Mật khẩu không chính xác");
                     request.setAttribute("txtEmail", Email);
                     request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
                 }
-                
+
             } else {
-                request.setAttribute("ERROR","Thônng tin người dùng không tồn tại");
+                request.setAttribute("ERROR", "Thônng tin người dùng không tồn tại");
                 request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
             }
         } catch (Exception e) {

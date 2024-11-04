@@ -74,7 +74,7 @@ public class MainController extends HttpServlet {
                 url = "Payment";
                 break;
             case "addProduct":
-                url = "test_AddProduct";
+                url = "AddProductController";
                 break;
         }
         request.getRequestDispatcher(url).forward(request, response);

@@ -65,7 +65,7 @@ public class GetShopOwner {
     
     public List<ShopOwner> getShopList() {
         return shopList;
-    }   
+    }
     
     private Connection connection ;
     public List<ShopOwner> getShopsByIds(List<Integer> shopIds) throws Exception {
