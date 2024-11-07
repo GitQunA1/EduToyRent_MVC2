@@ -72,7 +72,7 @@ public class LoginControllers extends HttpServlet {
                             HttpSession shopOwnerSession = request.getSession();
                             shopOwnerSession.setAttribute("ShopOwner", sa);
                         }
-                        request.getRequestDispatcher("test_AddProduct.jsp").forward(request, response);
+                        request.getRequestDispatcher("ProductsByShop").forward(request, response);
                     } else if (user.getRole().equals("S")) {
 
                     }

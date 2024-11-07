@@ -73,14 +73,26 @@ public class MainController extends HttpServlet {
             case "Payment":
                 url = "Payment";
                 break;
-            case "addProduct":
-                url = "AddProductController";
+            case "InformationOrder":
+                url = "GetOrderDetail";
+                break;
+            case "ProductFilter":
+                url = "ProductFilter";
+                break;
+            case "revenue":
+                url = "OwnerIncome.jsp";
+                break;
+            case "OwnerProduct":
+                url = "ProductsByShop";
+                break;
+            case "ownerOrder":
+                url = "OwnerOrderDetail";
+                break;
+            case "UpdateOrder":
+                url = "UpdateOrderDetail";
                 break;
         }
         request.getRequestDispatcher(url).forward(request, response);
-
-        
-        
       /*  String action = request.getParameter("action");
         String url = "MainPage.jsp";
         if(action == null) action = "Home";
