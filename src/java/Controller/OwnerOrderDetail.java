@@ -5,11 +5,14 @@
  */
 package Controller;
 
+import DAO.GetProductDAO;
 import DAO.OrderDAO;
 import Entity.OrderDetail;
+import Entity.Product;
 import Entity.ShopOwner;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,17 +43,55 @@ public class OwnerOrderDetail extends HttpServlet {
         try {
             HttpSession shopOwnerSession = request.getSession();
             ShopOwner sa = (ShopOwner) shopOwnerSession.getAttribute("ShopOwner");
-            int status = 1 ;
+            int status = 1;
             try {
                 String txtStatus = request.getParameter("txtStatus");
                 status = Integer.parseInt(txtStatus);
             } catch (Exception e) {
                 status = 1;
             }
+            int option = 0;
+            try {
+                String txtOption = request.getParameter("txtOption");
+                option = Integer.parseInt(txtOption);
+            } catch (Exception e) {
+                option = 0;
+            }
             OrderDAO od = new OrderDAO();
-            List<OrderDetail> orderDetailList = od.GetOrderDetailBySOID(sa.getSoid(), status);
-            
-            request.setAttribute("OwnerOrderDetail", orderDetailList);
+            GetProductDAO gpd = new GetProductDAO();
+            List<OrderDetail> List = od.GetOrderDetailBySOID(sa.getSoid(), status);
+            List<OrderDetail> orderDetailList = new ArrayList<>();
+            List<Product> ProductOrdered = new ArrayList<>();
+            if (option == 0) {
+                for (Product p : gpd.getSuccessList()) {
+                    for (OrderDetail d : List) {
+                        if (p.getPid() == d.getPid()) {
+                            ProductOrdered.add(p);
+                            break;
+                        }
+                    }
+                }
+                request.setAttribute("OwnerOrderDetail", List);
+            } else {
+                for (OrderDetail o : List) {
+                    if (o.getRentTime() == 0 && option == 1) {
+                        orderDetailList.add(o);
+                    }
+                    if (o.getRentTime() > 0 && option == 2) {
+                        orderDetailList.add(o);
+                    }
+                }
+                for (Product p : gpd.getSuccessList()) {
+                    for (OrderDetail d : orderDetailList) {
+                        if (p.getPid() == d.getPid()) {
+                            ProductOrdered.add(p);
+                            break;
+                        }
+                    }
+                }
+                request.setAttribute("OwnerOrderDetail", orderDetailList);
+            }
+            request.setAttribute("ProuductOrdered", ProductOrdered);
             request.getRequestDispatcher("OwnerOrder.jsp").forward(request, response);
         } catch (Exception e) {
         }

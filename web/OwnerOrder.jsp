@@ -50,31 +50,11 @@
                 text-decoration: none;
                 color: black;
             }
-            .button {
-                height: 30px;
-                background-color: white;
-                color: black;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                cursor: pointer;
-                width: 120px;
-                margin: 10px;
-                transition: background-color 0.3s, color 0.3s;
+            .feature a.active-feature {
+                text-decoration: underline;
+                font-weight: bold; /* Để làm nổi bật hơn */
+                color: #71D6FF; /* Màu chữ khi được chọn */
             }
-            .button.active {
-                background-color: #37A28F; /* Active button background color */
-                color: white; /* Active button text color */
-            }
-            .hidden {
-                display: none;
-            }
-            .visible {
-                display: block;
-            }
-            .buttom_Buy_Rent{
-                margin-left: 32px;
-            }
-
             .SOD{
                 margin-top: 150px;
                 margin-left: 385px;               
@@ -90,7 +70,13 @@
             .info{
                 display: flex;
                 margin-left: 29px;
-                padding-top: 10px
+                padding-top: 10px;
+                position: relative;
+            }
+            .detail{
+                position: absolute;
+                bottom: 125px;
+                margin-left: 980px;
             }
             .info1 img{
                 width: 120px;
@@ -147,62 +133,67 @@
                 </form>
             </div>
 
-            <!-- Buttons for "Bán" and "Cho thuê" -->
-            <div class="buttom_Buy_Rent">
-                <button id="btn_buy" class="button active">Bán</button>
-                <button id="btn_rent" class="button">Cho thuê</button>
-            </div>
-
             <!-- Các phần chức năng -->
-            <div class="feature" id="buy_section" style="display: block;">
-                <a href="MainController?action=ownerOrder&txtStatus=1">Chờ xử lý</a>
-                <a href="MainController?action=ownerOrder&txtStatus=2">Đang giao</a>
-                <a href="MainController?action=ownerOrder&txtStatus=8">Giao thành công</a>
-                <a href="MainController?action=ownerOrder&txtStatus=6">Đơn hàng hủy</a>
-                <a href="MainController?action=ownerOrder&txtStatus=5">Trả hàng</a>
-            </div>
-            <div class="feature" id="rent_section" style="display: none;">
-                <a href="MainController?action=ownerOrder&txtStatus=1">Chờ xử lý</a>
-                <a href="MainController?action=ownerOrder&txtStatus=2">Đang giao</a>
-                <a href="MainController?action=ownerOrder&txtStatus=3">Đang cho thuê</a>
-                <a href="MainController?action=ownerOrder&txtStatus=4">Đang trả hàng</a>
-                <a href="MainController?action=ownerOrder&txtStatus=7">Trả thành công</a>
-                <a href="MainController?action=ownerOrder&txtStatus=8">Hoàn thành</a>
+            <div class="feature" style="display: block;">
+                <a href="MainController?action=ownerOrder&txtStatus=1&txtOption=0" 
+                   class="${empty param.txtStatus || param.txtStatus == '1' ? 'active-feature' : ''}">Chờ xử lý</a>
+                <a href="MainController?action=ownerOrder&txtStatus=2&txtOption=0" 
+                   class="${param.txtStatus == '2' ? 'active-feature' : ''}">Đang giao</a>
+                <a href="MainController?action=ownerOrder&txtStatus=3&txtOption=1" 
+                   class="${param.txtStatus == '3' ? 'active-feature' : ''}">Đang cho thuê (T)</a>
+                <a href="MainController?action=ownerOrder&txtStatus=4&txtOption=1" 
+                   class="${param.txtStatus == '4' ? 'active-feature' : ''}">Hoàn tất thuê (T)</a>
+                <a href="MainController?action=ownerOrder&txtStatus=5&txtOption=1" 
+                   class="${param.txtStatus == '5' ? 'active-feature' : ''}">Trả thành công (T)</a>
+                <a href="MainController?action=ownerOrder&txtStatus=6&txtOption=1" 
+                   class="${param.txtStatus == '6' ? 'active-feature' : ''}">Xử lý thanh toán (T)</a>
+                <a href="MainController?action=ownerOrder&txtStatus=7&txtOption=2" 
+                   class="${param.txtStatus == '7' ? 'active-feature' : ''}">Trả hàng (B)</a>
+                <a href="MainController?action=ownerOrder&txtStatus=8&txtOption=0" 
+                   class="${param.txtStatus == '8' ? 'active-feature' : ''}">Đơn hàng hủy</a>
+                <a href="MainController?action=ownerOrder&txtStatus=9&txtOption=0" 
+                   class="${param.txtStatus == '9' ? 'active-feature' : ''}">Hoàn thành</a>
             </div>
         </div>
+
+
+
         <div class="SOD">
             <c:forEach var="OwnerODID" items="${OwnerOrderDetail}">
-                <div class="ShowOrderDetail">
-
-                    <div class="info">
-                        <div class="info1">
-                            <a>PID: ${OwnerODID.pid}</a><br>
-                            <img src="Image/Logo.jpg"/>
+                <c:forEach var="product" items="${ProuductOrdered}">
+                    <c:if test="${OwnerODID.pid == product.pid}">
+                        <div class="ShowOrderDetail">
+                            <div class="info">
+                                <div class="info1">
+                                    <a>PID: ${OwnerODID.pid}</a><br>
+                                    <img src="${product.image}"/>
+                                </div>
+                                <div class="info2">
+                                    <p>${product.name}</p><br>
+                                    <a>Số lượng: ${OwnerODID.quantity}</a>
+                                </div>
+                                <c:if test="${OwnerODID.status == 1}">
+                                    <div class="info3">
+                                        <form action="MainController" method="post">
+                                            <input type="hidden" value="${OwnerODID.odid}" name="txtODID">
+                                            <input type="hidden" value="2" name="txtStatusUpdate">
+                                            <input type="hidden" value="UpdateOrder" name="action"/>
+                                            <input type="submit" value="Nhận đơn"/>
+                                        </form>
+                                        <a>|</a>
+                                        <form action="MainController" method="post">
+                                            <input type="hidden" value="${OwnerODID.odid}" name="txtODID">
+                                            <input type="hidden" value="8" name="txtStatusUpdate">
+                                            <input type="hidden" value="UpdateOrder" name="action"/>
+                                            <input type="submit" value="Hủy đơn"/>
+                                    </div>
+                                </c:if>
+                                <a class="detail" href="">Chi tiết</a>
+                            </div>
                         </div>
-                        <div class="info2">
-                            <p>ABCsalkgjsalgkasjglkasjglakgsajlgkajglakgjsalkgajlkajgalkgjslkajlgkasjglkajglaksgjlakgjalkgjalskdjaslkgjskgjdkjgndkgsfdgkljdhgkdjgdsfkljgsdflkgjhsdklgjdsgalksfjalfajflkasfjkjdhsgksdfjhdkjfgdhsgkldsfhgkjdssdkljhsdkljgdshlgkjdfshgksdjghdlskgjhdsflkjghsdlkjgdhslkjd</p><br>
-                            <a>Số lượng: ${OwnerODID.quantity}</a>
-                        </div>
-                        <div class="info3">
-                            <form action="MainController" method="post">
-                                <input type="hidden" value="${OwnerODID.odid}" name="txtODID">
-                                <input type="hidden" value="2" name="txtStatusUpdate">
-                                <input type="hidden" value="UpdateOrder" name="action"/>
-                                <input type="submit" value="Nhận đơn"/>
-                            </form>
-                            <a>|</a>
-                            <form action="MainController" method="post">
-                                <input type="hidden" value="${OwnerODID.odid}" name="txtODID">
-                                <input type="hidden" value="8" name="txtStatusUpdate">
-                                <input type="hidden" value="UpdateOrder" name="action"/>
-                                <input type="submit" value="Hủy đơn"/>
-                        </div>
-                        <a href="">Chi tiết</a>
-                    </div>
-
-                </div>
+                    </c:if>
+                </c:forEach>
             </c:forEach>
         </div>
-        <script src="JS/BuyOrRent.js"></script>
     </body>
 </html>

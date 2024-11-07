@@ -24,6 +24,7 @@
                 height: 120px; 
                 position: relative;
                 position: fixed;
+                z-index: 1000;
             }
             .logo_Navigation{ 
                 width: 75px;
