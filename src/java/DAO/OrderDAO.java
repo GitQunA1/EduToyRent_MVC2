@@ -126,7 +126,7 @@ public class OrderDAO {
         try {
             conn = new DBUtils().getConnection();
             for (Order order : oList) {
-                
+
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, order.getOid());
                 if (status != 0) {
@@ -153,6 +153,47 @@ public class OrderDAO {
         }
         return orderList;
     }
-    
-    
+
+    public List<OrderDetail> GetOrderDetailBySOID(int soid, int status) {
+        List<OrderDetail> orderDetailsOwner = new ArrayList<>();
+        String sql = "SELECT * FROM [Order_Detail] WHERE SOID = ? AND Status = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, soid);
+            ps.setInt(2, status);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int odid = rs.getInt("ODID");
+                int oid = rs.getInt("OID");
+                int pid = rs.getInt("PID");
+                int quantity = rs.getInt("Quantity");
+                int rentTime = rs.getInt("TimeRent");
+                String dateStart = rs.getString("DateStart");
+                String dateEnd = rs.getString("DateEnd");
+
+                OrderDetail od = new OrderDetail(odid, oid, soid, pid, quantity, rentTime, dateStart, dateEnd, status);
+                orderDetailsOwner.add(od);
+            }
+            return orderDetailsOwner;
+        } catch (Exception e) {
+        }
+        return orderDetailsOwner;
+    }
+
+    public boolean updateOrderDetail(int odid, int status) {
+        String sql = "UPDATE [Order_Detail] SET Status = ? WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, odid);
+            int rowsAffected = ps.executeUpdate();
+            if(rowsAffected > 0){
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
 }

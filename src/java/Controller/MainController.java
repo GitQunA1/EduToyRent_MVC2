@@ -79,6 +79,18 @@ public class MainController extends HttpServlet {
             case "ProductFilter":
                 url = "ProductFilter";
                 break;
+            case "revenue":
+                url = "OwnerIncome.jsp";
+                break;
+            case "ownerProduct":
+                url = "OwnerProduct.jsp";
+                break;
+            case "ownerOrder":
+                url = "OwnerOrderDetail";
+                break;
+            case "UpdateOrder":
+                url = "UpdateOrderDetail";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 
