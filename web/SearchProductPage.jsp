@@ -14,12 +14,13 @@
         
         <style>
             body{
-                background-color: #EAEAEA;
+                margin: 0;
+                padding: 0;
+                overflow: auto; 
             }
             .Advertising{
-               
-                background-color: #FFBCDD;
-                padding-top: 20px;
+        
+                padding-top: 130px;
                 margin-left: 70px;
                 margin-right: 70px;
                 border-radius: 10px;
@@ -98,7 +99,7 @@
         
         <c:choose>
             <c:when test="${not empty ProductSearch}">
-                <div style="margin-top: 123px;" class="Advertising">
+                <div  class="Advertising">
                     <div class="Show_product">
                         <c:forEach var="procuct" items="${ProductSearch}">
                             <div class="product-box">

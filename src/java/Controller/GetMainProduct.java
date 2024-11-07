@@ -55,7 +55,7 @@ public class GetMainProduct extends HttpServlet {
             for (Product product : successfulProducts){
                 if(product.getqSell() == 1 && product.getType() == 2){
                     count++;
-                    if (count <= 70) {
+                    if (count <= 14) {
                         SecondHand.add(product);
                     }
                 }
@@ -65,14 +65,13 @@ public class GetMainProduct extends HttpServlet {
             for (Product product : successfulProducts){
                 if(product.getqRent() == 1 && product.getType() == 2){
                     count++;
-                    if (count <= 70) {
+                    if (count <= 14) {
                         listRented.add(product);
                     }
                 }
             }
-            
-            
-            
+
+      
             request.setAttribute("mainProductList", mainProductList);
             request.setAttribute("SecondHand", SecondHand);
             request.setAttribute("listRented", listRented);

@@ -39,13 +39,18 @@ public class SearchByName extends HttpServlet {
         try{
             /* TODO output your page here. You may use following sample code. */
 
+            
+            
             // nameList
             request.setCharacterEncoding("utf-8");
             SearchProduct seP = new SearchProduct();
+            
             String txtName = request.getParameter("txtSearch");
             GetProductDAO product = new GetProductDAO();
+            
             List<Product> pro = product.getSuccessList();
             List<Product> prod = new ArrayList<>();
+            
             for (Product product1 : pro) {
                 if (product1.getName().toLowerCase().contains(txtName.toLowerCase())) {
                     prod.add(product1);

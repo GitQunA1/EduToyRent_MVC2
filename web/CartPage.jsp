@@ -19,13 +19,11 @@
                 background-color: white;
                 width: 80%;
                 height: auto;
-                
-                
                 padding-top: 135px;
                 padding-bottom: 30px;
             }
             .background_product_cart{
-                background-color: #E8E8E8;
+                background-color: #F5F5FA;
                 width: 1100px;
                 height: auto;
                 padding-right: 20px;
@@ -33,7 +31,8 @@
                 padding-bottom: 20px;
                 margin-left: 45px;
                 margin-bottom: 10px;
-                
+                border: 1.5px solid #333;
+                border-radius: 10px;
             }
             
             .shopOwner_cart{

@@ -15,7 +15,7 @@
         
         <style>
             body{
-                background-color: #EAEAEA;
+                background-color: #F5F5FA;
                 width: 100%;
                 height: 100%;
             }
@@ -46,20 +46,23 @@
                 text-decoration: underline;
             }
             .background_coler_Product{
-                background-color: white;
+                background-color: #F5F5FA;
                 width: 80%;
                 height: auto;
-                margin-left: 190px;
+                margin-left: 150px;
                 padding-bottom: 20px;
                 z-index: -100;
                 padding-top: 190px;
+                
             }
             .backgrount_product{
-                background-color: #E8E8E8;
+                background-color: white;
                 width: 80%;
                 height: auto;
                 margin-left: 130px;
                 margin-bottom: 20px;
+                border: 1.5px solid black;
+                border-radius: 10px;
             }
             .Shop_Order_product{
                 display: flex;

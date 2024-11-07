@@ -39,14 +39,17 @@ public class SearchByCategory extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             // nameList
+            int qRent = Integer.parseInt(request.getParameter("txtQRent"));
             
+            int qSell = Integer.parseInt(request.getParameter("txtQSell"));
+            int qStype = Integer.parseInt(request.getParameter("txtStype"));
             GetProductDAO get = new GetProductDAO();
                 String category = request.getParameter("txtcategory");
                 List<Product> successfulProducts = get.getSuccessList();
                 
                 List<Product> categoryList = new ArrayList<>();
                 for (Product product : successfulProducts) {
-                    if (product.getCategory().equalsIgnoreCase(category)) {
+                    if (product.getCategory().equalsIgnoreCase(category) && product.getqRent() == qRent && product.getqSell() >= qSell && product.getType() == qStype){
                         categoryList.add(product);
                     }
                 }

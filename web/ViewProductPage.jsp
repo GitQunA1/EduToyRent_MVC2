@@ -16,20 +16,20 @@
 
         <style>
             body{
-                background-color: white;
+                background-color: #efefef;
             }
             .Advertising{
-                background-color: #EAEAEA;
+                background-color: white;
                 margin-left: 70px;
                 margin-right: 70px;
                 border-radius: 10px;                              
                 height: 500px;
-                margin-top: 130px;
                 display: flex;
                 margin-bottom: 20px;
+                margin-top: 130px;
             }
             .Advertising_Content{
-                background-color: #EAEAEA;
+                background-color: white;
                 margin-left: 70px;
                 margin-right: 70px;
                 border-radius: 10px;
@@ -42,6 +42,8 @@
                 height: 450px;
                 margin-left: 80px; 
                 margin-top: 25px;
+                border: 1px solid black; 
+                border-radius: 10px;
             }
             .body_product{          
                 margin-left: 70px; 
@@ -151,7 +153,7 @@
 
             /* ------------------------------------------- */
             .detail_shop_product{
-                background-color: #EAEAEA;
+                background-color: white;
                 margin-left: 70px;
                 margin-right: 70px;
                 border-radius: 10px;
@@ -191,9 +193,9 @@
                 width: 100px;
                 height: 30px;
                 background-color: white;
-                border: none;
                 margin-right: 110px;
                 margin-top: 10px;
+                border-radius: 10px;
             }
             .Shop_Product_content{
                 display: flex;
@@ -256,10 +258,10 @@
             .body_buy_product{
                 position: absolute;
                 bottom: 70px; 
+               
             }
             .duration-button {
-                margin: 5px;
-                border: none;
+                margin: 5px; 
                 background-color: #ccc;
                 color: #333;
                 cursor: pointer;
@@ -308,6 +310,15 @@
                 margin-left: 145px;
                 font-size: 17px;
             }
+            .buyOrRent{
+                display: flex;
+                margin-left: 50px;
+            }
+            .buyOrRent a{
+                color: black;
+                margin-top: 15px;
+                margin-left: 1000px;
+            }
         </style>
 
     </head>
@@ -332,7 +343,7 @@
 
                                 <form class="buttont_add" action="MainController" method="post">
 
-                                    <div class="quantity-container-Rent" style="margin-bottom: 145px;">
+                                    <div class="quantity-container-Rent" style="margin-bottom: 135px;">
                                         <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
                                             <a>Số lượng:</a>
 
@@ -353,7 +364,7 @@
                         <c:otherwise>
                             <div class="body_buy_product">
                                 <form class="buttont_add" action="MainController" method="post">
-                                    <div class="quantity-container" style="margin-bottom: 145px;">
+                                    <div class="quantity-container" style="margin-bottom: 105px;">
                                         <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
                                             <a>Số lượng:</a>
                                             <button type="button" class="quantity-btn" onclick="decreaseQuantity()">-</button>
@@ -388,46 +399,86 @@
             </p>
         </div>
 
-        <div class="detail_shop_product">
+                <div class="detail_shop_product">
+                    <c:choose>
+                        <c:when test="${productDetail.qSell > 0 and productDetail.type == 1}">
+                            <div class="shop_owner">
+                                <div class="shop_owner_Content">
 
-            <div class="shop_owner">
-                <div class="shop_owner_Content">
+                                    <img src="<c:out value="${shop.avatar}"></c:out>" />
+                                    <a><c:out value="${shop.name}"></c:out></a>
+                                    <c:set var="soid" value="${shop.soid}"></c:set>
+                                        <form action="MainController" method="post">
+                                            <input type="hidden" value="${soid}" name="txtSOID"/>
+                                        <input type="hidden" value="Access" name="action"/>
+                                        <input type="submit" value="Truy cập"/>
+                                    </form>
+                                </div>                        
+                                <div class="line"></div>
 
-                    <img src="<c:out value="${shop.avatar}"></c:out>" />
-                    <a><c:out value="${shop.name}"></c:out></a>
-                    <c:set var="soid" value="${shop.soid}"></c:set>
-                        <form action="MainController" method="post">
-                            <input type="hidden" value="${soid}" name="txtSOID"/>
-                        <input type="hidden" value="Access" name="action"/>
-                        <input type="submit" value="Truy cập"/>
-                    </form>
-                </div>                        
-                <div class="line"></div>
+                            </div>
 
-            </div>
+                            <div class="Shop_information_product">
+                                <div class="Shop_Product_content">
+                                    <p>Top sản phẩm bán chạy trong ngày</p>
+                                    <a href="MainController?action=Access&txtSOID=${soid}">Xem thêm sản phẩm từ shop</a>
+                                </div>
+                                <div class="Show_product">
+                                    <c:forEach var="procuct" items="${highIncList}">
+                                        <div class="product-box">
+                                            <a href="MainController?txtPID=${procuct.pid}&action=viewProduct">
+                                                <img src="${procuct.image}"/>
+                                                <p>${procuct.name}</p>
+                                                <a>Giá: <fmt:formatNumber value="${procuct.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                                                </a>
+                                                <form action="MainController" method="post">
+                                                    <input type="hidden" value="${procuct.pid}" name="txtPID"/>   
+                                                <input type="hidden" value="AddCart" name="action"/>
+                                                <input type="submit" value="Thêm vào giỏ hàng" />
+                                            </form>
+                                        </div>
+                                    </c:forEach>  
+                                </div>
+                            </div> 
+                        </c:when>
+                        <c:otherwise>
+                            
+                            <div class="Shop_information_product">
+                                <div class="buyOrRent">
+                                    <p>Sản phẩm liên quan</p>
+                                    <c:if test="${productDetail.qSell == 1 and productDetail.type == 2}">
+                                        <a  href="MainController?action=ProductFilter&txtOption=2">Xem thêm sản phẩm</a>
+                                    </c:if>
+                                    <c:if test="${productDetail.qRent == 1 and productDetail.type == 2}">
+                                        <a  href="MainController?action=ProductFilter&txtOption=1">Xem thêm sản phẩm</a>
+                                    </c:if>
+                                </div>
+                                <div class="Show_product">
+                                    <c:forEach var="procuctcus" items="${listproduct}">
+                                        <div class="product-box">
+                                            
+                                            <a href="MainController?txtPID=${procuctcus.pid}&action=viewProduct">
+                                                <img src="${procuctcus.image}"/>
+                                                <p>${procuctcus.name}</p>
+                                                <a>Giá: <fmt:formatNumber value="${procuctcus.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                                                </a>
+                                                <form action="MainController" method="post">
+                                                    <input type="hidden" value="${procuctcus.pid}" name="txtPID"/>   
+                                                <input type="hidden" value="AddCart" name="action"/>
+                                                <input type="submit" value="Thêm vào giỏ hàng" />
+                                            </form>
+                                        </div>
+                                    </c:forEach>  
+                                </div>
+                            </div> 
+                        </c:otherwise>
+                    </c:choose>
 
-            <div class="Shop_information_product">
-                <div class="Shop_Product_content">
-                    <p>Top sản phẩm bán chạy trong ngày</p>
-                    <a href="MainController?action=Access&txtSOID=${soid}">Xem thêm sản phẩm từ shop</a>
-                </div>
-                <div class="Show_product">
-                    <c:forEach var="procuct" items="${highIncList}">
-                        <div class="product-box">
-                            <a href="MainController?txtPID=${procuct.pid}&action=viewProduct">
-                                <img src="${procuct.image}"/>
-                                <p>${procuct.name}</p>
-                                <a>Giá: <fmt:formatNumber value="${procuct.price}" pattern="#,###"></fmt:formatNumber> đ </a>
-                                </a>
-                                <form action="MainController" method="post">
-                                <input type="hidden" value="${procuct.pid}" name="txtPID"/>   
-                                <input type="hidden" value="AddCart" name="action"/>
-                                <input type="submit" value="Thêm vào giỏ hàng" />
-                            </form>
-                        </div>
-                    </c:forEach>  
-                </div>
-            </div> 
+
+
+
+                
+            
         </div>
 
         <script src="JS/ViewAndUpdate.js"></script> 
