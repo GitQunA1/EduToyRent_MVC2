@@ -121,7 +121,10 @@
         </style>
     </head>
     <body>
-        <%@include file="OwnerNavigation.jsp" %>
+        <jsp:include page="OwnerNavigation.jsp">
+            <jsp:param name="currentPage" value="ownerOrder" />
+        </jsp:include>
+
         <div class="Nav_Bar">
             <div class="Search">
                 <form action="MainController" method="post">

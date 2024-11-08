@@ -73,7 +73,13 @@
                 border: none;
                 background-color: white;
             }
-            
+            .active_button {
+                background-color: #DCAC0C; /* Choose a color to indicate the active button */
+                color: #37A28F;
+                font-weight: bold;
+            }
+
+
 
         </style>
 
@@ -88,19 +94,24 @@
                 <div class="shop_feature">
                     <form action="MainController" method="post">
                         <input type="hidden" value="revenue" name="action"/>
-                        <input type="submit" value="Doanh thu"/>
+                        <input type="submit" value="Doanh thu" 
+                               class="<%= "revenue".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
                     <form action="MainController" method="post">
                         <input type="hidden" value="ownerProduct" name="action"/>
-                        <input type="submit" value="Sản phẩm"/>
+                        <input type="submit" value="Sản phẩm" 
+                               class="<%= "ownerProduct".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
                     <form action="MainController" method="post">
                         <input type="hidden" value="ownerOrder" name="action"/>
-                        <input type="submit" value="Đơn hàng"/>
+                        <input type="submit" value="Đơn hàng" 
+                               class="<%= "ownerOrder".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
+
                     <form action="MainController" method="post">
                         <input type="hidden" value="owneRegister" name="action"/>
-                        <input type="submit" value="Thêm sản phẩm"/>
+                        <input type="submit" value="Thêm sản phẩm" 
+                               class="<%= "owneRegister".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
                 </div>
                 <form action="MainController" method="post">
