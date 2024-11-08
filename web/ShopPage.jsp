@@ -8,7 +8,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        
+        <script src="JS/Button_themsoluong.js"></script>
         <style>
             /* Các kiểu dáng sẵn có */
             .Nav_Bar {
@@ -123,7 +123,7 @@
     </head>
     <body>
         <%@include file="ShopNavigation.jsp" %>
-        
+
         <div class="Nav_Bar">
             <div class="Search">
                 <form action="MainController" method="post">
@@ -154,7 +154,9 @@
                         <p>Số lượng thuê: ${product.qRent}</p>
                     </div>
                     <div class="product-actions">
-                        <button>Thêm số lượng</button>
+                        <button onclick="toggleInput(${product.pid})">Thêm số lượng</button>
+                        <input type="number" id="quantityInput-${product.pid}" style="display:none;" placeholder="Nhập số lượng" />
+                        <button onclick="updateQuantity(${product.pid})" style="display:none;" id="saveBtn-${product.pid}">Lưu</button>
                         <a href="MainController?action=ProductDetails&pid=${product.pid}">Chi tiết</a>
                     </div>
                 </div>

@@ -74,9 +74,25 @@ public class ProductDAO {
         }
     }
 
-    public boolean deleteProduct(int pid) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM [Product] WHERE PID = ?";
+    public void updateQSell(int pid, int newqsell) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE [Product] SET [QSell] = ? WHERE [PID] = ?";
+        try (Connection con = DB.DBUtils.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, newqsell);
+            ps.setInt(2, pid);
+            ps.executeUpdate();
+        }
+    }
+    public void updateQRent(int pid, int newqrent) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE Product SET [QRent] = ? WHERE [PID] = ?";
+        try (Connection con = DB.DBUtils.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, newqrent);
+            ps.setInt(2, pid);
+            ps.executeUpdate();
+        }
+    }
 
+    public boolean deleteProduct(int pid) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM [Product] WHERE [PID] = ?";
         try (Connection con = DB.DBUtils.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pid);
             int rowsDeleted = ps.executeUpdate();

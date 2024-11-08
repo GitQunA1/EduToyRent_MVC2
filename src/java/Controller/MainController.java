@@ -91,6 +91,12 @@ public class MainController extends HttpServlet {
             case "UpdateOrder":
                 url = "UpdateOrderDetail";
                 break;
+            case "ProductDetails":
+                url = "ProductDetails.jsp";
+                break;
+            case "UpdateQuantity":
+                url = "UpdateQuantityProduct";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
       /*  String action = request.getParameter("action");

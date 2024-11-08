@@ -102,10 +102,10 @@ public class GetProductDAO {
     public List<Product> getPendingList() {
         return pendingList;
     }
-    
-    public List<Product> getFreezeList(){
+
+    public List<Product> getFreezeList() {
         return freezeList;
-    } 
+    }
 
     private Connection connection;
 
@@ -153,6 +153,36 @@ public class GetProductDAO {
         return products;
     }
 
+    public Product getProductById(int pid) throws ClassNotFoundException, SQLException {
+        Product product = null;
+        String sql = "SELECT * FROM [Product] WHERE [PID] = ?";
+
+        connection = DBUtils.getConnection();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, pid); 
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                product = new Product();
+                product.setPid(rs.getInt("PID"));
+                product.setSoid(rs.getInt("SOID"));
+                product.setImage(rs.getString("Image"));
+                product.setName(rs.getString("Name"));
+                product.setPrice(rs.getFloat("Price"));
+                product.setqSell(rs.getInt("QSell"));
+                product.setqRent(rs.getInt("QRent"));
+                product.setAge(rs.getInt("Age"));
+                product.setBrand(rs.getString("Brand"));
+                product.setOrigin(rs.getString("Origin"));
+                product.setDescription(rs.getString("Description"));
+                product.setCategory(rs.getString("Category"));
+                product.setType(rs.getInt("Type"));
+                product.setStatus(rs.getString("Status"));
+            }
+        }
+        return product;
+    }
+
     public List<Product> getProductByShopandStatus(int soid, String status) {
         List<Product> products = new ArrayList<>();
         connection = null;
@@ -172,7 +202,7 @@ public class GetProductDAO {
                         product.setName(rs.getString("Name"));
                         product.setPrice(rs.getFloat("Price"));
                         product.setqSell(rs.getInt("QSell"));
-                        product.setqRent(rs.getInt("QRent")); 
+                        product.setqRent(rs.getInt("QRent"));
                         product.setAge(rs.getInt("Age"));
                         product.setBrand(rs.getString("Brand"));
                         product.setOrigin(rs.getString("Origin"));
@@ -180,7 +210,7 @@ public class GetProductDAO {
                         product.setCategory(rs.getString("Category"));
                         product.setType(rs.getInt("Type"));
                         product.setStatus(rs.getString("Status"));
-                        products.add(product); 
+                        products.add(product);
                     }
                 } catch (Exception e) {
                 }
@@ -189,17 +219,20 @@ public class GetProductDAO {
         }
         return products;
     }
-    
-    public List<Product> getSuccessfulProductsByShop(int soid){
+
+    public List<Product> getSuccessfulProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Thành công");
     }
-    public List<Product> getFailedProductsByShop(int soid){
+
+    public List<Product> getFailedProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Thất bại");
     }
-    public List<Product> getPendingProductsByShop(int soid){
+
+    public List<Product> getPendingProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Đang chờ");
     }
-    public List<Product> getFreezeProductsByShop(int soid){
+
+    public List<Product> getFreezeProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Đóng băng");
     }
 }
