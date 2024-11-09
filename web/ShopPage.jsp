@@ -56,7 +56,8 @@
 
             /* Các kiểu dáng mới cho khu vực hiển thị sản phẩm */
             .Show_product {
-                margin-left: 400px; /* Điều chỉnh dựa trên chiều rộng Nav_Bar */
+                margin-left: 370px; /* Điều chỉnh dựa trên chiều rộng Nav_Bar */
+                margin-top: 150px; /* Đẩy phần danh sách sản phẩm xuống dưới */
                 padding: 20px;
             }
             .product-box {
@@ -143,7 +144,7 @@
             </div>
         </div>
 
-        <div class="Show_product">
+        <div class="Show_product" style="margin-left: 370px; margin-top: 150px;">
             <c:forEach var="product" items="${list}">
                 <div class="product-box">
                     <img src="${product.image}" alt="${product.name}">
