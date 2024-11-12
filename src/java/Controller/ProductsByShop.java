@@ -53,7 +53,6 @@ public class ProductsByShop extends HttpServlet {
                     successList.add(s);
                 }
             }
-
             List<Product> failedList = new ArrayList<>();
             List<Product> s2 = getProductDAO.getFailureList();
             for (Product s : s2) {
@@ -75,6 +74,8 @@ public class ProductsByShop extends HttpServlet {
                     freezeList.add(s);
                 }
             }
+            List<Product> fewProduct = new ArrayList<>();
+            fewProduct = getProductDAO.getfewProductsByShop(shop.getSoid());
             
             String status = request.getParameter("txtStatus");
             if (status == null || status.isEmpty()) {
@@ -83,6 +84,9 @@ public class ProductsByShop extends HttpServlet {
             List<Product> list = new ArrayList<>();
             if (status.equals("1")) {
                 list.addAll(successList);
+            }
+            if (status.equals("2")){
+                list.addAll(fewProduct);
             }
             if(status.equals("3")){
                 list.addAll(pendingList);
@@ -95,6 +99,7 @@ public class ProductsByShop extends HttpServlet {
             }
             
             request.setAttribute("list", list);
+            request.setAttribute("ShopOwner", shop);
 
             request.getRequestDispatcher("ShopPage.jsp").forward(request, response);
         } catch (IOException | IllegalStateException | ServletException e) {

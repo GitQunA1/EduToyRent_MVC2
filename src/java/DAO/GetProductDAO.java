@@ -235,4 +235,8 @@ public class GetProductDAO {
     public List<Product> getFreezeProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Đóng băng");
     }
+    
+    public List<Product> getfewProductsByShop(int soid) {
+        return getProductByShopandStatus(soid, "Còn ít");
+    }
 }

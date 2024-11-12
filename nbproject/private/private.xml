@@ -5,11 +5,12 @@
         <group>
             <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/ProductsByShop.java</file>
             <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/ShopPage.jsp</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/EditProfile.jsp</file>
             <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/MainController.java</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/ShopNavigation.jsp</file>
             <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/DAO/GetProductDAO.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/UpdateQuantityProduct.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/DAO/ProductDAO.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/JS/Button_themsoluong.js</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/Shopincome.jsp</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/ProfileCustomer.jsp</file>
         </group>
     </open-files>
 </project-private>

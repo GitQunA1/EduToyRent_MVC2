@@ -86,6 +86,12 @@
                 font-size: 16px;
                 font-weight: bold;
                 color: #333;
+                line-height: 1.3;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .product-details a {
                 display: block;
@@ -124,7 +130,6 @@
     </head>
     <body>
         <%@include file="ShopNavigation.jsp" %>
-
         <div class="Nav_Bar">
             <div class="Search">
                 <form action="MainController" method="post">
@@ -151,13 +156,19 @@
                     <div class="product-details">
                         <p>${product.name}</p>
                         <a>Giá: <fmt:formatNumber value="${product.price}" pattern="#,###"/> đ</a>
+                        <c:if test="${product.qSell >= 1}">
                         <p>Số lượng bán: ${product.qSell}</p>
+                        </c:if>
+                        <c:if test="${product.qRent == 1}">
                         <p>Số lượng thuê: ${product.qRent}</p>
+                        </c:if>
                     </div>
                     <div class="product-actions">
+                        <c:if test = "${ShopOwner.type == 1}">
                         <button onclick="toggleInput(${product.pid})">Thêm số lượng</button>
                         <input type="number" id="quantityInput-${product.pid}" style="display:none;" placeholder="Nhập số lượng" />
                         <button onclick="updateQuantity(${product.pid})" style="display:none;" id="saveBtn-${product.pid}">Lưu</button>
+                        </c:if>
                         <a href="MainController?action=ProductDetails&pid=${product.pid}">Chi tiết</a>
                     </div>
                 </div>

@@ -78,7 +78,6 @@
 
     </head>
     <body>
-
         <div class="backgrount_navigation">
             <div class="button_navigation">
                 <a href="MainController?action=home">
@@ -89,7 +88,7 @@
                         <input type="hidden" value="revenue" name="action"/>
                         <input type="submit" value="Doanh thu"/>
                     </form>
-                    <form action="MainController" method="post">
+                    <form action="MainController?action=OwnerProduct" method="post">
                         <input type="hidden" value="ownerProduct" name="action"/>
                         <input type="submit" value="Sản phẩm"/>
                     </form>
