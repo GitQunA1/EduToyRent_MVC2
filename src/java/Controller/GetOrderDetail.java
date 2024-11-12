@@ -87,10 +87,7 @@ public class GetOrderDetail extends HttpServlet {
                 productIds.add(Detail.getPid());
             }            
             GetProductDAO productDAO = new GetProductDAO();
-            List<Product> product = productDAO.getProductsByIds(productIds);
-            
-            
-            
+            List<Product> product = productDAO.getProductsByIds(productIds);            
             
             request.setAttribute("product", product);
             request.setAttribute("pdetail", pdetail);

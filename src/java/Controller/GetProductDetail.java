@@ -5,10 +5,15 @@
  */
 package Controller;
 
+import DAO.CommentDAO;
 import DAO.GetProductDAO;
 import DAO.GetShopOwner;
 import DAO.HighIncomeToday;
+import DAO.ProfileDAO;
+import Entity.Comment;
+import Entity.Customer;
 import Entity.Product;
+import Entity.Reply;
 import Entity.ShopOwner;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,9 +118,30 @@ public class GetProductDetail extends HttpServlet {
                 request.setAttribute("listproduct", listproduct);
             }
             
+            CommentDAO cd = new CommentDAO();
+            List<Comment> comment = cd.GetComment(pid);
+            ProfileDAO pro = new ProfileDAO();
+            List<Customer> cus = new ArrayList<>();
+            for (Comment c : comment) {
+                if(cus.isEmpty()){
+                    cus.add(pro.ShowCustomer(c.getUid()));
+                }
+                for (Customer cu : cus) {
+                    if(c.getUid()!=cu.getUid()){
+                        cus.add(pro.ShowCustomer(c.getUid()));
+                        break;
+                    }
+                }
+            }
+            
+            List<Reply> reply = cd.GetReply(pid);
+            
             String description = p.getDescription().replace("\n", "<br>").replace("\\n", "<br>");            
             request.setAttribute("description", description);           
             request.setAttribute("productDetail", p);
+            request.setAttribute("comment", comment);
+            request.setAttribute("customerList", cus);
+            request.setAttribute("reply", reply);
             request.getRequestDispatcher("ViewProductPage.jsp").forward(request, response);         
         } catch (Exception e) {
         }

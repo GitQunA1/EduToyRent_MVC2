@@ -53,7 +53,7 @@ public class LoginControllers extends HttpServlet {
                     ss.setAttribute("UserAccount", user);
 
                     ProfileDAO profile = new ProfileDAO();
-                    Customer cus = profile.ShowCustomer(user);
+                    Customer cus = profile.ShowCustomer(user.getUid());
                     HttpSession customer = request.getSession();
                     customer.setAttribute("Customer", cus);
 
