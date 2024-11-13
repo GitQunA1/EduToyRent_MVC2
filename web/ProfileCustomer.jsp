@@ -67,6 +67,7 @@
                 margin-top: 20px;
                 display: flex;
                 justify-content: center;
+                gap: 50px;
             }
             .update-btn button {
                 padding: 10px 20px;
@@ -89,31 +90,32 @@
             <div class="profile">
                 <label style="font-size: 25px">Thông tin cá nhân</label><br>
                 <div class="line"></div>
-                
+
                 <label>Họ và Tên:   </label>
-                <input type="text" name="txtName" value="<%= cus.getName()%>" style="margin-left: 20px"/><br><br>
-                
+                <input type="text"  value="<%= cus.getName()%>" style="margin-left: 20px"/><br><br>
+
                 <label>Giới tính:   </label>
-                <input type="text" name="txtSex" value="<%= cus.getSex()%>" style="margin-left: 29px"><br><br>
-                
+                <input type="text"  value="<%= cus.getSex()%>" style="margin-left: 29px"><br><br>
+
                 <label>Ngày sinh:   </label>
-                <input type="text" name="txtBirthday" value="<fmt:formatDate value="<%= cus.getBirthday()%>" pattern="dd / MM / yyyy"></fmt:formatDate>" style="margin-left: 20px"><br><br>
-                
-                <label>Email:   </label>  
-                <a style="margin-left: 48px"><%= us.getEmail()%></a><br><br>
-                
+                <input type="text"  value="<fmt:formatDate value="<%= cus.getBirthday()%>" pattern="dd / MM / yyyy"></fmt:formatDate>" style="margin-left: 20px"><br><br>
+
+                    <label>Email:   </label>  
+                    <a style="margin-left: 48px"><%= us.getEmail()%></a><br><br>
+
                 <label>SĐT:   </label>
-                <input type="text" name="txtPhone" value="<%= us.getPhone()%>" style="margin-left: 57px"><br><br>
-                
+                <input type="text"  value="<%= us.getPhone()%>" style="margin-left: 57px"><br><br>
+
                 <div class="address">
                     <label style="width: 60px">Địa chỉ:   </label>
-                    <textarea rows="3" name="txtAddress"><%= cus.getAddress()%></textarea>
+                    <textarea rows="3" ><%= cus.getAddress()%></textarea>
                 </div>
-                
+
                 <div class="update-btn">
                     <form action="EditProfile.jsp" method="get">
                         <button type="submit">Cập nhật</button>
                     </form>
+                    <button type="button" class="back-btn" onclick="window.history.back()">Quay lại</button>
                 </div>
             </div>
             <img src="<%= cus.getAvatar()%>">

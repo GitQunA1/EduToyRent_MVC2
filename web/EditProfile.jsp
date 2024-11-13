@@ -15,47 +15,75 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Profile</title>
         <style>
+            body {
+                background-color: #FFFFE0; /* Đổi nền của toàn trang thành xám nhạt */
+                font-family: Arial, sans-serif;
+            }
             .edit-form {
                 width: 500px;
-                margin: 0 auto;
-                padding: 20px;
+                margin: 40px auto;
+                padding: 25px;
                 border: 1px solid #ddd;
                 border-radius: 8px;
-                background-color: #f9f9f9;
+                background-color: #e6e6e6; /* Màu nền cho form chỉnh sửa */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .edit-form h2 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 20px;
             }
             .edit-form label {
                 display: block;
                 margin-top: 10px;
+                color: #555;
+                font-weight: bold;
             }
             .edit-form input, .edit-form textarea {
                 width: 100%;
-                padding: 8px;
+                padding: 10px;
                 margin-top: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
             }
             .button-container {
-                margin-top: 15px;
+                margin-top: 20px;
                 display: flex;
                 justify-content: space-between;
             }
-            .button-container button {
-                padding: 10px 15px;
+            .button-container input[type="submit"],
+            .button-container input[type="button"] {
+                width: 48%;
+                padding: 12px;
                 border: none;
                 border-radius: 5px;
-                background-color: skyblue;
+                background-color: #4CAF50; /* Màu nút Lưu */
                 color: white;
+                font-weight: bold;
                 cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            .button-container input[type="button"] {
+                background-color: #d9534f; /* Màu nút Hủy */
+            }
+            .button-container input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+            .button-container input[type="button"]:hover {
+                background-color: #c9302c;
             }
         </style>
     </head>
     <body>
-        <%  HttpSession sessions = request.getSession();
+        <%  
+            HttpSession sessions = request.getSession();
             User us = (User) sessions.getAttribute("UserAccount");
             Customer cus = (Customer) sessions.getAttribute("Customer");
         %>
 
         <div class="edit-form">
             <h2>Chỉnh sửa Thông tin Cá nhân</h2>
-            <form action="UpdateProfileController" method="post" enctype="multipart/form-data">
+            <form action="MainController" method="get" enctype="multipart/form-data">
                 
                 <label>Họ và Tên:</label>
                 <input type="text" name="txtName" value="<%= cus.getName() %>" required />
@@ -81,12 +109,13 @@
                 <label>Hoặc nhập URL ảnh đại diện:</label>
                 <input type="text" name="txtAvatarUrl" placeholder="Nhập URL ảnh đại diện..." />
 
+                <input type="hidden" name="action" value="UpdateProfile"/>
+
                 <div class="button-container">
-                    <button type="submit">Lưu</button>
-                    <button type="button" onclick="window.location.href='Profile.jsp'">Hủy</button>
+                    <input type="submit" value="Lưu"/>
+                    <input type="button" value="Hủy" onclick="window.history.back()"/>
                 </div>
             </form>
         </div>
     </body>
 </html>
-

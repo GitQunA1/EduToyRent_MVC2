@@ -100,6 +100,9 @@ public class MainController extends HttpServlet {
             case "BackShopPage":
                 url = "ProductsByShop";
                 break;
+            case "UpdateProfile":
+                url = "UpdateProfileCustomer";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
       /*  String action = request.getParameter("action");
