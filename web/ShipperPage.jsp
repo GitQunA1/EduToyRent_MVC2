@@ -58,6 +58,20 @@
             .info2 a{
                 font-size: 10px;
             }
+            .logout-btn-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+            }
+            .logout-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: tomato;
+                color: white;
+                cursor: pointer;
+                font-size: 16px;
+            }
         </style>
     </head>
     <body>
@@ -90,7 +104,7 @@
                                                 <input type="hidden" value="9" name="txtStatusUpdate"/>
                                             </c:if>
                                             <input type="hidden" value="UpdateOrder" name="action"/>
-                                            <input type="submit" value="Nhận đơn"/>
+                                            <input type="submit" value="Đã giao"/>
                                         </form>
                                     </div>
                                 </div>
@@ -100,6 +114,11 @@
                 </c:forEach>
             </div>
         </c:if>
-
+        <div class="logout-btn-container">
+            <form action="MainController" method="post">
+                <button type="submit" class="logout-btn">Logout</button>
+                <input type="hidden" name="action" value="LogoutController"/>
+            </form>
+        </div>
     </body>
 </html>

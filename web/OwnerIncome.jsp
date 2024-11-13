@@ -11,8 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý Sản phẩm</title>
         <style>
-           
-           
+
+
 
             body {
                 background-color: #f2f2f2;
@@ -64,7 +64,7 @@
                 border-radius: 10px;
                 text-align: center;
                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-position: relative;
+                position: relative;
             }
 
             .info-box p {
@@ -225,3 +225,10 @@ position: relative;
                             <div><strong>Doanh thu:</strong> 500,000</div>
                             <div><strong>Số lượng đã bán:</strong> 10</div>
                             <div><strong>Số lượng đã cho thuê:</strong> 8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
