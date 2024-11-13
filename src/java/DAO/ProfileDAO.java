@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -50,5 +52,31 @@ public class ProfileDAO {
         return cus;
 
     }
-
+    
+    public List<Customer> getCustomer(){
+        String sql = "SELECT * FROM [Customer]";
+        List<Customer> cusList = new ArrayList<>();
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    int uid = rs.getInt("UID");
+                    String avatar = rs.getString("Avatar");
+                    String name = rs.getString("Name");
+                    String sex = rs.getString("Sex");
+                    Date birthday = rs.getDate("Birthday");
+                    String address = rs.getString("Address");
+                    int membership = rs.getInt("Membership");
+                    
+                    Customer cus = new Customer(uid, avatar, name, sex, birthday, address, membership);
+                    cusList.add(cus);
+                }
+            }
+            return cusList;
+        } catch (Exception e) {
+        }
+        return cusList;
+    }
 }

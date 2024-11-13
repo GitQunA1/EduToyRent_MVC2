@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,13 +34,12 @@ public class OrderDAO {
         try {
             LocalDateTime currentDateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String formattedDateTime = currentDateTime.format(formatter);
 
             String query = " INSERT INTO [Order] (UID, CreationDate, Price) VALUES (?, ?, ?) ";
             conn = new DBUtils().getConnection();
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, uid);
-            ps.setString(2, formattedDateTime);
+            ps.setTimestamp(2, Timestamp.valueOf(currentDateTime));
             ps.setFloat(3, price);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -189,7 +189,26 @@ public class OrderDAO {
             ps.setInt(1, status);
             ps.setInt(2, odid);
             int rowsAffected = ps.executeUpdate();
-            if(rowsAffected > 0){
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public boolean setRentTime(int odid, int rentTime) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String sql = "UPDATE [Order_Detail] SET DateStart = ?, DateEnd = ? WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setTimestamp(1, Timestamp.valueOf(currentDateTime));
+            ps.setTimestamp(2, Timestamp.valueOf(currentDateTime.plusDays(rentTime)));
+            ps.setInt(3, odid);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
                 return true;
             }
         } catch (Exception e) {

@@ -5,21 +5,33 @@
  */
 package Controller;
 
+import DAO.GetProductDAO;
+import DAO.GetShopOwner;
 import DAO.OrderDAO;
+import DAO.ProfileDAO;
+import Entity.Customer;
+import Entity.Order;
+import Entity.OrderDetail;
+import Entity.Product;
+import Entity.Shipper;
+import Entity.ShopOwner;
+import Entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author HagiLee
  */
-@WebServlet(name = "UpdateOrderDetail", urlPatterns = {"/UpdateOrderDetail"})
-public class UpdateOrderDetail extends HttpServlet {
+@WebServlet(name = "Shipping", urlPatterns = {"/Shipping"})
+public class Shipping extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,24 +46,49 @@ public class UpdateOrderDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession ss = request.getSession();
+            User user = (User) ss.getAttribute("UserAccount");
+//            HttpSession shipperSS = request.getSession();
+//            Shipper sh = (Shipper)shipperSS.getAttribute("Shipper");
+            ProfileDAO prd = new ProfileDAO();
+            List<Customer> cusList = prd.getCustomer();
             OrderDAO od = new OrderDAO();
-            String txtStatus = request.getParameter("txtStatusUpdate");
-            String txtOdid = request.getParameter("txtODID");
-            int status = Integer.parseInt(txtStatus);
-            int odid = Integer.parseInt(txtOdid);
-            if(od.updateOrderDetail(odid, status)){
-                if(status == 3 || status == 9){
-                    if(status == 3){
-                        String txtRentTime = request.getParameter("txtRentTime");
-                        int rentTime = Integer.parseInt(txtRentTime);
-                        if(od.setRentTime(odid, rentTime)){
-                            request.getRequestDispatcher("Shipping").forward(request, response);
-                        }                        
+            List<OrderDetail> allODList = new ArrayList<>();
+            List<Order> allOrderList = new ArrayList<>();
+            for (Customer cus : cusList) {
+                List<OrderDetail> orderDetailList = od.GetOrderByStatus(cus.getUid(), 2);
+                if(!orderDetailList.isEmpty()){
+                    for (OrderDetail o : orderDetailList) {
+                        allODList.add(o);
                     }
-                    request.getRequestDispatcher("Shipping").forward(request, response);
                 }
-                request.getRequestDispatcher("OwnerOrderDetail").forward(request, response);
+                List<Order> orderList = od.getOrder(cus.getUid());
+                if(!orderList.isEmpty()){
+                    allOrderList.addAll(orderList);
+                    for (Order o : orderList) {
+                        allOrderList.add(o);
+                    }
+                }
             }
+            GetShopOwner gso = new GetShopOwner();
+            List<ShopOwner> shopList = gso.getShopList();
+            
+            GetProductDAO gpd = new GetProductDAO();
+            List<Product> ProductOrdered = new ArrayList<>();
+            for (Product p : gpd.getSuccessList()) {
+                for (OrderDetail d : allODList) {
+                    if (p.getPid() == d.getPid()) {
+                        ProductOrdered.add(p);
+                        break;
+                    }
+                }
+            }
+            request.setAttribute("cusList", cusList);
+            request.setAttribute("allODList", allODList);
+            request.setAttribute("allOrderList", allOrderList);
+            request.setAttribute("shopList", shopList);
+            request.setAttribute("ProuductOrdered", ProductOrdered);
+            request.getRequestDispatcher("ShipperPage.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

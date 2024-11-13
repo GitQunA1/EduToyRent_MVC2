@@ -73,11 +73,6 @@
                 padding-top: 10px;
                 position: relative;
             }
-            .detail{
-                position: absolute;
-                bottom: 125px;
-                margin-left: 980px;
-            }
             .info1 img{
                 width: 120px;
                 height: 120px;
@@ -117,6 +112,11 @@
             .info3 input{
                 width: 75px;
                 height: 30px;
+            }
+            .detail{
+                position: absolute;
+                bottom: 125px;
+                margin-left: 980px;
             }
         </style>
     </head>
@@ -189,6 +189,7 @@
                                             <input type="hidden" value="8" name="txtStatusUpdate">
                                             <input type="hidden" value="UpdateOrder" name="action"/>
                                             <input type="submit" value="Hủy đơn"/>
+                                        </form>
                                     </div>
                                 </c:if>
                                 <a class="detail" href="">Chi tiết</a>

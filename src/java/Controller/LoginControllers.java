@@ -5,11 +5,13 @@
  */
 package Controller;
 
+import DAO.GetShipperDAO;
 import DAO.GetShopOwner;
 import Entity.ShopOwner;
 import DAO.LoginDAO;
 import DAO.ProfileDAO;
 import Entity.Customer;
+import Entity.Shipper;
 import Entity.User;
 import java.io.IOException;
 import java.util.List;
@@ -73,8 +75,19 @@ public class LoginControllers extends HttpServlet {
                             shopOwnerSession.setAttribute("ShopOwner", sa);
                         }
                         request.getRequestDispatcher("OwnerIncome.jsp").forward(request, response);
-                    } else if (user.getRole().equals("S")) {
-
+                    } else if (user.getRole().equals("SH")) {
+//                        GetShipperDAO shipper = new GetShipperDAO();
+//                        List<Shipper> shipperList = shipper.getShipperList();
+//                        Shipper ship = new Shipper();
+//                        for (Shipper sh : shipperList) {
+//                            if(sh.getUid() == cus.getUid())
+//                                ship = sh;
+//                        }
+//                        if(ship != null){
+//                            HttpSession Shipper = request.getSession();
+//                            Shipper.setAttribute("Shipper", ship);
+//                        }
+                        request.getRequestDispatcher("Shipping").forward(request, response);
                     }
 
                 } else {

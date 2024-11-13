@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +33,6 @@ public class PaymentDAO {
         try {
             LocalDateTime currentDateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String formattedDateTime = currentDateTime.format(formatter);
 
             String query = " INSERT INTO [Payment] (OID, Amount, points, Method, Date) VALUES (?, ?, ?, ?, ?) ";
             conn = new DBUtils().getConnection();
@@ -41,7 +41,7 @@ public class PaymentDAO {
             ps.setFloat(2, price);
             ps.setFloat(3, point);
             ps.setString(4, method);
-            ps.setString(5, formattedDateTime);
+            ps.setTimestamp(5, Timestamp.valueOf(currentDateTime));
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
@@ -74,7 +74,7 @@ public class PaymentDAO {
                 ps.setInt(2, odid);
                 ps.setFloat(3, c.getTotal());
                 ps.setFloat(4, deposit);
-                ps.setString(5, formattedDateTime);
+                ps.setTimestamp(5, Timestamp.valueOf(currentDateTime));
                 ps.setString(6, status);
                 ps.executeUpdate();
             } catch (Exception e) {
