@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,5 +79,54 @@ public class ProfileDAO {
         } catch (Exception e) {
         }
         return cusList;
+    }
+    
+    public User ShowUser(int uid) {
+        String sql = "SELECT * FROM [User] Where UID = ?";
+        User u = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, uid);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    int Uid = rs.getInt("UID");
+                    String email = rs.getString("Email");
+                    String phone = rs.getString("Phone");
+                    String pass = rs.getString("Password");
+                    String role = rs.getString("Role");
+                    u = new User(Uid, email, phone, pass, role);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return u;
+    }
+
+    public int updateProfileCustomer(int uid, String avatar, String name, String sex, Date birthday, String address)
+            throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE [Customer] SET [Avatar] = ?, [Name] = ?, [Sex] = ?, [Birthday] = ?, [Address] = ? WHERE [UID] = ?";
+        try (Connection con = DB.DBUtils.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, avatar);
+            ps.setString(2, name);
+            ps.setString(3, sex);
+            ps.setDate(4, birthday);
+            ps.setString(5, address);
+            ps.setInt(6, uid);
+
+            return ps.executeUpdate();
+        }
+    }
+    
+    public void updatePhone(int uid, String phone)
+            throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE [User] SET [Phone] = ? WHERE [UID] = ?";
+        try (Connection con = DB.DBUtils.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, phone);
+            ps.setInt(2, uid);
+
+            ps.executeUpdate();
+        }
     }
 }

@@ -83,7 +83,7 @@ public class MainController extends HttpServlet {
                 url = "OwnerIncome.jsp";
                 break;
             case "ownerProduct":
-                url = "OwnerProduct.jsp";
+                url = "ProductsByShop";
                 break;
             case "ownerOrder":
                 url = "OwnerOrderDetail";
@@ -96,6 +96,15 @@ public class MainController extends HttpServlet {
                 break;
             case "ViewShop":
                 url = "ViewProducShop";
+                break;
+            case "BackShopPage":
+                url = "ProductsByShop";
+                break;
+            case "UpdateProfile":
+                url = "UpdateProfileCustomer";
+                break;
+            case "LogoutController":
+                url = "LogoutController";
                 break;
         }
         request.getRequestDispatcher(url).forward(request, response);

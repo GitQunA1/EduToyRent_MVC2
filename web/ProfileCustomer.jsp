@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ProfileCustomer
-    Created on : Oct 26, 2024, 4:09:51 PM
-    Author     : Quyền
---%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Entity.Customer"%>
@@ -13,10 +7,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-
+        <title>Profile Page</title>
         <style>
-            .background{
+            /* CSS của trang */
+            .background {
                 margin-top: 200px;
                 position: absolute;
                 height: 400px;
@@ -25,59 +19,81 @@
                 left: 50%;
                 transform: translateX(-50%);
             }
-            .background img{
+            .background img {
                 margin-left: 66.8%;
                 margin-top: 50px;
                 height: 300px;
                 width: 300px;
             }
-            .profile{
+            .profile {
                 position: absolute;
                 margin-top: 30px;
                 margin-left: 30px;
-                padding-top: 20px;
-                padding-left:  50px;
-                padding-right:  50px;
-                padding-bottom: 50px;
-                border:  solid skyblue; 
-                border-radius: 10px; 
-                background-color: rgba(255, 255, 255, 0.1); 
+                padding: 20px 50px;
+                border: solid skyblue;
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.1);
                 display: inline-block;
-                z-index: 20;    
                 width: 500px;
-                height: 265px;
+                height: 320px;
             }
-            .line{
+            .line {
                 height: 2px;
                 width: 500px;
                 background-color: black;
                 margin-top: 10px;
                 margin-bottom: 20px;
             }
-            
-            .profile input{
+            .profile input {
                 background-color: transparent;
                 outline: none;
                 width: 300px;
-                text-decoration : underline;
+                text-decoration: underline;
                 border: none;
             }
-            .profile textArea{
+            .profile textarea {
                 width: 400px;
                 resize: none;
-                margin-left: 35px;
                 background-color: transparent;
                 outline: none;
                 border: none;
-                text-decoration : underline;
+                text-decoration: underline;
             }
-            .address{
+            .address {
                 display: flex;
                 align-items: flex-start;
             }
-
+            .update-btn {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 50px;
+            }
+            .update-btn button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: skyblue;
+                color: white;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            /* Logout button styling */
+            .logout-btn-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+            }
+            .logout-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: tomato;
+                color: white;
+                cursor: pointer;
+                font-size: 16px;
+            }
         </style>
-
     </head>
     <body>
         <%  HttpSession sessions = request.getSession();
@@ -86,30 +102,46 @@
         %>
         <%@include file="UserNavigation.jsp" %>
         <div class="background">
-            
-        <div class="profile">
-            <label style="font-size: 25px">Thông tin cá nhân</label><br>
-            <div class="line"></div>
-            <label>Họ và Tên:   </label>
-            <input type="text" name="txtName" value="<%= cus.getName()%>" style="margin-left: 20px"/><br><br>
-            <label>Giới tính:   </label>
-            <input type="text" name="txtSex" value="<%= cus.getSex()%>" style="margin-left: 29px"><br><br>
-            <label>Ngày sinh:   </label>
-            <input type="text" name="txtBirthday" value="<fmt:formatDate value="<%= cus.getBirthday()%>" pattern="dd / MM / yyyy "></fmt:formatDate>" style="margin-left: 20px"></a><br><br>
-            <label>Email:   </label>  
-            <a style="margin-left: 48px"><%= us.getEmail()%></a><br><br>
-            <label>SĐT:   </label>
-            <input type="text" name="txtPhone" value="<%= us.getPhone()%>" style="margin-left: 57px"></a><br><br>
-            <div class="address">
-                <label style="width: 60px">Địa chỉ:   </label>
-            <textarea rows="3" name="txtAddress"><%= cus.getAddress()%></textarea>
+            <div class="profile">
+                <label style="font-size: 25px">Thông tin cá nhân</label><br>
+                <div class="line"></div>
+
+                <label>Họ và Tên:   </label>
+                <input type="text"  value="<%= cus.getName()%>" style="margin-left: 20px"/><br><br>
+
+                <label>Giới tính:   </label>
+                <input type="text"  value="<%= cus.getSex()%>" style="margin-left: 29px"><br><br>
+
+                <label>Ngày sinh:   </label>
+                <input type="text"  value="<fmt:formatDate value="<%= cus.getBirthday()%>" pattern="dd / MM / yyyy"></fmt:formatDate>" style="margin-left: 20px"><br><br>
+
+                    <label>Email:   </label>  
+                    <a style="margin-left: 48px"><%= us.getEmail()%></a><br><br>
+
+                <label>SĐT:   </label>
+                <input type="text"  value="<%= us.getPhone()%>" style="margin-left: 57px"><br><br>
+
+                <div class="address">
+                    <label style="width: 60px">Địa chỉ:   </label>
+                    <textarea rows="3" ><%= cus.getAddress()%></textarea>
+                </div>
+
+                <div class="update-btn">
+                    <form action="EditProfile.jsp" method="get">
+                        <button type="submit">Cập nhật</button>
+                    </form>
+                    <button type="button" class="back-btn" onclick="window.history.back()">Quay lại</button>
+                </div>
             </div>
-        </div> 
-        <img src="<%= cus.getAvatar()%>">
+            <img src="<%= cus.getAvatar()%>">
         </div>
         
-
-
-
+        <!-- Logout button at bottom right -->
+        <div class="logout-btn-container">
+            <form action="MainController" method="post">
+                <button type="submit" class="logout-btn">Logout</button>
+                <input type="hidden" name="action" value="LogoutController"/>
+            </form>
+        </div>
     </body>
 </html>
