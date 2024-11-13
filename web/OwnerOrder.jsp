@@ -142,15 +142,15 @@
                    class="${empty param.txtStatus || param.txtStatus == '1' ? 'active-feature' : ''}">Chờ xử lý</a>
                 <a href="MainController?action=ownerOrder&txtStatus=2&txtOption=0" 
                    class="${param.txtStatus == '2' ? 'active-feature' : ''}">Đang giao</a>
-                <a href="MainController?action=ownerOrder&txtStatus=3&txtOption=1" 
+                <a href="MainController?action=ownerOrder&txtStatus=3&txtOption=2" 
                    class="${param.txtStatus == '3' ? 'active-feature' : ''}">Đang cho thuê (T)</a>
-                <a href="MainController?action=ownerOrder&txtStatus=4&txtOption=1" 
+                <a href="MainController?action=ownerOrder&txtStatus=4&txtOption=2" 
                    class="${param.txtStatus == '4' ? 'active-feature' : ''}">Hoàn tất thuê (T)</a>
-                <a href="MainController?action=ownerOrder&txtStatus=5&txtOption=1" 
+                <a href="MainController?action=ownerOrder&txtStatus=5&txtOption=2" 
                    class="${param.txtStatus == '5' ? 'active-feature' : ''}">Trả thành công (T)</a>
-                <a href="MainController?action=ownerOrder&txtStatus=6&txtOption=1" 
+                <a href="MainController?action=ownerOrder&txtStatus=6&txtOption=2" 
                    class="${param.txtStatus == '6' ? 'active-feature' : ''}">Xử lý thanh toán (T)</a>
-                <a href="MainController?action=ownerOrder&txtStatus=7&txtOption=2" 
+                <a href="MainController?action=ownerOrder&txtStatus=7&txtOption=1" 
                    class="${param.txtStatus == '7' ? 'active-feature' : ''}">Trả hàng (B)</a>
                 <a href="MainController?action=ownerOrder&txtStatus=8&txtOption=0" 
                    class="${param.txtStatus == '8' ? 'active-feature' : ''}">Đơn hàng hủy</a>
