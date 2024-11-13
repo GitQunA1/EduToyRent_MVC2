@@ -206,7 +206,7 @@ public class OrderDAO {
             conn = new DBUtils().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setTimestamp(1, Timestamp.valueOf(currentDateTime));
-            ps.setTimestamp(2, Timestamp.valueOf(currentDateTime.minusDays(rentTime)));
+            ps.setTimestamp(2, Timestamp.valueOf(currentDateTime.plusDays(rentTime)));
             ps.setInt(3, odid);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
