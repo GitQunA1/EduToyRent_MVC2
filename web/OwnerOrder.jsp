@@ -173,7 +173,10 @@
                                 </div>
                                 <div class="info2">
                                     <p>${product.name}</p><br>
-                                    <a>Số lượng: ${OwnerODID.quantity}</a>
+                                    <a>Số lượng: ${OwnerODID.quantity}</a><br>
+                                    <c:if test="${OwnerODID.rentTime > 0}">
+                                        <a>Thời gian thuê: ${OwnerODID.rentTime} ngày</a>
+                                    </c:if>
                                 </div>
                                 <c:if test="${OwnerODID.status == 1}">
                                     <div class="info3">

@@ -91,20 +91,36 @@
                                     </div>
                                     <div class="info2">
                                         <p>${product.name}</p><br>
-                                        <a>Số lượng: ${OwnerODID.quantity}</a>
+                                        <a>Số lượng: ${OwnerODID.quantity}</a><br>
+                                        <c:if test="${OwnerODID.rentTime > 0}">
+                                            <a>Thời gian thuê: ${OwnerODID.rentTime} ngày</a>
+                                        </c:if>
                                     </div>
                                     <div class="info3">
                                         <form action="MainController" method="post">
                                             <input type="hidden" value="${OwnerODID.odid}" name="txtODID"/>
                                             <c:if test="${OwnerODID.rentTime > 0}">
-                                                <input type="hidden" value="3" name="txtStatusUpdate"/>
-                                                <input type="hidden" value="${OwnerODID.rentTime}" name="txtRentTime"/>
+                                                <c:if test="${not empty OwnerODID.dateEnd && OwnerODID.status == 3}">
+                                                    <input type="hidden" value="4" name="txtStatusUpdate"/>
+                                                    <input type="submit" value="Đã nhận"/>
+                                                </c:if>
+                                                <c:if test="${not empty OwnerODID.dateEnd && OwnerODID.status == 4}">
+                                                    <input type="hidden" value="5" name="txtStatusUpdate"/>
+                                                    <input type="submit" value="Đã hoàn trả"/>
+                                                </c:if>
+                                                <c:if test="${empty OwnerODID.dateEnd}">
+                                                    <input type="hidden" value="3" name="txtStatusUpdate"/>
+                                                    <input type="hidden" value="${OwnerODID.rentTime}" name="txtRentTime"/>
+                                                    <input type="submit" value="Đã giao"/>
+                                                </c:if>
                                             </c:if>
+
                                             <c:if test="${OwnerODID.rentTime == 0}">
                                                 <input type="hidden" value="9" name="txtStatusUpdate"/>
+                                                <input type="submit" value="Đã giao"/>
                                             </c:if>
                                             <input type="hidden" value="UpdateOrder" name="action"/>
-                                            <input type="submit" value="Đã giao"/>
+                                            
                                         </form>
                                     </div>
                                 </div>
@@ -116,7 +132,7 @@
         </c:if>
         <div class="logout-btn-container">
             <form action="MainController" method="post">
-                <button type="submit" class="logout-btn">Logout</button>
+                <button type="submit" class="logout-btn">Đăng xuất</button>
                 <input type="hidden" name="action" value="LogoutController"/>
             </form>
         </div>

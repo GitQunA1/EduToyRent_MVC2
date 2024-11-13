@@ -17,6 +17,8 @@ import Entity.Shipper;
 import Entity.ShopOwner;
 import Entity.User;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -57,9 +59,26 @@ public class Shipping extends HttpServlet {
             List<Order> allOrderList = new ArrayList<>();
             for (Customer cus : cusList) {
                 List<OrderDetail> orderDetailList = od.GetOrderByStatus(cus.getUid(), 2);
+                List<OrderDetail> orderDetailList2 = od.GetOrderByStatus(cus.getUid(), 3);
+                List<OrderDetail> orderDetailList3 = od.GetOrderByStatus(cus.getUid(), 4);
+                if(!orderDetailList3.isEmpty()){
+                    for (OrderDetail o : orderDetailList3) {
+                        orderDetailList2.add(o);
+                    }
+                }
                 if(!orderDetailList.isEmpty()){
                     for (OrderDetail o : orderDetailList) {
                         allODList.add(o);
+                    }
+                }
+                if(!orderDetailList2.isEmpty()){
+                    for (OrderDetail o : orderDetailList2) {
+                        LocalDateTime currentDateTime = LocalDateTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        String current = currentDateTime.format(formatter);
+                        if(current.compareTo(o.getDateEnd())>0){
+                            allODList.add(o);
+                        }
                     }
                 }
                 List<Order> orderList = od.getOrder(cus.getUid());

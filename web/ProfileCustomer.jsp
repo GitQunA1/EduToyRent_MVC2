@@ -139,7 +139,7 @@
         <!-- Logout button at bottom right -->
         <div class="logout-btn-container">
             <form action="MainController" method="post">
-                <button type="submit" class="logout-btn">Logout</button>
+                <button type="submit" class="logout-btn">Đăng xuất</button>
                 <input type="hidden" name="action" value="LogoutController"/>
             </form>
         </div>
