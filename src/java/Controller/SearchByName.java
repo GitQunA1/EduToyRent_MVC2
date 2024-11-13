@@ -5,11 +5,9 @@
  */
 package Controller;
 
-import DAO.GetProductDAO;
 import DAO.SearchProduct;
 import Entity.Product;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,36 +33,46 @@ public class SearchByName extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
-        try{
-            /* TODO output your page here. You may use following sample code. */
-
-            
-            
-            // nameList
-            request.setCharacterEncoding("utf-8");
-            SearchProduct seP = new SearchProduct();
+        try {
+            request.setCharacterEncoding("UTF-8");
+            int qRent = 0;
+            int qSell = 0;
+            int qStype = 0;
+  
+            try {
+                qRent = Integer.parseInt(request.getParameter("txtQRent"));
+                qSell = Integer.parseInt(request.getParameter("txtQSell"));
+                qStype = Integer.parseInt(request.getParameter("txtStype"));
+            } catch (NumberFormatException e) {
+                request.setAttribute("error", "ParseInt fail");
+            }
             
             String txtName = request.getParameter("txtSearch");
-            GetProductDAO product = new GetProductDAO();
-            
-            List<Product> pro = product.getSuccessList();
-            List<Product> prod = new ArrayList<>();
-            
-            for (Product product1 : pro) {
-                if (product1.getName().toLowerCase().contains(txtName.toLowerCase())) {
-                    prod.add(product1);
-                }
+            if (txtName != null) {
+                txtName = txtName.trim().toLowerCase();
+                 System.out.println("txtName: " + txtName);
+            } else {
+                txtName = "";
             }
-
-                
-                
-              //  String name = request.getParameter("txtSearch").trim();
-              //  List<Product> SearchByName = seP.SearchByName(name);
-                request.setAttribute("ProductSearch", prod);
-                request.getRequestDispatcher("SearchProductPage.jsp").forward(request, response);
-        } catch (Exception e) {
             
+          //  request.setAttribute("txtName", txtName);
+          //  request.getRequestDispatcher("testJSP.jsp").forward(request, response);
+            
+            SearchProduct search = new SearchProduct();
+            List<Product> searchResults = search.SearchByName(txtName, qRent, qSell, qStype); 
+
+            request.setAttribute("ProductSearch", searchResults);
+
+            request.setAttribute("qRent", qRent);
+            request.setAttribute("qSell", qSell);
+            request.setAttribute("qStype", qStype);
+
+            request.getRequestDispatcher("SearchProductPage.jsp").forward(request, response);
+
+        } catch (Exception e) {
+
         }
     }
 
@@ -107,4 +115,7 @@ public class SearchByName extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
 }
+
+

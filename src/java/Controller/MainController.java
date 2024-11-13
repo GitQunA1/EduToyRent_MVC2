@@ -91,6 +91,12 @@ public class MainController extends HttpServlet {
             case "UpdateOrder":
                 url = "UpdateOrderDetail";
                 break;
+            case "letProfile":
+                url = "ProfileCustomer.jsp";
+                break;
+            case "ViewShop":
+                url = "ViewProducShop";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 

@@ -26,7 +26,7 @@
                 height: 500px;
                 display: flex;
                 margin-bottom: 20px;
-                margin-top: 130px;
+                margin-top: 10px;
             }
             .Advertising_Content{
                 background-color: white;
@@ -258,7 +258,7 @@
             .body_buy_product{
                 position: absolute;
                 bottom: 70px; 
-               
+
             }
             .duration-button {
                 margin: 5px; 
@@ -307,7 +307,7 @@
             .Notification{
                 position: absolute;
                 bottom: 110px;
-                margin-left: 145px;
+                margin-left: 135px;
                 font-size: 17px;
             }
             .buyOrRent{
@@ -319,12 +319,171 @@
                 margin-top: 15px;
                 margin-left: 1000px;
             }
+            .background_comment {
+                height: auto;
+                background-color: white;
+                margin-left: 70px;
+                margin-right: 70px;
+                border-radius: 10px;                                              
+                margin-top: 10px;
+                margin-bottom: 20px;
+                border-radius: 10px;
+                padding-top: 10px;
+                padding-bottom: 20px;
+            }
+
+            .comment {
+                background-color: #efefef;
+                width: 90%;
+                max-width: 975px;
+                margin: 0 auto;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 10px;
+                
+            }
+
+            .user_comment {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+                position: relative;
+            }
+
+             .user_comment{
+                display: flex;
+                position: relative;
+            }
+             .user_comment img{
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                margin-left: 10px;
+                margin-top: 5px;
+            }
+            .user_comment a{
+                position: absolute;
+                margin-left: 60px;
+                padding-right: 290px;
+                
+            }
+            .user_comment p{
+                margin-left: 760px;
+                text-transform: uppercase;
+                bottom: 5px;
+                position: absolute;
+                bottom: -17px;
+            }
+
+            .background_content_comment {
+                background-color: white;
+                border: 1px solid #ccc;
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+
+            .satisfaction {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: bold;
+                color: #444;
+            }
+
+            .content_comment_user {
+                display: block;
+                margin-bottom: 15px;
+                padding-right: 30px;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                font-size: 15px;
+                color: #333;
+                margin-left: 20px;
+            }
+
+            .img_comment {
+                width: 100px;
+                height: 100px;
+                border-radius: 8px;
+                margin-top: 10px;
+                margin-left: 20px;
+            }
+
+            .line_comment {
+                background-color: #D3D3D3;
+                width: 100%;
+                height: 1px;
+                margin: 15px 0;
+            }
+
+            .shop_satisfaction {
+                color: #888;
+                font-size: 14px;
+                display: block;
+                margin-left: 45px;
+                margin-top: -30px;
+                margin-right: 290px;
+            }
+            .Comment_frame{
+                overflow-y: auto;
+                background-color: white;
+                margin-left: 70px;
+                margin-right: 70px;
+                border-radius: 10px;                                              
+                margin-top: 10px;
+                border-radius: 10px;               
+                scrollbar-width: none; 
+                -ms-overflow-style: none;
+                 max-height: 2000px;
+                margin-bottom: 20px;
+            }
+            .background_comment h3{
+                margin-left: 30px;
+            }
+            .shop_comment_img{
+                width: 25px;
+                height: 25px;
+                border-radius: 20px;
+                margin-left: 10px;
+               
+            }
+            .content_comment_shop{
+                color: #888;
+                font-size: 14px;
+                display: block;
+                margin-left: 60px;
+                margin-top: 20px;
+            }
+            .time_comment_shop{
+                color: #888;
+                font-size: 14px;
+                display: block;
+                margin-top: -16px;
+                margin-left: 750px;
+            }
+            .history_page{
+                background-color: #E0E0E0;
+                width: 100%;
+                height: 25px;
+                margin-top: 120px;
+                margin-bottom: 10px;
+            }
+            .history_page a{
+                margin-left: 70px;
+            }
+            .history_page a:hover{
+                cursor: pointer;
+            }
         </style>
 
     </head>
     <body>
         <%@include file="UserNavigation.jsp" %>
-
+        <div class="history_page">
+                    <a onclick="window.history.back()">Quay lại trang trước đó</a>
+        </div>
+        
         <div class="Advertising">
             <div class="img_product">
                 <img  src="${productDetail.image}"/>  
@@ -347,9 +506,9 @@
                                         <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
                                             <a>Số lượng:</a>
 
-                                            <button type="button" class="quantity-btn" onclick="decreaseQuantityRent()">-</button>
-                                            <input type="text" id="quantityRent" value="1" name="txtQuantity" readonly>
-                                            <button type="button" class="quantity-btn" onclick="increaseQuantityRent()">+</button>
+                                            
+                                            <input type="text"  value="1" name="txtQuantity" readonly>
+                                            
                                             <input type="hidden" value="${productDetail.price}" name="txtPrice">
                                         <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
                                         <input type="hidden" id="selectedDuration" name="selectedDuration" value="7"> 
@@ -399,88 +558,114 @@
             </p>
         </div>
 
-                <div class="detail_shop_product">
-                    <c:choose>
-                        <c:when test="${productDetail.qSell > 0 and productDetail.type == 1}">
-                            <div class="shop_owner">
-                                <div class="shop_owner_Content">
+        <div class="detail_shop_product">
+            <c:choose>
+                <c:when test="${productDetail.qSell > 0 and productDetail.type == 1}">
+                    <div class="shop_owner">
+                        <div class="shop_owner_Content">
 
-                                    <img src="<c:out value="${shop.avatar}"></c:out>" />
-                                    <a><c:out value="${shop.name}"></c:out></a>
-                                    <c:set var="soid" value="${shop.soid}"></c:set>
-                                        <form action="MainController" method="post">
-                                            <input type="hidden" value="${soid}" name="txtSOID"/>
-                                        <input type="hidden" value="Access" name="action"/>
-                                        <input type="submit" value="Truy cập"/>
-                                    </form>
-                                </div>                        
-                                <div class="line"></div>
+                            <img src="<c:out value="${shop.avatar}"></c:out>" />
+                            <a><c:out value="${shop.name}"></c:out></a>
+                            <c:set var="soid" value="${shop.soid}"></c:set>
+                                
+                        </div>                        
+                        <div class="line"></div>
 
-                            </div>
+                    </div>
 
-                            <div class="Shop_information_product">
-                                <div class="Shop_Product_content">
-                                    <p>Top sản phẩm bán chạy trong ngày</p>
-                                    <a href="MainController?action=Access&txtSOID=${soid}">Xem thêm sản phẩm từ shop</a>
+                    <div class="Shop_information_product">
+                        <div class="Shop_Product_content">
+                            <p>Top sản phẩm bán chạy trong ngày</p>
+                            <a href="MainController?action=ViewShop&txtSOID=${soid}">Xem thêm sản phẩm từ shop</a>
+                        </div>
+                        <div class="Show_product">
+                            <c:forEach var="procuct" items="${highIncList}">
+                                <div class="product-box">
+                                    <a href="MainController?txtPID=${procuct.pid}&action=viewProduct">
+                                        <img src="${procuct.image}"/>
+                                        <p>${procuct.name}</p>
+                                        <a>Giá: <fmt:formatNumber value="${procuct.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                                        </a>
+                                        
                                 </div>
-                                <div class="Show_product">
-                                    <c:forEach var="procuct" items="${highIncList}">
-                                        <div class="product-box">
-                                            <a href="MainController?txtPID=${procuct.pid}&action=viewProduct">
-                                                <img src="${procuct.image}"/>
-                                                <p>${procuct.name}</p>
-                                                <a>Giá: <fmt:formatNumber value="${procuct.price}" pattern="#,###"></fmt:formatNumber> đ </a>
-                                                </a>
-                                                <form action="MainController" method="post">
-                                                    <input type="hidden" value="${procuct.pid}" name="txtPID"/>   
-                                                <input type="hidden" value="AddCart" name="action"/>
-                                                <input type="submit" value="Thêm vào giỏ hàng" />
-                                            </form>
-                                        </div>
-                                    </c:forEach>  
+                            </c:forEach>  
+                        </div>
+                    </div> 
+                </c:when>
+                <c:otherwise>
+
+                    <div class="Shop_information_product">
+                        <div class="buyOrRent">
+                            <p>Sản phẩm liên quan</p>
+                            <c:if test="${productDetail.qSell == 1 and productDetail.type == 2}">
+                                <a  href="MainController?action=ProductFilter&txtOption=2">Xem thêm sản phẩm</a>
+                            </c:if>
+                            <c:if test="${productDetail.qRent == 1 and productDetail.type == 2}">
+                                <a  href="MainController?action=ProductFilter&txtOption=1">Xem thêm sản phẩm</a>
+                            </c:if>
+                        </div>
+                        <div class="Show_product">
+                            <c:forEach var="procuctcus" items="${listproduct}">
+                                <div class="product-box">
+                                    <a href="MainController?txtPID=${procuctcus.pid}&action=viewProduct">
+                                        <img src="${procuctcus.image}"/>
+                                        <p>${procuctcus.name}</p>
+                                        <a>Giá: <fmt:formatNumber value="${procuctcus.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                                    </a>
                                 </div>
-                            </div> 
-                        </c:when>
-                        <c:otherwise>
-                            
-                            <div class="Shop_information_product">
-                                <div class="buyOrRent">
-                                    <p>Sản phẩm liên quan</p>
-                                    <c:if test="${productDetail.qSell == 1 and productDetail.type == 2}">
-                                        <a  href="MainController?action=ProductFilter&txtOption=2">Xem thêm sản phẩm</a>
-                                    </c:if>
-                                    <c:if test="${productDetail.qRent == 1 and productDetail.type == 2}">
-                                        <a  href="MainController?action=ProductFilter&txtOption=1">Xem thêm sản phẩm</a>
-                                    </c:if>
-                                </div>
-                                <div class="Show_product">
-                                    <c:forEach var="procuctcus" items="${listproduct}">
-                                        <div class="product-box">
-                                            
-                                            <a href="MainController?txtPID=${procuctcus.pid}&action=viewProduct">
-                                                <img src="${procuctcus.image}"/>
-                                                <p>${procuctcus.name}</p>
-                                                <a>Giá: <fmt:formatNumber value="${procuctcus.price}" pattern="#,###"></fmt:formatNumber> đ </a>
-                                                </a>
-                                                <form action="MainController" method="post">
-                                                    <input type="hidden" value="${procuctcus.pid}" name="txtPID"/>   
-                                                <input type="hidden" value="AddCart" name="action"/>
-                                                <input type="submit" value="Thêm vào giỏ hàng" />
-                                            </form>
-                                        </div>
-                                    </c:forEach>  
-                                </div>
-                            </div> 
-                        </c:otherwise>
-                    </c:choose>
-
-
-
-
-                
-            
+                            </c:forEach>  
+                        </div>
+                    </div> 
+                </c:otherwise>
+            </c:choose>        
         </div>
 
+
+        <div class="background_comment">
+            <h3>Khách hàng đánh giá</h3>
+            <c:choose>
+                <c:when test="${ not empty comment}">
+                    <div class="Comment_frame">
+                        <c:forEach var="comment" items="${comment}">
+                            <div class="comment">
+                                <div class="user_comment">
+                                    <c:forEach var="custom" items="${customerList}">
+                                        <c:if test="${comment.uid == custom.uid}">
+                                            <img src="${custom.avatar}" />
+                                            <a>${custom.name}</a>
+                                        </c:if>
+                                    </c:forEach>
+                                    <p><fmt:formatDate value="${comment.date}" pattern="dd-MM-yyyy HH:mm:ss"></fmt:formatDate></p>
+                                    </div>
+                                    <div class="background_content_comment">
+                                        <a class="satisfaction">Độ hài lòng: ${comment.satisfaction}</a>
+                                    <a class="content_comment_user">${comment.comment}</a>
+                                    <c:if test="${ not empty comment.image}">
+                                        <img class="img_comment" src="${comment.image}" />
+                                    </c:if>
+                                    <div class="line_comment" ></div>
+
+                                    <img class="shop_comment_img" src="${shop.avatar}"/>
+                                    <a class="shop_satisfaction">${shop.name} đã trả lời</a>
+                                    <c:forEach var="rep" items="${reply}">
+                                        <c:if test="${comment.cid == rep.cid}">
+                                            <a class="time_comment_shop"><fmt:formatDate value="${reply.date}" pattern="dd-MM-yyyy HH:mm:ss"></fmt:formatDate></a>
+                                            <a class="content_comment_shop">${rep.comment}</a>
+                                        </c:if>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <a style="justify-content: center; text-align: center;display: flex;">Sản phẩm chưa có đánh giá nào!</a>
+                </c:otherwise>
+            </c:choose>
+        </div> 
+            
+        
+        <%@include file="HeaderPage.jsp" %>
         <script src="JS/ViewAndUpdate.js"></script> 
         <script src="JS/TimeRent.js"></script> 
     </body>

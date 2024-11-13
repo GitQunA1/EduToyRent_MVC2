@@ -135,10 +135,10 @@
             <a href="MainController?filter=pending&action=InformationOrder&txtcontent=1">Chờ vận chuyển</a>
             <a href="MainController?filter=shipping&action=InformationOrder&txtcontent=2">Đang vận chuyển</a>
             <a href="MainController?filter=rented&action=InformationOrder&txtcontent=3">Đang thuê</a>
-            <a href="MainController?filter=review&action=InformationOrder&txtcontent=4">Cần đánh giá</a>
-            <a href="MainController?filter=return&action=InformationOrder&txtcontent=5">Trả hàng</a>
-            <a href="MainController?filter=canceled&action=InformationOrder&txtcontent=6">Hủy đơn</a>
-            <a href="MainController?filter=history&action=InformationOrder&txtcontent=7">Lịch sử</a>
+            <a href="MainController?filter=review&action=InformationOrder&txtcontent=9">Cần đánh giá</a>
+            <a href="MainController?filter=return&action=InformationOrder&txtcontent=4">Trả hàng</a>
+            <a href="MainController?filter=canceled&action=InformationOrder&txtcontent=7">Hủy đơn</a>
+            <a href="MainController?filter=history&action=InformationOrder&txtcontent=10">Lịch sử</a>
         </div>
         
          <c:choose>
@@ -161,9 +161,9 @@
                                                                 <c:when test="${od.status == 1}">Chờ vận chuyển</c:when>
                                                                 <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
                                                                 <c:when test="${od.status == 3}">Đang Thuê</c:when>
-                                                                <c:when test="${od.status == 4 || od.status == 7}">Giao thành công</c:when>
-                                                                <c:when test="${od.status == 5}">Đang trả hàng</c:when>
-                                                                <c:when test="${od.status == 6}">Hủy đơn</c:when>
+                                                                <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
+                                                                <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
+                                                                <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
                                                             </c:choose>
                                                      </p>
                                                      </div>

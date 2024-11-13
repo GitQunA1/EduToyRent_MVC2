@@ -278,31 +278,14 @@
                 75% { margin-left: -3600px; } 
                 100% { margin-left: 0px; }    
             }
-            .background_header{
-                background-color: rgb(255, 224, 230);
-                width: 100%;
-                height: 250px;
-                display: flex;
-            }
-            .header_content{
-                margin-left: 150px;
-            }
             
-            .header_content p{
-                font-size: 18px;
-                text-transform: uppercase;
-            }
-            .header_content a{
-                display: block;
-                margin-bottom: 1px;
-            }
         </style>
         
     </head>
     <body> 
         <%@include file="UserNavigation.jsp" %>
         
-
+ 
 
         <div class="Advertising">
             <div class="background_slide">
@@ -359,12 +342,7 @@
                                 <img src="${listRented.image}"/>
                                 <p>${listRented.name}</p>
                                 <a>Giá: <fmt:formatNumber value="${listRented.price}" pattern="#,###"></fmt:formatNumber> đ </a>
-                                </a>
-                                <form action="MainController" method="post">
-                                    <input type="hidden" value="${listRented.pid}" name="txtPID"/>   
-                                <input type="hidden" value="AddCart" name="action"/>
-                                <input type="submit" value="Thêm vào giỏ hàng" />
-                            </form>
+                                </a>  
                         </div>
                     </c:forEach>                       
                 </div>
@@ -388,11 +366,7 @@
                                     <p>${SecondHand.name}</p>
                                     <a>Giá: <fmt:formatNumber value="${SecondHand.price}" pattern="#,###"></fmt:formatNumber> đ </a>
                                     </a>
-                                    <form action="MainController" method="post">
-                                        <input type="hidden" value="${SecondHand.pid}" name="txtPID"/>   
-                                    <input type="hidden" value="AddCart" name="action"/>
-                                    <input type="submit" value="Thêm vào giỏ hàng" />
-                                </form>
+                                  
                             </div>
                         </c:forEach>                       
                     </div>
@@ -424,15 +398,11 @@
                                         <p>${procuct1.name}</p>
                                         <a>Giá: <fmt:formatNumber value="${procuct1.price}" pattern="#,###"></fmt:formatNumber> đ </a>
                                         </a>
-                                    <form action="MainController" method="post">
-                                            <input type="hidden" value="${procuct1.pid}" name="txtPID"/>   
-                                        <input type="hidden" value="AddCart" name="action"/>
-                                        <input type="submit" value="Thêm vào giỏ hàng" />
-                                    </form>
+                                   
                                 </div>
                             </c:forEach>                       
                         </div> 
-                        <a href="MainController?action=SearchGender&txtcategory=Ngôn ngữ" class="show_more">Xem thêm</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Ngôn ngữ&txtQRent=0&txtQSell=1&txtStype=1" class="show_more">Xem thêm</a>
                     </div>               
                 </c:if> 
 
@@ -460,15 +430,11 @@
                                         <p>${procuct2.name}</p>
                                         <a>Giá: <fmt:formatNumber value="${procuct2.price}" pattern="#,###"></fmt:formatNumber> đ </a>
                                         </a>
-                                        <form action="MainController" method="post">
-                                            <input type="hidden" value="${procuct2.pid}" name="txtPID"/>   
-                                        <input type="hidden" value="AddCart" name="action"/>
-                                        <input type="submit" value="Thêm vào giỏ hàng" />
-                                    </form>
+                                      
                                 </div>
                             </c:forEach>                       
                         </div> 
-                        <a href="MainController?action=SearchGender&txtcategory=Giải đố" class="show_more">Xem thêm</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Giải đố&txtQRent=0&txtQSell=1&txtStype=1" class="show_more">Xem thêm</a>
                     </div>
                 </c:if> 
 
@@ -496,15 +462,11 @@
                                         <p>${procuct3.name}</p>
                                         <a>Giá: <fmt:formatNumber value="${procuct3.price}" pattern="#,###"></fmt:formatNumber> đ </a>
                                         </a>
-                                        <form action="MainController" method="post">
-                                            <input type="hidden" value="${procuct3.pid}" name="txtPID"/>   
-                                        <input type="hidden" value="AddCart" name="action"/>
-                                        <input type="submit" value="Thêm vào giỏ hàng" />
-                                    </form>
+                                       
                                 </div>
                             </c:forEach>                       
                         </div>
-                        <a href="MainController?action=SearchGender&txtcategory=Toán học" class="show_more">Xem thêm</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Toán học&txtQRent=0&txtQSell=1&txtStype=1" class="show_more">Xem thêm</a>
                     </div>
                 </c:if>  
 
@@ -518,43 +480,18 @@
                                     <p>${procuct.name}</p>
                                     <a>Giá: <fmt:formatNumber value="${procuct.price}" pattern="#,###"></fmt:formatNumber> đ</a>
                                     </a>
-                                    <form action="MainController" method="post">
-                                        <input type="hidden" value="${procuct.pid}" name="txtPID"/>   
-                                    <input type="hidden" value="AddCart" name="action"/>
-                                    <input type="submit" value="Thêm vào giỏ hàng" />
-                                </form>
+                                   
                             </div>
                         </c:forEach>                       
                     </div>
-                    <a href="MainController?action=ProductFilter&txtOption=3" class="show_more">Xem thêm</a>
+                    <a href="MainController?action=ProductFilter&txtOption=3&txtQRent=0&txtQSell=1&txtStype=1" class="show_more">Xem thêm</a>
                 </div>
                 
             </div>
         </div>
     </div>
     
-    <div class="background_header">
-        <div class="header_content">
-            <p>Hỗ trợ khách hàng</p>
-            <a>Báo lỗi hệ thống</a><br>
-            <a>Hướng dẫn đặt hàng</a><br>
-            <a>Yêu cầu hỗ trợ</a><br>
-        </div>
-        <div class="header_content">
-            <p>Về EduToyRent</p>
-            <a>Giới thiệu EduToyRent</a><br>
-            <a>Chính sách bảo mật</a><br>
-            <a>Điều khoản sử dụng</a><br>
-        </div>
-        <div class="header_content">
-            <p>Hợp tác và liên kết</p>
-            <a>Bán hàng cùng EduToyRent</a><br>
-        </div>
-        <div class="header_content">
-            <p>Phương thức thanh toán</p>
-            
-        </div>
-    </div>
+    <%@include file="HeaderPage.jsp" %>
                                                                                                                                                                                                                     
         
     </body>

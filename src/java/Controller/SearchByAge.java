@@ -39,8 +39,8 @@ public class SearchByAge extends HttpServlet {
             GetProductDAO get = new GetProductDAO();
             int minAge = Integer.parseInt(request.getParameter("txtMinAge"));
             int maxAge = Integer.parseInt(request.getParameter("txtMaxAge"));
-            int qRent = Integer.parseInt(request.getParameter("txtQRent"));
             
+            int qRent = Integer.parseInt(request.getParameter("txtQRent"));            
             int qSell = Integer.parseInt(request.getParameter("txtQSell"));
             int qStype = Integer.parseInt(request.getParameter("txtStype"));
             
@@ -52,6 +52,9 @@ public class SearchByAge extends HttpServlet {
                 }
             }
      
+            request.setAttribute("qRent", qRent);
+            request.setAttribute("qSell", qSell);
+            request.setAttribute("qStype", qStype);
             request.setAttribute("ProductSearch", ageList);
             request.getRequestDispatcher("SearchProductPage.jsp").forward(request, response);
         } catch (Exception e) {

@@ -39,10 +39,10 @@ public class SearchByCategory extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             // nameList
-            int qRent = Integer.parseInt(request.getParameter("txtQRent"));
-            
+            int qRent = Integer.parseInt(request.getParameter("txtQRent"));            
             int qSell = Integer.parseInt(request.getParameter("txtQSell"));
             int qStype = Integer.parseInt(request.getParameter("txtStype"));
+            
             GetProductDAO get = new GetProductDAO();
                 String category = request.getParameter("txtcategory");
                 List<Product> successfulProducts = get.getSuccessList();
@@ -53,6 +53,9 @@ public class SearchByCategory extends HttpServlet {
                         categoryList.add(product);
                     }
                 }
+                request.setAttribute("qRent", qRent);
+                request.setAttribute("qSell", qSell);
+                request.setAttribute("qStype", qStype);
                 request.setAttribute("ProductSearch", categoryList);
                 request.getRequestDispatcher("SearchProductPage.jsp").forward(request, response);
         } catch (Exception e) {

@@ -8,7 +8,6 @@ package Controller;
 import DAO.GetProductDAO;
 import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -45,12 +44,13 @@ public class ProductFilter extends HttpServlet {
             if (option.equals("3")) {
                 List<Product> saleList = new ArrayList<>();
                 for (Product product : successfulProducts) {
-                    if (product.getType() == 1) {
+                    if (product.getType() == 1){
                         saleList.add(product);
                     }
                 }
+                
                 request.setAttribute("saleList", saleList);
-                url = "";
+                url = "NewProductPage.jsp";
             } else if (option.equals("2")) {
                 List<Product> SecondHand = new ArrayList<>();
                 for (Product product : successfulProducts) {
@@ -58,17 +58,18 @@ public class ProductFilter extends HttpServlet {
                         SecondHand.add(product);
                     }
                 }
+                
                 request.setAttribute("SecondHand", SecondHand);
-                url = "";
-            } else {
-                List<Product> listRented = new ArrayList<>();
+                url = "SecondHandPage.jsp";
+            } else if (option.equals("1")){
+                List<Product> listRent = new ArrayList<>();
                 for (Product product : successfulProducts) {
                     if (product.getqRent() == 1 && product.getType() == 2) {
-                        listRented.add(product);
+                        listRent.add(product);
                     }
                 }
-                request.setAttribute("listRented", listRented);
-                url = "";
+                request.setAttribute("listRent", listRent);
+                url = "RentPage.jsp";
             }
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e) {

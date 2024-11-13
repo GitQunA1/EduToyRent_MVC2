@@ -16,7 +16,7 @@
         <style>
             .backgrount_navigation{
                 background-color: #FF74B8;
-                width: 100%;
+                width: 99%;
                 height: 120px; 
                 position: relative;
                 position: fixed;   
@@ -62,7 +62,7 @@
                 cursor: pointer; 
             }
             .Cart_navigation{
-                margin-left: 100px;
+                margin-left: 60px;
                 margin-top: 45px; 
             }
             .content_cart{
@@ -76,7 +76,7 @@
                 background-color: white;
             }
             .Account_navigation{
-                margin-left: 100px;
+                margin-left: 30px;
                 margin-top: 45px; 
             }
             
@@ -99,7 +99,12 @@
             .publicize_two{
                 margin-left: 100px;
             }
-          
+            .notification img{
+                width: 35px;
+                height: 35px;
+                margin-top: 43px;
+                margin-left: 80px;
+            }
         </style>
         
     </head>
@@ -133,13 +138,15 @@
                 <div class="Cart_navigation">
                     <form action="MainController" method="post">
                         <input type="hidden" value="CartPage" name="action"/>
-
                         <button type="submit">
                             <img class="Cart_navigation_img" src="Image/Cart.png"/>
-
                             <span class="content_cart">Giỏ hàng</span> 
                         </button>                          
                     </form>
+                </div>
+                
+                <div class="notification" onclick="toggleNotification()">
+                    <a href=""><img src="Image/ThongBao.png" /></a>
                 </div>
 
                 <%-- vào trang tài khoản. xử lý MainContronller: value="AccountPage" name="action"--%>
@@ -151,7 +158,23 @@
                 </div>           
             </div>
         </div>
-        
+                
+                <div id="notificationContent" style="display: none; border: 1px solid #ccc; padding: 20px;">
+                    <p>Nội dung thông báo</p>
+                    <button onclick="closeNotification()">Đóng</button>
+                </div>
+                <script>
+            // Hàm để bật hoặc tắt thẻ thông báo
+            function toggleNotification() {
+                const notificationContent = document.getElementById('notificationContent');
+                notificationContent.style.display = notificationContent.style.display === 'none' ? 'block' : 'none';
+            }
+
+            // Hàm để tắt thẻ thông báo khi nhấn nút đóng
+            function closeNotification() {
+                document.getElementById('notificationContent').style.display = 'none';
+            }
+                </script>
     </body>
 </html>
 

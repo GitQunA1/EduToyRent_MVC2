@@ -1,29 +1,23 @@
 <%-- 
-    Document   : SearchProductPage
-    Created on : Oct 21, 2024, 1:20:23 PM
+    Document   : SecondHandPage
+    Created on : Nov 5, 2024, 12:25:05 AM
     Author     : Quyền
 --%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="vi">
-    
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         
         <style>
-             body, html {
+            body, html {
                 margin: 0;
                 padding: 0;
                 height: 100%;
-                overflow: auto; 
-                background-color: #F2F2F2;
+                overflow: auto;         
             }
             .backgrount_navigation{
                 background-color: #FF74B8;
@@ -172,28 +166,20 @@
             
             
             
-            
-            .Advertising{
-                padding-top: 10px;
-                margin-left: 70px;
-                margin-right: 70px;
-                border-radius: 10px;
-                margin-bottom: 50px;
-                padding-bottom: 100px;
-            }
+            /* Bố cục chính của các sản phẩm */
             .Show_product {
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
                 gap: 10px; /* Khoảng cách giữa các sản phẩm */
                 padding: 10px;
-                
             }
 
             .Show_product img {
-                width: 157px;
+                width: 100%;
                 height: 180px; 
                 border-radius: 5px;
-                object-fit: cover; 
+                
+                
             }
 
             .Show_product .product-box {
@@ -204,9 +190,9 @@
                 border-radius: 10px;
                 padding: 13px;
                 text-align: center;
-                background-color: #f9f9f9;
+                background-color: white;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                height: 350px; 
+                height: 300px; 
             }
 
             
@@ -235,15 +221,23 @@
             .product-box input[type="submit"] {
                 margin-top: 10px;
                 height: 25px;
-                background-color: #FFBD68;
-                color: white;
+                background-color: #41B6A2;
                 border: none;
+                color: white;
                 border-radius: 5px;
                 cursor: pointer;
                 
             }
-            .product-box{
-                margin-bottom: 20px;
+
+             /* ------------------------------------------- */
+             .Advertising{
+                background-color: #FEE8AB;
+                margin-left: 70px;
+                margin-right: 70px;
+                border-radius: 10px;
+                margin-bottom: 50px;
+                padding-bottom: 100px;
+                padding-top: 10px;
             }
             .notification img{
                 width: 35px;
@@ -265,13 +259,10 @@
                 cursor: pointer;
             }
         </style>
-        
     </head>
     <body>
-
-
-
-         <div class="backgrount_navigation">
+        
+        <div class="backgrount_navigation">
             <div class="navigation_first">
                 <a href="MainController?action=home">
                     <img class="logo_Navigation" src="Image/Logo.jpg" /> 
@@ -280,11 +271,11 @@
 
                 <%-- thanh tìm kiếm xử lý: txtSearch. xử lý trong Maincontroller: value="SearchProduct" name="action"--%>
                 <div class="Search_navigation">
-                    <form action="MainController" method="Get" >
+                    <form action="MainController" method="Get">
                         <input type="text" name="txtSearch" placeholder="Tìm kiếm"/>
-                        <input type="hidden" value="${qRent}" name="txtQRent"/>
-                        <input type="hidden" value="${qSell}" name="txtQSell"/>
-                        <input type="hidden" value="${qStype}" name="txtStype"/>
+                        <input type="hidden" value="0" name="txtQRent"/>
+                        <input type="hidden" value="1" name="txtQSell"/>
+                        <input type="hidden" value="2" name="txtStype"/>
                         <input type="hidden" value="SearchProduct" name="action"/>
                         <button type="submit">Tìm kiếm</button>
                     </form>
@@ -312,12 +303,12 @@
                         </button>                          
                     </form>
                 </div>
-
+                
+                
                 <div class="notification">
                     <a href=""><img src="Image/ThongBao.png" /></a>
                 </div>
-                
-                
+
                 <%-- vào trang tài khoản. xử lý MainContronller: value="AccountPage" name="action"--%>
                 <div class="Account_navigation">
                     <form action="MainController" method="post">
@@ -331,17 +322,17 @@
                 <div class="search_Gender">
                     <button id="showGenresBtn">Thể loại</button>
                     <div id="genreList" class="genre-list" style="display: none;"> 
-                        <a href="MainController?action=SearchGender&txtcategory=Toán học&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Toán học</a>                                        
-                        <a href="MainController?action=SearchGender&txtcategory=Giải đố&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Giải đố</a><br>                                      
-                        <a href="MainController?action=SearchGender&txtcategory=Ngôn ngữ&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Ngôn ngữ</a>
-                        <a href="MainController?action=SearchGender&txtcategory=Kĩ thuật&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Kĩ thuật</a><br>  
-                        <a href="MainController?action=SearchGender&txtcategory=Khoa học&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Khoa học</a>
-                        <a href="MainController?action=SearchGender&txtcategory=Nghệ thuật&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Nghệ thuật</a><br>
-                        <a href="MainController?action=SearchGender&txtcategory=Xếp hình&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Xếp hình</a>
-                        <a href="MainController?action=SearchGender&txtcategory=Mô phỏng&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Mô phỏng</a><br>
-                        <a href="MainController?action=SearchGender&txtcategory=Thiên văn&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Thiên văn</a>
-                        <a href="MainController?action=SearchGender&txtcategory=Địa lý&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Địa lý</a><br>
-                        <a href="MainController?action=SearchGender&txtcategory=Thể chất&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">Thể chất</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Toán học&txtQRent=0&txtQSell=1&txtStype=2">Toán học</a>                                        
+                        <a href="MainController?action=SearchGender&txtcategory=Giải đố&txtQRent=0&txtQSell=1&txtStype=2">Giải đố</a><br>                                      
+                        <a href="MainController?action=SearchGender&txtcategory=Ngôn ngữ&txtQRent=0&txtQSell=1&txtStype=2">Ngôn ngữ</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Kĩ thuật&txtQRent=0&txtQSell=1&txtStype=2">Kĩ thuật</a><br>  
+                        <a href="MainController?action=SearchGender&txtcategory=Khoa học&txtQRent=0&txtQSell=1&txtStype=2">Khoa học</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Nghệ thuật&txtQRent=0&txtQSell=1&txtStype=2">Nghệ thuật</a><br>
+                        <a href="MainController?action=SearchGender&txtcategory=Xếp hình&txtQRent=0&txtQSell=1&txtStype=2">Xếp hình</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Mô phỏng&txtQRent=0&txtQSell=1&txtStype=2">Mô phỏng</a><br>
+                        <a href="MainController?action=SearchGender&txtcategory=Thiên văn&txtQRent=0&txtQSell=1&txtStype=2">Thiên văn</a>
+                        <a href="MainController?action=SearchGender&txtcategory=Địa lý&txtQRent=0&txtQSell=1&txtStype=2">Địa lý</a><br>
+                        <a href="MainController?action=SearchGender&txtcategory=Thể chất&txtQRent=0&txtQSell=1&txtStype=2">Thể chất</a>
                     </div>
                 </div>
 
@@ -349,43 +340,36 @@
                 <div class="search_Age">
                     <button id="showByeEag">Độ tuổi</button>
                     <div id="AgeList" class="Age-list" style="display: none;"> 
-                        <a href="MainController?action=SearchAge&txtMinAge=1&txtMaxAge=3&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">1-3 tuổi</a>
-                        <a href="MainController?action=SearchAge&txtMinAge=3&txtMaxAge=5&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">3-5 tuổi</a><br>
-                        <a href="MainController?action=SearchAge&txtMinAge=5&txtMaxAge=7&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">5-7 tuổi</a>
-                        <a href="MainController?action=SearchAge&txtMinAge=7&txtMaxAge=10&txtQRent=${qRent}&txtQSell=${qSell}&txtStype=${qStype}">7-10 tuổi</a>
+                        <a href="MainController?action=SearchAge&txtMinAge=1&txtMaxAge=3&txtQRent=0&txtQSell=1&txtStype=2">1-3 tuổi</a>
+                        <a href="MainController?action=SearchAge&txtMinAge=3&txtMaxAge=5&txtQRent=0&txtQSell=1&txtStype=2">3-5 tuổi</a><br>
+                        <a href="MainController?action=SearchAge&txtMinAge=5&txtMaxAge=7&txtQRent=0&txtQSell=1&txtStype=2">5-7 tuổi</a>
+                        <a href="MainController?action=SearchAge&txtMinAge=7&txtMaxAge=10&txtQRent=0&txtQSell=1&txtStype=2">7-10 tuổi</a>
                     </div>
                 </div>
             </div>     
         </div>
+                
         <div class="history_page">
-            <a onclick="window.history.back()">Quay lại trang trước đó</a>
-        </div>
- 
-        
-        <c:choose>
-            <c:when test="${not empty ProductSearch}">
-                <div  class="Advertising">
-                    <div class="Show_product">
-                        <c:forEach var="procuct" items="${ProductSearch}">
-                            <div class="product-box">
-                                <a href="MainController?txtPID=${procuct.pid}&action=viewProduct">
-                                    <img src="${procuct.image}"/>
-                                    <p><c:out value="${procuct.name}"></c:out></p>
-                                    <a>Giá: <fmt:formatNumber value="${procuct.price}" pattern="#,###"></fmt:formatNumber> đ </a>
-                                    </a>
-                                  
-                            </div>
-                        </c:forEach>                       
-                    </div> 
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div style="align-items: center; height: 100%; display: flex; justify-content: center;">
-                    <c:out value="Không tìm thấy sản phẩm"></c:out>
-                </div>               
-            </c:otherwise>
-        </c:choose>
+                    <a onclick="window.history.back()">Quay lại trang trước đó</a>
+                </div>        
+                
+                
+        <div class="Advertising">
+            <div class="Show_product">
+                <c:forEach var="SecondHand" items="${SecondHand}">
+                    <div class="product-box">
+                        <a href="MainController?txtPID=${SecondHand.pid}&action=viewProduct">
+                            <img src="${SecondHand.image}"/>
+                            <p>${SecondHand.name}</p>
+                            <a>Giá: <fmt:formatNumber value="${SecondHand.price}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        </a>
+                      
+                    </div>
+                </c:forEach>                       
+            </div>   
+        </div>         
                     
+                
         <%@include file="HeaderPage.jsp" %>
         <script src="JS/ListGender.js"></script>
     </body>

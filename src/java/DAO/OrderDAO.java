@@ -54,7 +54,7 @@ public class OrderDAO {
         return 0;
     }
 
-    public void insertOrderDetail(int oid, List<Cart> cart) {
+    public boolean insertOrderDetail(int oid, List<Cart> cart) {
 
         for (Cart c : cart) {
             try {
@@ -70,10 +70,11 @@ public class OrderDAO {
                 ps.setNull(6, Types.NVARCHAR);
                 ps.setNull(7, Types.NVARCHAR);
                 ps.setInt(8, 1);
-                ps.executeUpdate();
+                int result = ps.executeUpdate();
             } catch (Exception e) {
             }
         }
+        return true;
     }
 
     public int getSOID(int pid) {

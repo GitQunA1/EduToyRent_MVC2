@@ -6,8 +6,7 @@
 package Controller;
 
 import DAO.GetProductDAO;
-import DAO.OrderDAO;
-import Entity.OrderDetail;
+import DAO.GetShopOwner;
 import Entity.Product;
 import Entity.ShopOwner;
 import java.io.IOException;
@@ -18,14 +17,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author HagiLee
+ * @author Quyền
  */
-@WebServlet(name = "OwnerOrderDetail", urlPatterns = {"/OwnerOrderDetail"})
-public class OwnerOrderDetail extends HttpServlet {
+@WebServlet(name = "ViewProducShop", urlPatterns = {"/ViewProducShop"})
+public class ViewProducShop extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,58 +38,33 @@ public class OwnerOrderDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession shopOwnerSession = request.getSession();
-            ShopOwner sa = (ShopOwner) shopOwnerSession.getAttribute("ShopOwner");
-            int status = 1;
-            try {
-                String txtStatus = request.getParameter("txtStatus");
-                status = Integer.parseInt(txtStatus);
-            } catch (Exception e) {
-                status = 1;
-            }
-            int option = 0;
-            try {
-                String txtOption = request.getParameter("txtOption");
-                option = Integer.parseInt(txtOption);
-            } catch (Exception e) {
-                option = 0;
-            }
-            OrderDAO od = new OrderDAO();
-            GetProductDAO gpd = new GetProductDAO();
-            List<OrderDetail> List = od.GetOrderDetailBySOID(sa.getSoid(), status);
-            List<OrderDetail> orderDetailList = new ArrayList<>();
-            List<Product> ProductOrdered = new ArrayList<>();
-            if (option == 0) {
-                for (Product p : gpd.getSuccessList()) {
-                    for (OrderDetail d : List) {
-                        if (p.getPid() == d.getPid()) {
-                            ProductOrdered.add(p);
-                            break;
-                        }
-                    }
+            
+            int txtSOID = Integer.parseInt(request.getParameter("txtSOID"));
+            
+            GetShopOwner sd = new GetShopOwner();
+            List<ShopOwner> so = sd.getShopList();
+            ShopOwner shop = new ShopOwner();
+            for (ShopOwner shopOwner : so) {
+                if(shopOwner.getSoid() == txtSOID){
+                    shop = shopOwner;
+                    break;
                 }
-                request.setAttribute("OwnerOrderDetail", List);
-            } else {
-                for (OrderDetail o : List) {
-                    if (o.getRentTime() == 0 && option == 1) {
-                        orderDetailList.add(o);
-                    }
-                    if (o.getRentTime() > 0 && option == 2) {
-                        orderDetailList.add(o);
-                    }
-                }
-                for (Product p : gpd.getSuccessList()) {
-                    for (OrderDetail d : orderDetailList) {
-                        if (p.getPid() == d.getPid()) {
-                            ProductOrdered.add(p);
-                            break;
-                        }
-                    }
-                }
-                request.setAttribute("OwnerOrderDetail", orderDetailList);
             }
-            request.setAttribute("ProuductOrdered", ProductOrdered);
-            request.getRequestDispatcher("OwnerOrder.jsp").forward(request, response);
+            
+            
+            GetProductDAO pd = new GetProductDAO();
+            List<Product> product = pd.getSuccessList();
+            List<Product> productOfShop = new ArrayList<>();
+            for (Product product1 : product) {
+                if(product1.getSoid() == txtSOID){
+                    productOfShop.add(product1);
+                }
+            }
+            
+            request.setAttribute("shop", shop);
+            request.setAttribute("productOfShop", productOfShop);
+            request.getRequestDispatcher("ViewShopPage.jsp").forward(request, response);
+            
         } catch (Exception e) {
         }
     }
