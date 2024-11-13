@@ -59,6 +59,11 @@ public class OwnerOrderDetail extends HttpServlet {
             OrderDAO od = new OrderDAO();
             GetProductDAO gpd = new GetProductDAO();
             List<OrderDetail> List = od.GetOrderDetailBySOID(sa.getSoid(), status);
+            if(status == 10){
+                for (OrderDetail o : od.GetOrderDetailBySOID(sa.getSoid(), 9)) {
+                    List.add(o);
+                }
+            }
             List<OrderDetail> orderDetailList = new ArrayList<>();
             List<Product> ProductOrdered = new ArrayList<>();
             if (option == 0) {

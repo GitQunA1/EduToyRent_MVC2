@@ -154,8 +154,8 @@
                    class="${param.txtStatus == '7' ? 'active-feature' : ''}">Trả hàng (B)</a>
                 <a href="MainController?action=ownerOrder&txtStatus=8&txtOption=0" 
                    class="${param.txtStatus == '8' ? 'active-feature' : ''}">Đơn hàng hủy</a>
-                <a href="MainController?action=ownerOrder&txtStatus=9&txtOption=0" 
-                   class="${param.txtStatus == '9' ? 'active-feature' : ''}">Hoàn thành</a>
+                <a href="MainController?action=ownerOrder&txtStatus=10&txtOption=0" 
+                   class="${param.txtStatus == '10' ? 'active-feature' : ''}">Hoàn thành</a>
             </div>
         </div>
 
