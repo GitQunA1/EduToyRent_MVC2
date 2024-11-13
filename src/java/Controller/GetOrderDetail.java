@@ -61,10 +61,26 @@ public class GetOrderDetail extends HttpServlet {
                 }
             }
            
+
+            List<OrderDetail> orderDetail = new ArrayList<>();
             OrderDAO od = new OrderDAO();
             PaymentDAO pd = new PaymentDAO();
-                     
-            List<OrderDetail> orderDetail = od.GetOrderByStatus(user.getUid(),status);
+            if (status == 4) {
+                
+                for (int i = 4; i <= 6; i++) {
+                    List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
+                    orderDetail.addAll(tempOrderDetails);  
+                }
+            } else if (status == 10) {
+                
+                for (int i = 9; i <= 10; i++) {
+                    List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
+                    orderDetail.addAll(tempOrderDetails); 
+                }
+            } else {
+              
+                orderDetail = od.GetOrderByStatus(user.getUid(), status);
+            }
             
             
     
