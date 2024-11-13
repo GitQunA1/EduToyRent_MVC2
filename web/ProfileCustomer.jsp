@@ -78,6 +78,21 @@
                 cursor: pointer;
                 font-size: 16px;
             }
+            /* Logout button styling */
+            .logout-btn-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+            }
+            .logout-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: tomato;
+                color: white;
+                cursor: pointer;
+                font-size: 16px;
+            }
         </style>
     </head>
     <body>
@@ -119,6 +134,14 @@
                 </div>
             </div>
             <img src="<%= cus.getAvatar()%>">
+        </div>
+        
+        <!-- Logout button at bottom right -->
+        <div class="logout-btn-container">
+            <form action="MainController" method="post">
+                <button type="submit" class="logout-btn">Logout</button>
+                <input type="hidden" name="action" value="LogoutController"/>
+            </form>
         </div>
     </body>
 </html>

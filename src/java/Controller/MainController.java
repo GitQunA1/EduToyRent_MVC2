@@ -103,6 +103,9 @@ public class MainController extends HttpServlet {
             case "UpdateProfile":
                 url = "UpdateProfileCustomer";
                 break;
+            case "LogoutController":
+                url = "LogoutController";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
       /*  String action = request.getParameter("action");
