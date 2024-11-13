@@ -106,6 +106,12 @@ public class MainController extends HttpServlet {
             case "LogoutController":
                 url = "LogoutController";
                 break;
+            case "UpdateQuantity":
+                url = "UpdateQuantityProduct";
+                break;
+            case "ProductDetails":
+                url = "GetProductById";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 

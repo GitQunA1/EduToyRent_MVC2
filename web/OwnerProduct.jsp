@@ -141,11 +141,11 @@
                 </form>
             </div>
             <div class="feature">
-                <a href="MainController?action=OwnerProduct&txtStatus=1">Đang hoạt động</a>
-                <a href="MainController?action=OwnerProduct&txtStatus=2">Còn ít tồn kho</a>
-                <a href="MainController?action=OwnerProduct&txtStatus=3">Đang xét duyệt</a>
-                <a href="MainController?action=OwnerProduct&txtStatus=4">Không thành công</a>
-                <a href="MainController?action=OwnerProduct&txtStatus=5">Đóng băng</a>
+                <a href="MainController?action=ownerProduct&txtStatus=1">Đang hoạt động</a>
+                <a href="MainController?action=ownerProduct&txtStatus=2">Còn ít tồn kho</a>
+                <a href="MainController?action=ownerProduct&txtStatus=3">Đang xét duyệt</a>
+                <a href="MainController?action=ownerProduct&txtStatus=4">Không thành công</a>
+                <a href="MainController?action=ownerProduct&txtStatus=5">Đóng băng</a>
             </div>
         </div>
 
@@ -165,9 +165,11 @@
                     </div>
                     <div class="product-actions">
                         <c:if test = "${ShopOwner.type == 1}">
-                        <button onclick="toggleInput(${product.pid})">Thêm số lượng</button>
-                        <input type="number" id="quantityInput-${product.pid}" style="display:none;" placeholder="Nhập số lượng" />
-                        <button onclick="updateQuantity(${product.pid})" style="display:none;" id="saveBtn-${product.pid}">Lưu</button>
+                            <c:if test="${product.status eq 'Thành công' or product.status eq 'Còn ít'}">
+                                <button onclick="toggleInput(${product.pid})">Thêm số lượng</button>
+                                <input type="number" id="quantityInput-${product.pid}" style="display:none;" placeholder="Nhập số lượng" />
+                                <button onclick="updateQuantity(${product.pid})" style="display:none;" id="saveBtn-${product.pid}">Lưu</button>
+                            </c:if>
                         </c:if>
                         <a href="MainController?action=ProductDetails&pid=${product.pid}">Chi tiết</a>
                     </div>

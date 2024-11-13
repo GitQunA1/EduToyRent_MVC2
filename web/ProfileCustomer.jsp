@@ -13,7 +13,7 @@
             .background {
                 margin-top: 200px;
                 position: absolute;
-                height: 400px;
+                height: 450px;
                 width: 1000px;
                 background-color: wheat;
                 left: 50%;
@@ -64,17 +64,15 @@
                 align-items: flex-start;
             }
             .update-btn {
-                margin-top: 20px;
-                display: flex;
-                justify-content: center;
+                margin-top: 26px;
                 gap: 50px;
             }
             .update-btn button {
-                padding: 10px 20px;
+                padding: 7px 30px;
                 border: none;
                 border-radius: 5px;
                 background-color: skyblue;
-                color: white;
+                color: black;
                 cursor: pointer;
                 font-size: 16px;
             }
@@ -82,10 +80,10 @@
             .logout-btn-container {
                 position: fixed;
                 bottom: 20px;
-                right: 20px;
+                right: 50px;
             }
             .logout-btn {
-                padding: 10px 20px;
+                padding: 7px 20px;
                 border: none;
                 border-radius: 5px;
                 background-color: tomato;
@@ -128,20 +126,21 @@
 
                 <div class="update-btn">
                     <form action="EditProfile.jsp" method="get">
-                        <button type="submit">Cập nhật</button>
+                        <button type="submit">Cập nhật thông tin</button>
                     </form>
-                    <button type="button" class="back-btn" onclick="window.history.back()">Quay lại</button>
+                    
                 </div>
             </div>
             <img src="<%= cus.getAvatar()%>">
+            <div class="logout-btn-container">
+                <form action="MainController" method="post">
+                    <button type="submit" class="logout-btn">Đăng xuất</button>
+                    <input type="hidden" name="action" value="LogoutController"/>
+                </form>
+            </div>
         </div>
         
         <!-- Logout button at bottom right -->
-        <div class="logout-btn-container">
-            <form action="MainController" method="post">
-                <button type="submit" class="logout-btn">Đăng xuất</button>
-                <input type="hidden" name="action" value="LogoutController"/>
-            </form>
-        </div>
+        
     </body>
 </html>

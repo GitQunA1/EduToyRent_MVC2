@@ -100,14 +100,17 @@
                                         <form action="MainController" method="post">
                                             <input type="hidden" value="${OwnerODID.odid}" name="txtODID"/>
                                             <c:if test="${OwnerODID.rentTime > 0}">
-                                                <c:if test="${not empty OwnerODID.dateEnd && OwnerODID.status == 3}">
-                                                    <input type="hidden" value="4" name="txtStatusUpdate"/>
-                                                    <input type="submit" value="Đã nhận"/>
+                                                <c:if test="${not empty OwnerODID.dateEnd}">
+                                                    <c:if test="${OwnerODID.status == 3}">
+                                                        <input type="hidden" value="4" name="txtStatusUpdate"/>
+                                                        <input type="submit" value="Đã nhận"/>
+                                                    </c:if>
+                                                    <c:if test="${OwnerODID.status == 4}">
+                                                        <input type="hidden" value="5" name="txtStatusUpdate"/>
+                                                        <input type="submit" value="Đã hoàn trả"/>
+                                                    </c:if>
                                                 </c:if>
-                                                <c:if test="${not empty OwnerODID.dateEnd && OwnerODID.status == 4}">
-                                                    <input type="hidden" value="5" name="txtStatusUpdate"/>
-                                                    <input type="submit" value="Đã hoàn trả"/>
-                                                </c:if>
+                                              
                                                 <c:if test="${empty OwnerODID.dateEnd}">
                                                     <input type="hidden" value="3" name="txtStatusUpdate"/>
                                                     <input type="hidden" value="${OwnerODID.rentTime}" name="txtRentTime"/>

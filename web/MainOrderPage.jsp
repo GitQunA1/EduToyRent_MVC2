@@ -123,6 +123,14 @@
                 margin-left: 200px;
                 margin-top: 20px;
             }
+            .review_product{
+                position: absolute;
+                bottom: -70px;
+                margin-left: 600px;
+                z-index: 1000;
+                margin-right: -800px;
+                color: #209897;
+            }
         </style>
         
     </head>
@@ -157,20 +165,20 @@
                                                          <img src="${so.avatar}" />
                                                          <a>${so.name}</a>
                                                          <p>
-                                                            <c:choose>
-                                                                <c:when test="${od.status == 1}">Chờ vận chuyển</c:when>
-                                                                <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
-                                                                <c:when test="${od.status == 3}">Đang Thuê</c:when>
-                                                                <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
-                                                                <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
-                                                                <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
-                                                            </c:choose>
-                                                     </p>
+                                                             <c:choose>
+                                                                 <c:when test="${od.status == 1}">Chờ vận chuyển</c:when>
+                                                                 <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
+                                                                 <c:when test="${od.status == 3}">Đang Thuê</c:when>
+                                                                 <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
+                                                                 <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
+                                                                 <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
+                                                             </c:choose>
+                                                         </p>
                                                      </div>
                                                      <div class="line_order"></div>
                                                      <div class="product_order">
                                                          <img src="${pr.image}" />
-                                                         <div class="content_product_order">
+                                                        <div class="content_product_order">
                                                              <a>${pr.name}</a>
                                                              <div class="order_PriceAndQuantity">
                                                                 <a>Giá: <fmt:formatNumber value="${pd.price}" pattern="#,###" /> đ</a>
@@ -186,7 +194,10 @@
                                                                         <a>Thời gian thuê: 1 tháng</a>
                                                                     </c:when>
                                                                 </c:choose>
-                                                             </div>                       
+                                                             </div>
+                                                            <c:if test="${od.status == 9}">
+                                                                <a class="review_product" href="">Đánh giá sản phẩm</a>
+                                                            </c:if>
                                                          </div>
                                                      </div>
                                                  </div> 

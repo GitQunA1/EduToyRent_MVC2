@@ -121,8 +121,8 @@
                     <input type="hidden" value="" name="action"/> 
                 </form>
                 <form class="button_acc" action="MainController" method="post">
-                    <input type="hidden" value="AccountPage" name="action"/>
-                    <input type="submit" value="Tài khoản"/>
+                    <input type="hidden" name="action" value="LogoutController"/>
+                    <input type="submit" value="Đăng xuất"/>
                 </form>
             </div>
         </div>
