@@ -16,6 +16,8 @@ public class DamageReport {
     private String Overall;
     private String external;
     private String mobileParts;
+    private String feature;
+    private String accessory;
     private String image;
     private String description;
     private int noDamage;
@@ -26,13 +28,15 @@ public class DamageReport {
     public DamageReport() {
     }
 
-    public DamageReport(int odid, String name, int quantity, String Overall, String external, String mobileParts, String image, String description, int noDamage, int halfDamage, int fullDamege, String Date) {
+    public DamageReport(int odid, String name, int quantity, String Overall, String external, String mobileParts, String feature, String accessory, String image, String description, int noDamage, int halfDamage, int fullDamege, String Date) {
         this.odid = odid;
         this.name = name;
         this.quantity = quantity;
         this.Overall = Overall;
         this.external = external;
         this.mobileParts = mobileParts;
+        this.feature = feature;
+        this.accessory = accessory;
         this.image = image;
         this.description = description;
         this.noDamage = noDamage;
@@ -40,6 +44,8 @@ public class DamageReport {
         this.fullDamege = fullDamege;
         this.Date = Date;
     }
+
+
 
     public int getOdid() {
         return odid;
@@ -135,6 +141,22 @@ public class DamageReport {
 
     public void setDate(String Date) {
         this.Date = Date;
+    }
+
+    public String getFeature() {
+        return feature;
+    }
+
+    public void setFeature(String feature) {
+        this.feature = feature;
+    }
+
+    public String getAccessory() {
+        return accessory;
+    }
+
+    public void setAccessory(String accessory) {
+        this.accessory = accessory;
     }
     
 }

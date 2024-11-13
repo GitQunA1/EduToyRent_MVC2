@@ -98,7 +98,7 @@
 
 
             .info2 a{
-                font-size: 10px;
+                font-size: 12px;
             }
             .info3{
                 margin-top: 120px;
@@ -117,7 +117,7 @@
                 width: 120px;
                 height: 30px;
             }
-            
+
             .detail{
                 position: absolute;
                 bottom: 125px;
@@ -178,7 +178,10 @@
                                 </div>
                                 <div class="info2">
                                     <p>${product.name}</p><br>
-                                    <a>Số lượng: ${OwnerODID.quantity}</a>
+                                    <a>Số lượng: ${OwnerODID.quantity}</a><br>
+                                    <c:if test="${OwnerODID.rentTime > 0}">
+                                        <a>Thời gian thuê: ${OwnerODID.rentTime} ngày</a>
+                                    </c:if>
                                 </div>
                                 <div class="info3">
                                     <c:if test="${OwnerODID.status == 1}">
