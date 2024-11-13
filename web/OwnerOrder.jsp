@@ -113,6 +113,11 @@
                 width: 75px;
                 height: 30px;
             }
+            .info3 select{
+                width: 120px;
+                height: 30px;
+            }
+            
             .detail{
                 position: absolute;
                 bottom: 125px;
@@ -175,8 +180,8 @@
                                     <p>${product.name}</p><br>
                                     <a>Số lượng: ${OwnerODID.quantity}</a>
                                 </div>
-                                <c:if test="${OwnerODID.status == 1}">
-                                    <div class="info3">
+                                <div class="info3">
+                                    <c:if test="${OwnerODID.status == 1}">
                                         <form action="MainController" method="post">
                                             <input type="hidden" value="${OwnerODID.odid}" name="txtODID">
                                             <input type="hidden" value="2" name="txtStatusUpdate">
@@ -190,8 +195,21 @@
                                             <input type="hidden" value="UpdateOrder" name="action"/>
                                             <input type="submit" value="Hủy đơn"/>
                                         </form>
-                                    </div>
-                                </c:if>
+                                    </c:if>
+                                    <c:if test="${OwnerODID.status == 5}">
+                                        <form action="MainController" method="post">
+                                            <input type="hidden" value="${OwnerODID.odid}" name="txtODID">
+                                            <input type="hidden" value="6" name="txtStatusUpdate">
+                                            <input type="hidden" value="UpdateOrder" name="action"/>
+                                            <select name="damageStatus">
+                                                <option value="1">Không hư tổn</option>
+                                                <option value="2">Có hư tổn</option>
+                                                <option value="3">Hư hoàn toàn</option>
+                                            </select>
+                                            <input type="submit" value="gửi"/>
+                                        </form>
+                                    </c:if>
+                                </div>
                                 <a class="detail" href="">Chi tiết</a>
                             </div>
                         </div>

@@ -99,6 +99,7 @@
                                     <div class="info3">
                                         <form action="MainController" method="post">
                                             <input type="hidden" value="${OwnerODID.odid}" name="txtODID"/>
+                                            <input type="hidden" value="UpdateOrder" name="action"/>
                                             <c:if test="${OwnerODID.rentTime > 0}">
                                                 <c:if test="${not empty OwnerODID.dateEnd}">
                                                     <c:if test="${OwnerODID.status == 3}">
@@ -122,8 +123,6 @@
                                                 <input type="hidden" value="9" name="txtStatusUpdate"/>
                                                 <input type="submit" value="Đã giao"/>
                                             </c:if>
-                                            <input type="hidden" value="UpdateOrder" name="action"/>
-                                            
                                         </form>
                                     </div>
                                 </div>

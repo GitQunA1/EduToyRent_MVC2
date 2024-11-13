@@ -6,13 +6,15 @@
 package Controller;
 
 import DAO.OrderDAO;
+import DAO.ReportDamageDAO;
+import Entity.ShopOwner;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,7 +42,7 @@ public class UpdateOrderDetail extends HttpServlet {
             int status = Integer.parseInt(txtStatus);
             int odid = Integer.parseInt(txtOdid);
             if(od.updateOrderDetail(odid, status)){
-                if(status == 3 || status == 9){
+                if(status == 3 || status == 9 || status == 4 || status == 5){
                     if(status == 3){
                         String txtRentTime = request.getParameter("txtRentTime");
                         int rentTime = Integer.parseInt(txtRentTime);
@@ -49,6 +51,13 @@ public class UpdateOrderDetail extends HttpServlet {
                         }                        
                     }
                     request.getRequestDispatcher("Shipping").forward(request, response);
+                }
+                if(status == 6){
+                    String damaged = request.getParameter("damageStatus");
+                    ReportDamageDAO rdd = new ReportDamageDAO();
+                    HttpSession session = request.getSession();
+                    ShopOwner shop = (ShopOwner) session.getAttribute("ShopOwner");
+                    if(rdd.insertOrderDetail(odid, damaged, shop.getName()));
                 }
                 request.getRequestDispatcher("OwnerOrderDetail").forward(request, response);
             }
