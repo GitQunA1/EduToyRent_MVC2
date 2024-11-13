@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -55,7 +54,7 @@ public class PaymentDAO {
         return 0;
     }
 
-    public void insertPDetail(int paid, int oid, List<Cart> cart) {
+    public boolean insertPDetail(int paid, int oid, List<Cart> cart) {
         for (Cart c : cart) {
 
             try {
@@ -76,10 +75,11 @@ public class PaymentDAO {
                 ps.setFloat(4, deposit);
                 ps.setTimestamp(5, Timestamp.valueOf(currentDateTime));
                 ps.setString(6, status);
-                ps.executeUpdate();
+                int result =  ps.executeUpdate();
             } catch (Exception e) {
             }
         }
+        return true;
     }
 
     public float Deposit(float total, int rentTime) {

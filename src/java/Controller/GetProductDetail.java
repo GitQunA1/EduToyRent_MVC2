@@ -54,10 +54,21 @@ public class GetProductDetail extends HttpServlet {
             }
             List<Product> listproduct = new ArrayList<>();
             
+            int SOID = p.getSoid();
+            GetShopOwner gso = new GetShopOwner();
+            List<ShopOwner> shopList = gso.getShopList();
+            ShopOwner SO = new ShopOwner();
+            for (ShopOwner shopOwner : shopList) {
+                if (shopOwner.getSoid() == SOID) {
+                    SO = shopOwner;
+                }
+            }
+            
+            
             if (p.getqSell() > 0 && p.getType() == 1) {
                 
                 HighIncomeToday hit = new HighIncomeToday();
-                int SOID = p.getSoid();
+                
                 List<Product> highIncList = hit.HighIncList(SOID);
                 if (highIncList.size() < 7) {
                     List<Product> anotherList = hit.getAnother(SOID);
@@ -79,17 +90,8 @@ public class GetProductDetail extends HttpServlet {
                             highIncList.add(p1);
                         }
                     }
-                }
+                }                
                 
-                GetShopOwner gso = new GetShopOwner();
-                List<ShopOwner> shopList = gso.getShopList();
-                ShopOwner SO = new ShopOwner();
-                for (ShopOwner shopOwner : shopList) {
-                    if (shopOwner.getSoid() == SOID) {
-                        SO = shopOwner;
-                    }
-                }
-                request.setAttribute("shop", SO);
                 request.setAttribute("highIncList", highIncList);
             }else if(p.getqSell() == 1 && p.getType() == 2){
                 int count = 0;
@@ -120,6 +122,8 @@ public class GetProductDetail extends HttpServlet {
             
             CommentDAO cd = new CommentDAO();
             List<Comment> comment = cd.GetComment(pid);
+            List<Reply> reply = cd.GetReply(pid);
+
             ProfileDAO pro = new ProfileDAO();
             List<Customer> cus = new ArrayList<>();
             for (Comment c : comment) {
@@ -134,14 +138,14 @@ public class GetProductDetail extends HttpServlet {
                 }
             }
             
-            List<Reply> reply = cd.GetReply(pid);
-            
+ 
             String description = p.getDescription().replace("\n", "<br>").replace("\\n", "<br>");            
             request.setAttribute("description", description);           
             request.setAttribute("productDetail", p);
             request.setAttribute("comment", comment);
             request.setAttribute("customerList", cus);
             request.setAttribute("reply", reply);
+            request.setAttribute("shop", SO);
             request.getRequestDispatcher("ViewProductPage.jsp").forward(request, response);         
         } catch (Exception e) {
         }
