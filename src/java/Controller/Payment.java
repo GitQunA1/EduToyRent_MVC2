@@ -9,6 +9,7 @@ import DAO.CartDAO;
 import DAO.OrderDAO;
 import DAO.PaymentDAO;
 import Entity.Cart;
+import Entity.Customer;
 import Entity.User;
 import java.io.IOException;
 import java.util.List;
@@ -39,33 +40,53 @@ public class Payment extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            request.setCharacterEncoding("utf-8");            
-            String txtpoint = request.getParameter("txtUsedPoints");
-            String txtBank = request.getParameter("txtBank");
-            if(txtBank.isEmpty()){
-                request.setAttribute("sms", "Chọn phương thức thanh toán !!");
-                request.getRequestDispatcher("LetToPayment").forward(request, response);
-            }
-            String txtPayment = request.getParameter("txtPayment");
-            String bank = null;
-            if(txtBank.equals("1")){
-                bank = "Thanh toán bằng ngân hàng";
-            }else if(txtBank.equals("2")){
-                bank = "Thẻ tín dụng / thẻ ghi nợ";
-            }
-            float total = Float.parseFloat(txtPayment);
+            request.setCharacterEncoding("utf-8");
             HttpSession ss = request.getSession();
             User user = (User) ss.getAttribute("UserAccount");
-            OrderDAO od = new OrderDAO();
-            int oid = od.insertOrder(user.getUid(), total);
-            CartDAO cd = new CartDAO();
-            List<Cart> cart = cd.getCart(user);
-            od.insertOrderDetail(oid, cart);
-            
-            float point = Float.parseFloat(txtpoint);
-            PaymentDAO pd = new PaymentDAO();
-            int paid = pd.insertPayment(oid, total, point, bank);
-            pd.insertPDetail(paid, oid, cart);
+            HttpSession customer = request.getSession();
+            Customer cus = (Customer) customer.getAttribute("Customer");
+
+            if ((cus == null || cus.getAddress() == null || cus.getAddress().isEmpty()) || (user == null || user.getPhone() == null || user.getPhone().isEmpty())) {
+                request.setAttribute("addInfor", "Vui lòng điền đầy đủ thông tin trước khi thanh toán");
+                request.getRequestDispatcher("LetToPayment").forward(request, response);
+            } else {
+                
+                String txtpoint = request.getParameter("txtUsedPoints");
+                String txtBank = request.getParameter("txtBank");
+                String txtPayment = request.getParameter("txtPayment");
+                String ErrorPayment = "Thanh toán không thành công";
+                String bank = null;
+                if (txtBank.equals("1")) {
+                    bank = "Thanh toán bằng ngân hàng";
+                } else if (txtBank.equals("2")) {
+                    bank = "Thẻ tín dụng / thẻ ghi nợ";
+                }
+                float total = Float.parseFloat(txtPayment);
+
+                CartDAO cd = new CartDAO();
+                List<Cart> cart = cd.getCart(user);
+
+                OrderDAO od = new OrderDAO();
+                PaymentDAO pd = new PaymentDAO();
+
+                int oid = od.insertOrder(user.getUid(), total);
+                boolean check1 = od.insertOrderDetail(oid, cart);
+                if (check1) {
+                    float point = Float.parseFloat(txtpoint);
+                    int paid = pd.insertPayment(oid, total, point, bank);
+                    boolean check2 = pd.insertPDetail(paid, oid, cart);
+                    if (check2) {
+                        boolean check3 = cd.deleteAllCart(user.getUid());
+                        request.setAttribute("SuccessPayment", "Cảm ơn bạn đã thanh toán!");
+                    } else {
+                        request.setAttribute("ErrorPayment", ErrorPayment);
+                    }
+                } else {
+                    request.setAttribute("ErrorPayment", ErrorPayment);
+                }
+
+                request.getRequestDispatcher("LetToCart").forward(request, response);
+            }
         } catch (Exception e) {
         }
     }

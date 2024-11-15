@@ -78,12 +78,13 @@ public class ProductsByShop extends HttpServlet {
             fewProduct = getProductDAO.getfewProductsByShop(shop.getSoid());
             
             String status = request.getParameter("txtStatus");
-            if (status == null || status.isEmpty()) {
+            if (status == null || status.isEmpty()){
                 status = "1";
             }
             List<Product> list = new ArrayList<>();
             if (status.equals("1")) {
                 list.addAll(successList);
+                list.addAll(fewProduct);
             }
             if (status.equals("2")){
                 list.addAll(fewProduct);
@@ -101,7 +102,7 @@ public class ProductsByShop extends HttpServlet {
             request.setAttribute("list", list);
             request.setAttribute("ShopOwner", shop);
 
-            request.getRequestDispatcher("ShopPage.jsp").forward(request, response);
+            request.getRequestDispatcher("OwnerProduct.jsp").forward(request, response);
         } catch (IOException | IllegalStateException | ServletException e) {
         }
     }

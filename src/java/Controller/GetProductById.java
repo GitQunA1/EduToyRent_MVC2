@@ -8,7 +8,6 @@ package Controller;
 import DAO.GetProductDAO;
 import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +38,6 @@ public class GetProductById extends HttpServlet {
             request.setAttribute("product", product);
             request.getRequestDispatcher("ProductDetails.jsp").forward(request, response);
         }catch(Exception e){
-            
         }
     } 
 

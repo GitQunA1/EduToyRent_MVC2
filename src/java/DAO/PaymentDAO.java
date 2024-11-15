@@ -8,12 +8,14 @@ package DAO;
 import DB.DBUtils;
 import Entity.Cart;
 import Entity.FeePolicy;
+import Entity.PaymentDetail;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -28,7 +30,8 @@ public class PaymentDAO {
 
     public int insertPayment(int oid, float price, float point, String method) {
         try {
-            LocalDate currentDate = LocalDate.now();
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
             String query = " INSERT INTO [Payment] (OID, Amount, points, Method, Date) VALUES (?, ?, ?, ?, ?) ";
             conn = new DBUtils().getConnection();
@@ -37,7 +40,7 @@ public class PaymentDAO {
             ps.setFloat(2, price);
             ps.setFloat(3, point);
             ps.setString(4, method);
-            ps.setDate(5, Date.valueOf(currentDate));
+            ps.setTimestamp(5, Timestamp.valueOf(currentDateTime));
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
@@ -51,14 +54,18 @@ public class PaymentDAO {
         return 0;
     }
 
-    public void insertPDetail(int paid, int oid, List<Cart> cart) {
+    public boolean insertPDetail(int paid, int oid, List<Cart> cart) {
         for (Cart c : cart) {
 
             try {
                 int odid = getODID(oid, c.getPid(), c.getRentTime());
                 float deposit = Deposit(c.getTotal(), c.getRentTime());
                 String status = "Đã thanh toán";
-                LocalDate currentDate = LocalDate.now();
+                
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                String formattedDateTime = currentDateTime.format(formatter);
+                
                 String sql = "INSERT INTO [PDetail] (PAID, ODID, Price, Deposit, Refund_Shop, Refund_Cus, platform_fee, Date, Status) VALUES (?, ?, ?, ?, 0, 0, 0 ,? ,?)";
                 conn = new DBUtils().getConnection();
                 ps = conn.prepareStatement(sql);
@@ -66,12 +73,13 @@ public class PaymentDAO {
                 ps.setInt(2, odid);
                 ps.setFloat(3, c.getTotal());
                 ps.setFloat(4, deposit);
-                ps.setDate(5, java.sql.Date.valueOf(currentDate));
+                ps.setTimestamp(5, Timestamp.valueOf(currentDateTime));
                 ps.setString(6, status);
-                ps.executeUpdate();
+                int result =  ps.executeUpdate();
             } catch (Exception e) {
             }
         }
+        return true;
     }
 
     public float Deposit(float total, int rentTime) {
@@ -109,4 +117,31 @@ public class PaymentDAO {
         }
         return 0;
     }
+    
+    public PaymentDetail getPDetail(int odid){
+        String sql = "SELECT * FROM [PDetail] WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, odid);
+            rs = ps.executeQuery();
+            if (rs.next()) {                
+                int pdid = rs.getInt("PDID");
+                int paid = rs.getInt("PAID");
+                float price = rs.getFloat("Price");
+                float deposit = rs.getFloat("Deposit");
+                float refShop = rs.getFloat("Refund_Shop");
+                float refCus = rs.getFloat("Refund_Cus");
+                float flatformFee = rs.getFloat("platform_fee");
+                String date = rs.getString("Date");
+                String status = rs.getString("Status");
+                
+                PaymentDetail pd = new PaymentDetail(pdid, paid, odid, price, deposit, refShop, refCus, flatformFee, date, status);
+                return pd;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
 }

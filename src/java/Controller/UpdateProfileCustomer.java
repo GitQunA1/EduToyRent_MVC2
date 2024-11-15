@@ -65,7 +65,7 @@ public class UpdateProfileCustomer extends HttpServlet {
                 int row = dao.updateProfileCustomer(customer.getUid(), avatar, name, sex, birthday, address);
                 if (row > 0) {
                     request.setAttribute("successMessage", "Cập nhật hồ sơ thành công");
-                    Customer c = dao.ShowCustomer(user);
+                    Customer c = dao.ShowCustomer(user.getUid());
                     User u = dao.ShowUser(user.getUid());
                     HttpSession ss2 = request.getSession();
                     ss2.setAttribute("Customer", c);

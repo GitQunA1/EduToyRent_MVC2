@@ -107,7 +107,7 @@
                 <input type="file" name="fileAvatar" />
 
                 <label>Hoặc nhập URL ảnh đại diện:</label>
-                <input type="text" name="txtAvatarUrl" placeholder="Nhập URL ảnh đại diện..." />
+                <input type="text" name="txtAvatarUrl" value="<%= cus.getAvatar() %>" placeholder="Nhập URL ảnh đại diện..." />
 
                 <input type="hidden" name="action" value="UpdateProfile"/>
 

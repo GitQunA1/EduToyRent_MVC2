@@ -140,6 +140,22 @@ public class CartDAO {
         }
         return false;
     }
+    
+    public boolean deleteAllCart(int uid) {
+        String sql = "DELETE FROM [Cart] WHERE UID = ?";
+        try{ 
+            Connection conn = new DBUtils().getConnection();
+            if (conn != null) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, uid);
+                int rowsAffected = ps.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
 

@@ -19,7 +19,8 @@ public class ProductDAO {
         String sql = "INSERT INTO [Product] (SOID, Image, Name, Price, QSell, QRent, Age, Brand, Origin, Description, Category, Type, Status) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = DB.DBUtils.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DB.DBUtils.getConnection(); 
+            PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, soid);
             ps.setString(2, image);
             ps.setString(3, name);

@@ -13,7 +13,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,17 +26,17 @@ public class ProfileDAO {
     private PreparedStatement ptm = null;
     private ResultSet rs = null;
 
-    public Customer ShowCustomer(User user) {
+    public Customer ShowCustomer(int uid) {
+
         String sql = "SELECT * FROM [Customer] Where UID = ?";
         Customer cus = null;
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(sql);
-                ptm.setInt(1, user.getUid());
+                ptm.setInt(1, uid);
                 rs = ptm.executeQuery();
-                if (rs.next()) {
-                    int uid = rs.getInt("UID");
+                if(rs.next()){
                     String avatar = rs.getString("Avatar");
                     String name = rs.getString("Name");
                     String sex = rs.getString("Sex");
@@ -44,12 +45,42 @@ public class ProfileDAO {
                     int membership = rs.getInt("Membership");
                     cus = new Customer(uid, avatar, name, sex, birthday, address, membership);
                 }
-
+                
             }
+
         } catch (Exception e) {
         }
         return cus;
+
     }
+    
+    public List<Customer> getCustomer(){
+        String sql = "SELECT * FROM [Customer]";
+        List<Customer> cusList = new ArrayList<>();
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    int uid = rs.getInt("UID");
+                    String avatar = rs.getString("Avatar");
+                    String name = rs.getString("Name");
+                    String sex = rs.getString("Sex");
+                    Date birthday = rs.getDate("Birthday");
+                    String address = rs.getString("Address");
+                    int membership = rs.getInt("Membership");
+                    
+                    Customer cus = new Customer(uid, avatar, name, sex, birthday, address, membership);
+                    cusList.add(cus);
+                }
+            }
+            return cusList;
+        } catch (Exception e) {
+        }
+        return cusList;
+    }
+    
     public User ShowUser(int uid) {
         String sql = "SELECT * FROM [User] Where UID = ?";
         User u = null;

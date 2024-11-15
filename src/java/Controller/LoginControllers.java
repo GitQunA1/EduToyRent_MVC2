@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,15 +28,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginControllers", urlPatterns = {"/LoginControllers"})
 public class LoginControllers extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -53,7 +45,7 @@ public class LoginControllers extends HttpServlet {
                     ss.setAttribute("UserAccount", user);
 
                     ProfileDAO profile = new ProfileDAO();
-                    Customer cus = profile.ShowCustomer(user);
+                    Customer cus = profile.ShowCustomer(user.getUid());
                     HttpSession customer = request.getSession();
                     customer.setAttribute("Customer", cus);
 
@@ -72,9 +64,20 @@ public class LoginControllers extends HttpServlet {
                             HttpSession shopOwnerSession = request.getSession();
                             shopOwnerSession.setAttribute("ShopOwner", sa);
                         }
-                        request.getRequestDispatcher("ProductsByShop").forward(request, response);
-                    } else if (user.getRole().equals("S")) {
-
+                        request.getRequestDispatcher("OwnerIncome.jsp").forward(request, response);
+                    } else if (user.getRole().equals("SH")) {
+//                        GetShipperDAO shipper = new GetShipperDAO();
+//                        List<Shipper> shipperList = shipper.getShipperList();
+//                        Shipper ship = new Shipper();
+//                        for (Shipper sh : shipperList) {
+//                            if(sh.getUid() == cus.getUid())
+//                                ship = sh;
+//                        }
+//                        if(ship != null){
+//                            HttpSession Shipper = request.getSession();
+//                            Shipper.setAttribute("Shipper", ship);
+//                        }
+                        request.getRequestDispatcher("Shipping").forward(request, response);
                     }
 
                 } else {
@@ -131,3 +134,4 @@ public class LoginControllers extends HttpServlet {
     }// </editor-fold>
 
 }
+

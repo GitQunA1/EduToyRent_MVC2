@@ -10,6 +10,7 @@ import Entity.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,46 +20,47 @@ import java.util.List;
  */
 public class SearchProduct {
 
-    private List<Product> SearchByName;
-
-    public List<Product> SearchByName(String txtName) {
-        List<Product> SearchByName = new ArrayList<>(); // Khởi tạo danh sách sản phẩm
+    public List<Product> SearchByName(String txtName, int qRent, int qSell, int qStype) {
+        List<Product> searchResults = new ArrayList<>();
         try {
-            Connection conn = new DBUtils().getConnection(); // Kết nối cơ sở dữ liệu
+            // Kết nối với cơ sở dữ liệu
+            Connection conn = new DBUtils().getConnection();
             if (conn != null) {
-                String query = "SELECT * FROM Product WHERE [Name] LIKE ?";  
-                PreparedStatement ps = conn.prepareStatement(query);                
-                ps.setString(1, "%" + txtName + "%"); 
+                String query = String.format(
+                        "SELECT * FROM [Product] WHERE Name COLLATE Vietnamese_CI_AI LIKE N'%%%s%%' AND QRent = %d AND QSell >= %d AND Type = %d",
+                        txtName, qRent, qSell, qStype
+                );
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+         
 
-                ResultSet rs = ps.executeQuery(); // Thực thi truy vấn
-
-                // Duyệt qua các kết quả trả về
+                
                 while (rs.next()) {
                     int pid = rs.getInt("PID");
                     int soid = rs.getInt("SOID");
                     String image = rs.getString("Image");
                     String name = rs.getString("Name");
                     float price = rs.getFloat("Price");
-                    int qSell = rs.getInt("QSell");
-                    int qRent = rs.getInt("QRent");
+                    int qSellResult = rs.getInt("QSell");
+                    int qRentResult = rs.getInt("QRent");
                     int age = rs.getInt("Age");
                     String brand = rs.getString("Brand");
                     String origin = rs.getString("Origin");
                     String description = rs.getString("Description");
                     String category = rs.getString("Category");
-                    int type = rs.getInt("[Type]");
+                    int type = rs.getInt("Type");
                     String status = rs.getString("Status");
 
-                    // Tạo đối tượng Product
-                    Product product = new Product(pid, soid, image, name, price, qSell, qRent, age, brand, 
+                    // Tạo đối tượng Product từ kết quả truy vấn và thêm vào danh sách
+                    Product product = new Product(pid, soid, image, name, price, qSellResult, qRentResult, age, brand,
                             origin, description, category, type, status);
-                    SearchByName.add(product); // Thêm sản phẩm vào danh sách
+                    searchResults.add(product);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Để dễ dàng debug nếu có lỗi
+            e.printStackTrace();
         }
-        return SearchByName; // Trả về danh sách sản phẩm
+        return searchResults; 
     }
 
 }

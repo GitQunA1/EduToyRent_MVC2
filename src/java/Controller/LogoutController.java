@@ -39,7 +39,7 @@ public class LogoutController extends HttpServlet {
             }
         }catch(Exception e){
         }
-        request.getRequestDispatcher("MainAccount").forward(request, response);
+        request.getRequestDispatcher("ViewAdvertisingProducts").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

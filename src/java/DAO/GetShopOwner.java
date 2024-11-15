@@ -65,7 +65,7 @@ public class GetShopOwner {
     
     public List<ShopOwner> getShopList() {
         return shopList;
-    }
+    }   
     
     private Connection connection ;
     public List<ShopOwner> getShopsByIds(List<Integer> shopIds) throws Exception {
@@ -73,7 +73,7 @@ public class GetShopOwner {
         if (shopIds.isEmpty()) return shopOwners; // Nếu không có ID thì trả về danh sách rỗng
 
         // Tạo câu lệnh SQL
-        StringBuilder sql = new StringBuilder("SELECT * FROM Shop_Owner WHERE SOID IN (");
+        StringBuilder sql = new StringBuilder("SELECT * FROM Shop_Owner WHERE SOID IN (" );
         for (int i = 0; i < shopIds.size(); i++) {
             sql.append("?");
             if (i < shopIds.size() - 1) sql.append(", ");

@@ -19,13 +19,11 @@
                 background-color: white;
                 width: 80%;
                 height: auto;
-                
-                
                 padding-top: 135px;
                 padding-bottom: 30px;
             }
             .background_product_cart{
-                background-color: #E8E8E8;
+                background-color: #F5F5FA;
                 width: 1100px;
                 height: auto;
                 padding-right: 20px;
@@ -33,7 +31,8 @@
                 padding-bottom: 20px;
                 margin-left: 45px;
                 margin-bottom: 10px;
-                
+                border: 1.5px solid #333;
+                border-radius: 10px;
             }
             
             .shopOwner_cart{
@@ -104,6 +103,7 @@
                 width: 50px;
                 text-align: center;
                 height: 21px;
+                border-radius: 7px;
             }
             .quantity-btn{
                 margin-top: 20px;
@@ -218,7 +218,6 @@
                 display: flex;
                 align-items: center; 
                 justify-content: center; 
-                
             }
 
             /* CSS cho nội dung ở giữa */
@@ -409,6 +408,61 @@
                 background-color: #F34545;
                 color: white;
             }
+            .error_profile{
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                font-weight: bold;
+                color: red;
+            }
+            .background_success_payment{
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6); 
+                z-index: 2500;
+                display: flex;
+                align-items: center; 
+                justify-content: center;
+            }
+            .success_payment{
+                background-color: white;
+                width: 500px;
+                height: a;
+                border-radius: 10px;
+                padding-bottom: 50px;
+            }
+            .img_payment_success{
+                width: 106px;
+                height: 100px;
+                margin-left: 195px;
+               
+            }
+            .out_Success_payment{
+                width: 40px;
+                height: 40px;
+                z-index: 2500;
+            }
+            .content_success_payment{
+                display: flex;
+                justify-content: center;
+                font-size: 21px;
+            }
+            .success_payment input[type="submit"]{
+                width: 400px;
+                height: 35px;
+                border-radius: 5px;
+                margin-left: 50px;
+                margin-top: 30px;
+                margin-bottom: 30px;
+                border: none;
+                background-color: #D3D3D3;
+            }
+            .success_payment input[type="submit"]:hover{
+                cursor: pointer;
+            }
         </style>
         
     </head>
@@ -480,8 +534,7 @@
                                                 <div class="background_product_cart">
                                                     <div class="shopOwner_cart">
                                                         <img src="${o.avatar}"/>
-                                                        <a>${o.name}</a>
-          
+                                                        <a>${o.name}</a>  
                                                     </div>
                                                         <div class="channel"></div>
                                                         <div class="product_cart">
@@ -492,9 +545,9 @@
                                                                     <div class="content_product_Change_cart_bottom">
                                                                         <a class="price_cart">Giá: <fmt:formatNumber value="${p.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
                                                                         <form id="updateFormRent${c.caid}" action="MainController" method="post" class="botton_cart_rent">
-                                                                            <button type="button" class="quantity-btn" onclick="changeQuantity(-1, 'updateFormRent${c.caid}', 'rentQuantity${c.caid}')">-</button>
-                                                                            <input class="quantity-btn-text" type="text" id="rentQuantity${c.caid}" name="txtQuantity" value="${c.quantity}" readonly>
-                                                                            <button type="button" class="quantity-btn" onclick="changeQuantity(1, 'updateFormRent${c.caid}', 'rentQuantity${c.caid}')">+</button>
+                                                                            
+                                                                            <input class="quantity-btn-text" style="margin-top: 10px;" type="text" name="txtQuantity" value="${c.quantity}" readonly>
+                                                                            
                                                                             <input type="hidden" name="txtPrice" value="${p.price}">
                                                                             <input type="hidden" name="txtCAID" value="${c.caid}">
                                                                             <input type="hidden" name="action" value="updateCart">
@@ -601,7 +654,7 @@
                         <div class="Delivery_address">
                             <div class="topic_address">
                                 <a>Địa chỉ giao hàng</a>
-                                <a class="change_address" href="">Thay đổi</a>
+                                <a class="change_address" href="MainController?action=letProfile">Thay đổi</a>
                             </div>
                             <%  HttpSession sessions = request.getSession();
                                 User us = (User) sessions.getAttribute("UserAccount");
@@ -611,6 +664,9 @@
                                 <a><%= cus.getName()%>  (+84)<%= us.getPhone()%></a><br><br>
                                 <a><%= cus.getAddress()%></a>
                             </div>
+                            <c:if test="${not empty addInfor}">
+                                <a class="error_profile">${addInfor}</a>
+                            </c:if> 
                             <div class="horizontal_lines"></div>
                         </div>
 
@@ -720,7 +776,7 @@
                                         <a>Thẻ tín dụng / thẻ ghi nợ</a>
                                     </div>
                                     <div class="payment_choose_radio">      
-                                        <input type="radio" name="txtBank" value="1"><br><br>
+                                        <input type="radio" name="txtBank" value="1" checked><br><br>
                                         <input type="radio" name="txtBank" value="2">
                                     </div>
                                 </div>        
@@ -729,10 +785,24 @@
                                 </div>  
                             </form>
                         </div>
-                    </div>
+                    </div>                  
                 </div>       
         </c:if>        
-
+        
+        <c:if test="${not empty SuccessPayment}">      
+            <div class="background_success_payment">
+                <div class="success_payment">
+                    <a href="MainController?action=CartPage"><img class="out_Success_payment" src="Image/X.png"/></a><br>
+                    <img class="img_payment_success" src="Image/pss.jpg"/><br>
+                    <a class="content_success_payment">${SuccessPayment}</a> 
+                    <form action="MainController" method="post">
+                        <input type="hidden" value="InformationOrder" name="action" />
+                        <input type="submit" value="Xem đơn hàng" />
+                    </form>
+                    <a class="link_maine_cart" style="justify-content: center; display: flex;" href="MainController?action=home">Tiếp tục mua sắm</a>
+                </div>
+            </div>
+        </c:if>  
         <script src="JS/ChangeTimeCart.js"></script>
         <script src="JS/ChangeCartBuy.js"></script>
         <script src="JS/UsePoint.js"></script>

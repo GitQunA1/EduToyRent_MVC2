@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ShopNavigation
-    Created on : Nov 5, 2024, 9:06:55 PM
-    Author     : LENOVO
+    Document   : OwnerNavigation
+    Created on : Oct 19, 2024, 5:03:43 PM
+    Author     : Quyền
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,6 +24,7 @@
                 height: 120px; 
                 position: relative;
                 position: fixed;
+                z-index: 1000;
             }
             .logo_Navigation{ 
                 width: 75px;
@@ -72,12 +73,19 @@
                 border: none;
                 background-color: white;
             }
-            
+            .active_button {
+                background-color: #DCAC0C; /* Choose a color to indicate the active button */
+                color: #37A28F;
+                font-weight: bold;
+            }
+
+
 
         </style>
 
     </head>
     <body>
+
         <div class="backgrount_navigation">
             <div class="button_navigation">
                 <a href="MainController?action=home">
@@ -86,19 +94,24 @@
                 <div class="shop_feature">
                     <form action="MainController" method="post">
                         <input type="hidden" value="revenue" name="action"/>
-                        <input type="submit" value="Doanh thu"/>
+                        <input type="submit" value="Doanh thu" 
+                               class="<%= "revenue".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
-                    <form action="MainController?action=OwnerProduct" method="post">
+                    <form action="MainController" method="post">
                         <input type="hidden" value="ownerProduct" name="action"/>
-                        <input type="submit" value="Sản phẩm"/>
+                        <input type="submit" value="Sản phẩm" 
+                               class="<%= "ownerProduct".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
                     <form action="MainController" method="post">
                         <input type="hidden" value="ownerOrder" name="action"/>
-                        <input type="submit" value="Đơn hàng"/>
+                        <input type="submit" value="Đơn hàng" 
+                               class="<%= "ownerOrder".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
+
                     <form action="MainController" method="post">
                         <input type="hidden" value="owneRegister" name="action"/>
-                        <input type="submit" value="Thêm sản phẩm"/>
+                        <input type="submit" value="Thêm sản phẩm" 
+                               class="<%= "owneRegister".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
                 </div>
                 <form action="MainController" method="post">
@@ -108,8 +121,8 @@
                     <input type="hidden" value="" name="action"/> 
                 </form>
                 <form class="button_acc" action="MainController" method="post">
-                    <input type="hidden" value="AccountPage" name="action"/>
-                    <input type="submit" value="Tài khoản"/>
+                    <input type="hidden" name="action" value="LogoutController"/>
+                    <input type="submit" value="Đăng xuất"/>
                 </form>
             </div>
         </div>

@@ -5,12 +5,18 @@
  */
 package Controller;
 
+import DAO.CommentDAO;
 import DAO.GetProductDAO;
 import DAO.GetShopOwner;
 import DAO.HighIncomeToday;
+import DAO.ProfileDAO;
+import Entity.Comment;
+import Entity.Customer;
 import Entity.Product;
+import Entity.Reply;
 import Entity.ShopOwner;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,42 +52,100 @@ public class GetProductDetail extends HttpServlet {
                 if(product.getPid()==(pid))
                     p = product;
             }
+            List<Product> listproduct = new ArrayList<>();
             
-            HighIncomeToday hit = new HighIncomeToday();
             int SOID = p.getSoid();
-            List<Product> highIncList = hit.HighIncList(SOID);
-            if(highIncList.size()<7){
-                List<Product> anotherList = hit.getAnother(SOID);
-                for (Product p1 : anotherList) {
-                    boolean check = true;
-                    for (Product p2 : highIncList) {
-                        if(p2.getPid() == p1.getPid()){
-                            check = false;
-                            break;
-                        }   
-                    }
-                    if(highIncList.size()>=7)
-                        break;
-                    if(p1.getPid()== p.getPid())
-                        check = false;
-                    if(check == true )
-                        highIncList.add(p1);                  
-                }
-            }
-            
             GetShopOwner gso = new GetShopOwner();
             List<ShopOwner> shopList = gso.getShopList();
             ShopOwner SO = new ShopOwner();
             for (ShopOwner shopOwner : shopList) {
-                if(shopOwner.getSoid() == SOID)
+                if (shopOwner.getSoid() == SOID) {
                     SO = shopOwner;
+                }
             }
             
-            request.setAttribute("shop", SO);
+            
+            if (p.getqSell() > 0 && p.getType() == 1) {
+                
+                HighIncomeToday hit = new HighIncomeToday();
+                
+                List<Product> highIncList = hit.HighIncList(SOID);
+                if (highIncList.size() < 7) {
+                    List<Product> anotherList = hit.getAnother(SOID);
+                    for (Product p1 : anotherList) {
+                        boolean check = true;
+                        for (Product p2 : highIncList) {
+                            if (p2.getPid() == p1.getPid()) {
+                                check = false;
+                                break;
+                            }
+                        }
+                        if (highIncList.size() >= 7) {
+                            break;
+                        }
+                        if (p1.getPid() == p.getPid()) {
+                            check = false;
+                        }
+                        if (check == true) {
+                            highIncList.add(p1);
+                        }
+                    }
+                }                
+                
+                request.setAttribute("highIncList", highIncList);
+            }else if(p.getqSell() == 1 && p.getType() == 2){
+                int count = 0;
+                for (Product product : successfulProducts) {
+                    if (product.getqSell() == 1 && product.getType() == 2 && product.getPid() != pid) {
+                        count++;
+                        if (count <= 7) {
+                            listproduct.add(product);
+                        }
+
+                    }
+                }
+                request.setAttribute("listproduct", listproduct);
+            }else if(p.getqRent() == 1 && p.getType() == 2){
+                
+                int count = 0;
+                for (Product product : successfulProducts) {
+                    if (product.getqRent()== 1 && product.getType() == 2 && product.getPid() != pid) {
+                        count++;
+                        if (count <= 7) {
+                            listproduct.add(product);
+                        }
+
+                    }
+                }
+                request.setAttribute("listproduct", listproduct);
+            }
+            
+            CommentDAO cd = new CommentDAO();
+            List<Comment> comment = cd.GetComment(pid);
+            List<Reply> reply = cd.GetReply(pid);
+
+            ProfileDAO pro = new ProfileDAO();
+            List<Customer> cus = new ArrayList<>();
+            for (Comment c : comment) {
+                if(cus.isEmpty()){
+                    cus.add(pro.ShowCustomer(c.getUid()));
+                }
+                for (Customer cu : cus) {
+                    if(c.getUid()!=cu.getUid()){
+                        cus.add(pro.ShowCustomer(c.getUid()));
+                        break;
+                    }
+                }
+            }
+            
+ 
             String description = p.getDescription().replace("\n", "<br>").replace("\\n", "<br>");            
-            request.setAttribute("description", description);
-            request.setAttribute("highIncList", highIncList);
+            request.setAttribute("description", description);           
             request.setAttribute("productDetail", p);
+            request.setAttribute("comment", comment);
+            request.setAttribute("customerList", cus);
+            request.setAttribute("reply", reply);
+            request.setAttribute("shop", SO);
             request.getRequestDispatcher("ViewProductPage.jsp").forward(request, response);         
         } catch (Exception e) {
         }

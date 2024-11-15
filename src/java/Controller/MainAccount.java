@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import Entity.Customer;
 import Entity.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -37,6 +36,7 @@ public class MainAccount extends HttpServlet {
         try{
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("UserAccount");
+            
             if(user == null){
                request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
             }else{

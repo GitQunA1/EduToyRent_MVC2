@@ -14,7 +14,6 @@ public class PaymentDetail {
     private int paid;
     private int odid;
     private float price;
-    private float points;
     private float deposit;
     private float refundShop;
     private float refundCus;
@@ -25,12 +24,11 @@ public class PaymentDetail {
     public PaymentDetail() {
     }
 
-    public PaymentDetail(int pdid, int paid, int odid, float price, float points, float deposit, float refundShop, float refundCus, float platformFee, String date, String status) {
+    public PaymentDetail(int pdid, int paid, int odid, float price, float deposit, float refundShop, float refundCus, float platformFee, String date, String status) {
         this.pdid = pdid;
         this.paid = paid;
         this.odid = odid;
         this.price = price;
-        this.points = points;
         this.deposit = deposit;
         this.refundShop = refundShop;
         this.refundCus = refundCus;
@@ -69,14 +67,6 @@ public class PaymentDetail {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public float getPoints() {
-        return points;
-    }
-
-    public void setPoints(float points) {
-        this.points = points;
     }
 
     public float getDeposit() {
@@ -126,6 +116,7 @@ public class PaymentDetail {
     public void setStatus(String status) {
         this.status = status;
     }
+
     
     
 }
