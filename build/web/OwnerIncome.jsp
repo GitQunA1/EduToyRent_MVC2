@@ -5,15 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản lý Sản phẩm</title>
         <style>
-
-
-
             body {
                 background-color: #f2f2f2;
             }
@@ -163,7 +161,6 @@
         </style>
     </head>
     <body>
-
         <jsp:include page="OwnerNavigation.jsp">
             <jsp:param name="currentPage" value="revenue" />
         </jsp:include>
@@ -171,63 +168,62 @@
         <div class="content">
             <!-- Các nút lọc thời gian -->
             <div class="filter-buttons">
-                <button class="filter-button">hôm nay</button>
-                <button class="filter-button">hôm qua</button>
-                <button class="filter-button">7 ngày</button>
-                <button class="filter-button">tùy chỉnh</button>
+                <form action="YourServletURL" method="GET">
+                    <button class="filter-button" type="submit" name="timePeriod" value="today">Hôm nay</button>
+                    <button class="filter-button" type="submit" name="timePeriod" value="yesterday">Hôm qua</button>
+                    <button class="filter-button" type="submit" name="timePeriod" value="last7days">7 ngày</button>
+                    <!-- Tùy chỉnh -->
+                </form>
             </div>
 
             <!-- Ô hiển thị doanh thu và đơn hàng -->
             <div class="info-box-container">
+                <!-- Tổng doanh thu -->
                 <div class="info-box">
-                    <p>doanh thu</p>
-                    <h2>1,000,000 Đ</h2>
+                    <p>Doanh thu</p>
+                    <h2>
+                        ${totalSellIncome} Đ
+                    </h2>
                 </div>
+                <!-- Tổng số lượng đã bán -->
                 <div class="info-box">
-                    <p>đơn hàng bán</p>
-                    <h2>100</h2>
+                    <p>Đơn hàng bán</p>
+                    <h2>
+                        ${totalSellQuantity}
+                    </h2>
                 </div>
+                <!-- Tổng số lượng đã cho thuê -->
                 <div class="info-box">
-                    <p>đơn hàng cho thuê</p>
-                    <h2>15</h2>
+                    <p>Đơn hàng cho thuê</p>
+                    <h2>
+                        ${totalRentQuantity}
+                    </h2>
                 </div>
             </div>
 
-            <!-- Phần Xếp hạng sản phẩm -->
             <div class="product-ranking">
                 <h3>Xếp hạng sản phẩm</h3>
-
-                <!-- Sản phẩm mẫu 1 -->
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <p class="pid">PID: P93768909</p>
-                        <img src="https://thebookland.vn/contents/1670045337198_Mathlink%20Cubes%20Numberblocks%20%201-10%20(1).jpg" alt="Xếp Hình Demo" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="product-title">Xếp Hình Demo</h4>
-                        <div class="product-details">
-                            <div><strong>Doanh thu:</strong> 1,000,000</div>
-                            <div><strong>Số lượng đã bán:</strong> 10</div>
-                            <div><strong>Số lượng đã cho thuê:</strong> 8</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sản phẩm mẫu 2 -->
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <p class="pid">PID: P93768910</p>
-                        <img src="https://thebookland.vn/images/1689223695931_BrainBolt%20Genius%20(2).jpg" alt="Xếp Hình Tháp" class="product-image">
-                    </div>
-                    <div class="product-info">
-                        <h4 class="product-title">Xếp Hình Tháp</h4>
-                        <div class="product-details">
-                            <div><strong>Doanh thu:</strong> 500,000</div>
-                            <div><strong>Số lượng đã bán:</strong> 10</div>
-                            <div><strong>Số lượng đã cho thuê:</strong> 8</div>
-                        </div>
-                    </div>
-                </div>
+                <c:forEach var="income" items="${incomeList}">
+                    <!-- Duyệt qua productList để tìm sản phẩm với PID khớp -->
+                    <c:forEach var="product" items="${productList}">
+                        <c:if test="${income.pid == product.pid}">
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <p class="pid">PID: ${income.pid}</p>
+                                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                                </div>
+                                <div class="product-info">
+                                    <h4 class="product-title">${product.name}</h4>
+                                    <div class="product-details">
+                                        <div><strong>Doanh thu:</strong> ${income.incSell}</div>
+                                        <div><strong>Số lượng đã bán:</strong> ${income.qSell}</div>
+                                        <div><strong>Số lượng đã cho thuê:</strong> ${income.qRent}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
             </div>
         </div>
     </body>

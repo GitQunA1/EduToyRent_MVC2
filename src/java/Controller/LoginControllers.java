@@ -64,7 +64,7 @@ public class LoginControllers extends HttpServlet {
                             HttpSession shopOwnerSession = request.getSession();
                             shopOwnerSession.setAttribute("ShopOwner", sa);
                         }
-                        request.getRequestDispatcher("OwnerIncome.jsp").forward(request, response);
+                        request.getRequestDispatcher("GetIncomeProduct").forward(request, response);
                     } else if (user.getRole().equals("SH")) {
 //                        GetShipperDAO shipper = new GetShipperDAO();
 //                        List<Shipper> shipperList = shipper.getShipperList();

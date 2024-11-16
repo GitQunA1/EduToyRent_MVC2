@@ -93,7 +93,7 @@
                 </a>
                 <div class="shop_feature">
                     <form action="MainController" method="post">
-                        <input type="hidden" value="revenue" name="action"/>
+                        <input type="hidden" value="revenueProduct" name="action"/>
                         <input type="submit" value="Doanh thu" 
                                class="<%= "revenue".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>
@@ -109,7 +109,7 @@
                     </form>
 
                     <form action="MainController" method="post">
-                        <input type="hidden" value="owneRegister" name="action"/>
+                        <input type="hidden" value="ownerRegister" name="action"/>
                         <input type="submit" value="Thêm sản phẩm" 
                                class="<%= "owneRegister".equals(request.getParameter("currentPage")) ? "active_button" : ""%>"/>
                     </form>

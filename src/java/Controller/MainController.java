@@ -115,6 +115,9 @@ public class MainController extends HttpServlet {
             case "viewReport":
                 url = "ViewReport";
                 break;
+            case "revenueProduct":
+                url = "GetIncomeProduct";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 
