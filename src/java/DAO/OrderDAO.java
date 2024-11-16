@@ -181,6 +181,30 @@ public class OrderDAO {
         }
         return orderDetailsOwner;
     }
+    
+    public OrderDetail GetPIDByODID(int odid){
+        String sql = "SELECT PID FROM [Order_Detail] WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, odid);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                int oid = rs.getInt("OID");
+                int soid = rs.getInt("SOID");
+                int pid = rs.getInt("PID");
+                int quantity = rs.getInt("Quantity");
+                int rentTime = rs.getInt("TimeRent");
+                String dateStart = rs.getString("DateStart");
+                String dateEnd = rs.getString("DateEnd");
+                int status = rs.getInt("Status");
+                OrderDetail od = new OrderDetail(odid, oid, soid, pid, quantity, rentTime, dateStart, dateEnd, status);
+                return od;
+            }   
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
     public boolean updateOrderDetail(int odid, int status) {
         String sql = "UPDATE [Order_Detail] SET Status = ? WHERE ODID = ?";
