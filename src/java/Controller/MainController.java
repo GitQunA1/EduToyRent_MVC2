@@ -112,6 +112,9 @@ public class MainController extends HttpServlet {
             case "ProductDetails":
                 url = "GetProductById";
                 break;
+            case "viewReport":
+                url = "ViewReport";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 

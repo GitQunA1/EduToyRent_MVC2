@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        
+
         <style>
             body{
                 background-color: #F5F5FA;
@@ -53,7 +53,7 @@
                 padding-bottom: 20px;
                 z-index: -100;
                 padding-top: 190px;
-                
+
             }
             .backgrount_product{
                 background-color: white;
@@ -68,7 +68,7 @@
                 display: flex;
                 position: relative;
             }
-            
+
             .Shop_Order_product img{
                 width: 40px;
                 height: 40px;
@@ -131,13 +131,36 @@
                 margin-right: -800px;
                 color: #209897;
             }
+            .background_report{
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6); /* Màu đen mờ */
+                z-index: 2000;
+                display: flex;
+                align-items: center; 
+                justify-content: center;
+            }
+            .background_content_report{
+                background-color: white;
+                width: 500px;
+                height: 400px;
+                border-radius: 10px;
+            }
+            .background_content_report h3{
+                display: flex;
+                justify-content: center;
+
+            }
         </style>
-        
+
     </head>
     <body>
-       
+
         <%@include  file="UserNavigation.jsp" %>
-         <%--trạng thái đơn hàng xử lý txtcontent . xử lý MainController: action=InformationOrder --%>
+        <%--trạng thái đơn hàng xử lý txtcontent . xử lý MainController: action=InformationOrder --%>
         <div class="content_order">
             <a class="active" href="MainController?filter=all&action=InformationOrder&txtcontent=0">Tất cả</a>
             <a href="MainController?filter=pending&action=InformationOrder&txtcontent=1">Chờ vận chuyển</a>
@@ -148,39 +171,39 @@
             <a href="MainController?filter=canceled&action=InformationOrder&txtcontent=7">Hủy đơn</a>
             <a href="MainController?filter=history&action=InformationOrder&txtcontent=10">Lịch sử</a>
         </div>
-        
-         <c:choose>
-             <c:when test="${ not empty orderDetail }">
-                <div class="background_coler_Product">
-                     <c:forEach var="od" items="${orderDetail}">
-                         <c:forEach var="pd" items="${pdetail}">
-                             <c:if test="${od.odid == pd.odid}">
-                                 <c:forEach var="pr" items="${product}">
-                                     <c:if test="${od.pid == pr.pid}">
-                                         <c:forEach var="so" items="${shop}">
-                                             <c:if test="${so.soid == od.soid}">
-                                                 <div class="backgrount_product">
-                                                     <div class="Shop_Order_product">
 
-                                                         <img src="${so.avatar}" />
-                                                         <a>${so.name}</a>
-                                                         <p>
-                                                             <c:choose>
-                                                                 <c:when test="${od.status == 1}">Chờ vận chuyển</c:when>
-                                                                 <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
-                                                                 <c:when test="${od.status == 3}">Đang Thuê</c:when>
-                                                                 <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
-                                                                 <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
-                                                                 <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
-                                                             </c:choose>
-                                                         </p>
-                                                     </div>
-                                                     <div class="line_order"></div>
-                                                     <div class="product_order">
-                                                         <img src="${pr.image}" />
+        <c:choose>
+            <c:when test="${ not empty orderDetail }">
+                <div class="background_coler_Product">
+                    <c:forEach var="od" items="${orderDetail}">
+                        <c:forEach var="pd" items="${pdetail}">
+                            <c:if test="${od.odid == pd.odid}">
+                                <c:forEach var="pr" items="${product}">
+                                    <c:if test="${od.pid == pr.pid}">
+                                        <c:forEach var="so" items="${shop}">
+                                            <c:if test="${so.soid == od.soid}">
+                                                <div class="backgrount_product">
+                                                    <div class="Shop_Order_product">
+
+                                                        <img src="${so.avatar}" />
+                                                        <a>${so.name}</a>
+                                                        <p>
+                                                            <c:choose>
+                                                                <c:when test="${od.status == 1}">Chờ vận chuyển</c:when>
+                                                                <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
+                                                                <c:when test="${od.status == 3}">Đang Thuê</c:when>
+                                                                <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
+                                                                <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
+                                                                <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
+                                                            </c:choose>
+                                                        </p>
+                                                    </div>
+                                                    <div class="line_order"></div>
+                                                    <div class="product_order">
+                                                        <img src="${pr.image}" />
                                                         <div class="content_product_order">
-                                                             <a>${pr.name}</a>
-                                                             <div class="order_PriceAndQuantity">
+                                                            <a>${pr.name}</a>
+                                                            <div class="order_PriceAndQuantity">
                                                                 <a>Giá: <fmt:formatNumber value="${pd.price}" pattern="#,###" /> đ</a>
                                                                 <a>Số lượng: ${od.quantity}</a>
                                                                 <c:choose>
@@ -194,34 +217,50 @@
                                                                         <a>Thời gian thuê: 1 tháng</a>
                                                                     </c:when>
                                                                 </c:choose>
-                                                             </div>
+                                                            </div>
                                                             <c:if test="${od.status == 9}">
                                                                 <a class="review_product" href="">Đánh giá sản phẩm</a>
                                                             </c:if>
-                                                         </div>
-                                                     </div>
-                                                 </div> 
-                                             </c:if>                                   
-                                         </c:forEach>
-                                     </c:if>
-                                 </c:forEach>
-                             </c:if>
-                         </c:forEach>
-                     </c:forEach>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </c:if>                                   
+                                        </c:forEach>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
+                        </c:forEach>
+                    </c:forEach>
 
-                 </div>
+                </div>
 
-             </c:when>
-             <c:otherwise>
-                 <a style="margin-top: 500px; z-index: 100;">trống</a>
-             </c:otherwise>
-         </c:choose>
-
-
+            </c:when>
+            <c:otherwise>
+                <a style="margin-top: 500px; z-index: 100;">trống</a>
+            </c:otherwise>
+        </c:choose>
+        
+            <form action="MainController" method="post">
+                <input type="hidden" value="viewReport" name="action"/>
+                <input type="hidden" value="${od.odid}" name="txtODID"/>
+                <input class="view_Report" type="submit" value="Xem báo cáo"/>
+            </form>
+              <c:if test="${od.status == 6}">  
+            <div class="background_report">
+                <div class="background_content_report">
+                    <h3>Báo cáo thiệt hại</h3>
+                    <a>Giá thuê: ${rentFee}</a>
+                    <a>Tiền cọc: ${deposit}</a>
+                    <a>Thiệt hại: ${damaged}%</a>
+                    <a>Cần đền bù: ${compensation}</a>
+                    <a>Tiền trả lại: ${deposit-compensation}</a>
+                </div>
+            </div>      
+        </c:if>
 
 
 
         <script src="JS/ButtonAuto.js"></script>
-       
+
     </body>
 </html>
