@@ -80,7 +80,7 @@
                 <a>Giúp bạn có trải nghiệm tốt hơn, dễ dàng quản lý đăng kí sản phẩm và tìm nhanh <br> thông tin theo dõi đơn hàng đã thanh toán.</a>
                
                 <%-- form dăng kí tài khoản xử lý thông tin txtEmail, txtName, txtPassword, confirmPassword.  xử lý trong Maincontroller: value="registerAccount" name="action"--%>
-                <form action="" method="post">
+                <form action="MainController" method="post">
                     <input type="text" name="txtEmail" placeholder="Email" required/><br>
                     <input type="text" name="txtName" placeholder="Họ và tên" required/><br>
                     <input type="text" name="txtPassword" placeholder="mật khẩu" required/><br>

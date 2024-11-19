@@ -45,56 +45,82 @@ public class GetIncomeProduct extends HttpServlet {
             HttpSession session = request.getSession();
             ShopOwner shop = (ShopOwner) session.getAttribute("ShopOwner");
             String timePeriod = request.getParameter("timePeriod");
-            if (timePeriod == null) {
-                timePeriod = "today";
-            }
-            LocalDate startDate = null;
-            LocalDate endDate = LocalDate.now();
-
-            switch (timePeriod) {
-                case "today":
-                    startDate = endDate;
-                    break;
-                case "yesterday":
-                    startDate = endDate.minusDays(1);
-                    endDate = endDate.minusDays(1);
-                    break;
-                case "last7days":
-                    startDate = endDate.minusDays(6);  //này là 7 ngày bao gồm hiện tại
-                    break;
-                default:
-                    startDate = endDate;
-                    break;
-            }
 
             IncomeDAO incomeDAO = new IncomeDAO();
             GetProductDAO getProductDAO = new GetProductDAO();
 
+            List<Product> list = getProductDAO.getListProductBySoid(shop.getSoid());
             List<Product> productList = new ArrayList<>();
-            List<Income> incomeList = incomeDAO.getListIncomeByDate(shop.getSoid(), startDate, endDate);
+            List<Income> incomeList = new ArrayList<>();
 
-            for (Income income : incomeList) {
-                int pid = income.getPid();
-                Product product = getProductDAO.getProductById(pid);
-                productList.add(product);
+            double totalIncome = 0;
+            double totalSellIncome = 0;
+            double totalRentIncome = 0;
+            int totalSellQuantity = 0;
+            int totalRentQuantity = 0;
+
+            if (timePeriod == null || timePeriod.equals("all")) {
+                productList = list;
+
+                for (Product product : productList) {
+                    Income income = incomeDAO.getIncomeByProductId(shop.getSoid(), product.getPid());
+                    if (income != null) {
+                        incomeList.add(income);
+                        totalSellIncome += income.getIncSell();
+                        totalRentIncome += income.getIncRent();
+                        totalSellQuantity += income.getqSell();
+                        totalRentQuantity += income.getqRent();
+                    }
+                }
+                totalIncome = totalRentIncome + totalSellIncome;
+            } else {
+                LocalDate startDate = null;
+                LocalDate endDate = LocalDate.now();
+
+                switch (timePeriod) {
+                    case "today":
+                        startDate = endDate;
+                        break;
+                    case "yesterday":
+                        startDate = endDate.minusDays(1);
+                        endDate = endDate.minusDays(1);
+                        break;
+                    case "last7days":
+                        startDate = endDate.minusDays(6); // Bao gồm ngày hiện tại
+                        break;
+                    default:
+                        startDate = endDate;
+                        break;
+                }
+
+                incomeList = incomeDAO.getListIncomeByDate(shop.getSoid(), startDate, endDate);
+
+                for (Income income : incomeList) {
+                    int pid = income.getPid();
+                    Product product = getProductDAO.getProductById(pid);
+                    if (product != null) {
+                        productList.add(product);
+                    }
+                }
+
+                totalSellIncome = incomeList.stream()
+                        .mapToDouble(Income::getIncSell).sum();
+                totalRentIncome = incomeList.stream()
+                        .mapToDouble(Income::getIncRent).sum();
+                totalSellQuantity = incomeList.stream()
+                        .mapToInt(Income::getqSell).sum();
+                totalRentQuantity = incomeList.stream()
+                        .mapToInt(Income::getqRent).sum();
+                totalIncome = totalRentIncome + totalSellIncome;
             }
 
-            double totalSellIncome = incomeList.stream()
-                    .mapToDouble(Income::getIncSell).sum();
-            double totalRentIncome = incomeList.stream()
-                    .mapToDouble(Income::getIncRent).sum();
-            int totalSellQuantity = incomeList.stream()
-                    .mapToInt(Income::getqSell).sum();
-            int totalRentQuantity = incomeList.stream()
-                    .mapToInt(Income::getqRent).sum();
-
-            session.setAttribute("totalSellIncome", totalSellIncome);
-            session.setAttribute("totalRentIncome", totalRentIncome);
+            session.setAttribute("totalIncome", totalIncome);
             session.setAttribute("totalSellQuantity", totalSellQuantity);
             session.setAttribute("totalRentQuantity", totalRentQuantity);
 
             session.setAttribute("incomeList", incomeList);
             session.setAttribute("productList", productList);
+
             request.getRequestDispatcher("OwnerIncome.jsp").forward(request, response);
         } catch (Exception e) {
         }

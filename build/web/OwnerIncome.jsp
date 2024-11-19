@@ -168,10 +168,11 @@
         <div class="content">
             <!-- Các nút lọc thời gian -->
             <div class="filter-buttons">
-                <form action="YourServletURL" method="GET">
+                <form action="GetIncomeProduct" method="GET">
                     <button class="filter-button" type="submit" name="timePeriod" value="today">Hôm nay</button>
                     <button class="filter-button" type="submit" name="timePeriod" value="yesterday">Hôm qua</button>
                     <button class="filter-button" type="submit" name="timePeriod" value="last7days">7 ngày</button>
+                    <button class="filter-button" type="submit" name="timePeriod" value="all">Tất cả</button>
                     <!-- Tùy chỉnh -->
                 </form>
             </div>
@@ -182,7 +183,7 @@
                 <div class="info-box">
                     <p>Doanh thu</p>
                     <h2>
-                        ${totalSellIncome} Đ
+                        ${totalIncome} Đ
                     </h2>
                 </div>
                 <!-- Tổng số lượng đã bán -->
@@ -215,7 +216,15 @@
                                 <div class="product-info">
                                     <h4 class="product-title">${product.name}</h4>
                                     <div class="product-details">
-                                        <div><strong>Doanh thu:</strong> ${income.incSell}</div>
+                                        <div>
+                                            <strong>Doanh thu:</strong> 
+                                            <c:if test="${income.incSell > 0}">
+                                                ${income.incSell}
+                                            </c:if>
+                                            <c:if test="${income.incSell <= 0 && income.incRent > 0}">
+                                                ${income.incRent}
+                                            </c:if>
+                                        </div>
                                         <div><strong>Số lượng đã bán:</strong> ${income.qSell}</div>
                                         <div><strong>Số lượng đã cho thuê:</strong> ${income.qRent}</div>
                                     </div>

@@ -118,6 +118,9 @@ public class MainController extends HttpServlet {
             case "revenueProduct":
                 url = "GetIncomeProduct";
                 break;
+            case "registerAccount":
+                url = "RegisterController";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 
