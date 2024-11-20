@@ -183,7 +183,7 @@ public class OrderDAO {
     }
     
     public OrderDetail GetPIDByODID(int odid){
-        String sql = "SELECT PID FROM [Order_Detail] WHERE ODID = ?";
+        String sql = "SELECT * FROM [Order_Detail] WHERE ODID = ?";
         try {
             conn = new DBUtils().getConnection();
             ps = conn.prepareStatement(sql);

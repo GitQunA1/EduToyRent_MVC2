@@ -125,9 +125,8 @@
             }
             .review_product{
                 position: absolute;
-                bottom: -70px;
                 margin-left: 600px;
-                z-index: 1000;
+                z-index: 100;
                 margin-right: -800px;
                 color: #209897;
             }
@@ -148,11 +147,38 @@
                 width: 500px;
                 height: 400px;
                 border-radius: 10px;
+                font-family: arial;
             }
             .background_content_report h3{
                 display: flex;
                 justify-content: center;
-
+                font-size: 20px;
+                margin-bottom: 40px;    
+            }
+            .background_content_report a{
+                display: block;
+                font-size: 18px;
+                margin-left: 20px;
+                margin-bottom: 20px;
+            }
+            .background_content_report form{
+                display: flex;
+                justify-content: center;
+                
+            }
+            .view_Report{
+                margin-left: 600px;
+                z-index: 101;
+                margin-right: -800px;
+                position: absolute;
+            }
+            .report_info img{
+                width: 150px;
+                height: 180px;
+            }
+            .report_info{
+                display: flex;
+                margin-bottom: 30px;
             }
         </style>
 
@@ -192,7 +218,7 @@
                                                                 <c:when test="${od.status == 1}">Chờ vận chuyển</c:when>
                                                                 <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
                                                                 <c:when test="${od.status == 3}">Đang Thuê</c:when>
-                                                                <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
+                                                                <c:when test="${od.status == 9 || od.status == 10}">Hoàn thành</c:when>
                                                                 <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
                                                                 <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
                                                             </c:choose>
@@ -221,6 +247,14 @@
                                                             <c:if test="${od.status == 9}">
                                                                 <a class="review_product" href="">Đánh giá sản phẩm</a>
                                                             </c:if>
+                                                            <c:if test="${od.status == 6}">
+                                                                <form action="MainController" method="post">
+                                                                    <input type="hidden" value="viewReport" name="action" />
+                                                                    <input type="hidden" value="${od.odid}" name="txtODID" />
+                                                                    <input class="view_Report" type="submit" value="Xem báo cáo" />
+                                                                </form>
+
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                 </div> 
@@ -239,25 +273,38 @@
                 <a style="margin-top: 500px; z-index: 100;">trống</a>
             </c:otherwise>
         </c:choose>
-        
-            <form action="MainController" method="post">
-                <input type="hidden" value="viewReport" name="action"/>
-                <input type="hidden" value="${od.odid}" name="txtODID"/>
-                <input class="view_Report" type="submit" value="Xem báo cáo"/>
-            </form>
-              <c:if test="${od.status == 6}">  
-            <div class="background_report">
-                <div class="background_content_report">
-                    <h3>Báo cáo thiệt hại</h3>
-                    <a>Giá thuê: ${rentFee}</a>
-                    <a>Tiền cọc: ${deposit}</a>
-                    <a>Thiệt hại: ${damaged}%</a>
-                    <a>Cần đền bù: ${compensation}</a>
-                    <a>Tiền trả lại: ${deposit-compensation}</a>
+        <c:forEach var="odi" items="${orderDetail}">
+            <c:if test="${not empty rentFee and ODID == odi.odid}">
+                <div class="background_report">
+                    <div class="background_content_report">
+                        <h3>Báo cáo thiệt hại</h3>
+                        <div class="report_info">
+                            <c:forEach var="prd" items="${product}">
+                                <c:if test="${odi.pid == prd.pid}">
+                                <img src="${prd.image}" />
+                                </c:if>
+                            </c:forEach>
+                        
+                        <div>
+                        <a>Giá thuê: <fmt:formatNumber value="${rentFee}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        <a>Tiền cọc: <fmt:formatNumber value="${deposit}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        <a>Thiệt hại: ${damaged}%</a>
+                        <a>Cần đền bù: <fmt:formatNumber value="${compensation}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        <a>Tiền trả lại: <fmt:formatNumber value="${deposit - compensation}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        </div>
+                        </div>
+                        <form class="accept" action="MainController" method="post">
+                            <input type="hidden" value="UpdateOrder" name="action"/>
+                            <input type="hidden" value="${odi.odid}" name="txtODID" />
+                            <input type="hidden" value="9" name="txtStatusUpdate" />
+                            <input type="hidden" value="1" name="txtOption" />
+                            <input class="accept_Report" type="submit" value="Xác nhận"/>
+                        </form>
+                    </div>
                 </div>
-            </div>      
-        </c:if>
 
+            </c:if>
+        </c:forEach>
 
 
         <script src="JS/ButtonAuto.js"></script>

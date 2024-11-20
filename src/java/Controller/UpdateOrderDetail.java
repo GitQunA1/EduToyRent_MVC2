@@ -50,6 +50,18 @@ public class UpdateOrderDetail extends HttpServlet {
                             request.getRequestDispatcher("Shipping").forward(request, response);
                         }                        
                     }
+                    int option = 0;
+                    try {
+                        String txtOption = request.getParameter("txtOption");
+                        option = Integer.parseInt(txtOption);
+                    } catch (Exception e) {
+                        option = 0;
+                    }
+                    if(option>0){
+                        if(status == 9){
+                            request.getRequestDispatcher("GetOrderDetail").forward(request, response);
+                        }
+                    }
                     request.getRequestDispatcher("Shipping").forward(request, response);
                 }
                 if(status == 6){

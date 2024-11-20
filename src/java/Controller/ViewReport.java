@@ -41,24 +41,32 @@ public class ViewReport extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-
-            int txtODID = Integer.parseInt(request.getParameter("txtODID"));
+            String txtODID = request.getParameter("txtODID");
+            int ODID = Integer.parseInt(txtODID);
+            if(txtODID.isEmpty()){
+                request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
+            }
             ReportDamageDAO rdd = new ReportDamageDAO();
 
-            DamageReport dr = rdd.getDMGReport(txtODID);
+            DamageReport dr = rdd.getDMGReport(ODID);
             OrderDAO od = new OrderDAO();
-            OrderDetail odetail = od.GetPIDByODID(txtODID);
+            OrderDetail odetail = od.GetPIDByODID(ODID);
             GetProductDAO gpd = new GetProductDAO();
+            
             float compensation = 0;
             float rentFee = 0;
             float deposit = 0;
             int damaged = 0;
+            
             GetFeePolicy gfp = new GetFeePolicy();
             FeePolicy fp = gfp.getFeePolicy();
+            
             if (odetail != null) {
+                
                 Product p = gpd.getProductById(odetail.getPid());
                 rentFee = p.getPrice()/100*fp.getWeek();
                 deposit = p.getPrice()-rentFee;
+                
                 if(odetail.getRentTime()== 14){
                     rentFee = p.getPrice()/100*fp.getBiWeek();
                     deposit = p.getPrice()-rentFee;
@@ -67,15 +75,21 @@ public class ViewReport extends HttpServlet {
                     rentFee = p.getPrice()/100*fp.getMonth();
                     deposit = p.getPrice()-rentFee;
                 }
+                if(dr == null){
+                    request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
+                }
                 if (dr.getHalfDamage() > 0) {
                     damaged = 30;
                     compensation = deposit/100*30;
                 }else if(dr.getFullDamege() > 0){
+                    
                     damaged = 100;
                     compensation = deposit;
                 }
+                
             }
             
+            request.setAttribute("ODID", ODID);
             request.setAttribute("damaged", damaged);
             request.setAttribute("compensation", compensation);
             request.setAttribute("deposit", deposit);
