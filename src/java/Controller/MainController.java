@@ -121,6 +121,9 @@ public class MainController extends HttpServlet {
             case "registerAccount":
                 url = "RegisterController";
                 break;
+            case "cancelOrder":
+                url = "GetOrderDetail";
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 

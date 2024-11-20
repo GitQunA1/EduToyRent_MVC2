@@ -64,6 +64,12 @@ public class GetOrderDetail extends HttpServlet {
             List<OrderDetail> orderDetail = new ArrayList<>();
             OrderDAO od = new OrderDAO();
             PaymentDAO pd = new PaymentDAO();
+            
+            String odidToCancel = request.getParameter("odid");
+            if(odidToCancel != null){
+                int odid = Integer.parseInt(odidToCancel);
+                od.updateOrderDetail(odid, 8);
+            }
             if (status == 4) {
                 for (int i = 4; i <= 6; i++) {
                     List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
@@ -72,6 +78,11 @@ public class GetOrderDetail extends HttpServlet {
             } else if (status == 10) {
 
                 for (int i = 9; i <= 10; i++) {
+                    List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
+                    orderDetail.addAll(tempOrderDetails);
+                }
+            } else if(status == 7){
+                for (int i = 7; i<= 8; i++) {
                     List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
                     orderDetail.addAll(tempOrderDetails);
                 }

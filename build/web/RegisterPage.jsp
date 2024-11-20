@@ -87,7 +87,7 @@
                     <a>Mật khẩu từ 3-20 kí tự không bao gồm các kí tự đặc biệt.</a><br>
                     <input type="text" name="confirmPassword" placeholder="Nhập lại mật khẩu" required/><br>
                     <input type="hidden" value="registerAccount" name="action"/>
-                    <input type="submit" value="Tạo tài khoản" />      
+                    <input type="submit" value="Tạo tài khoản" /> 
                 </form>
                 
                 <%-- chuyển sang trang đăng kí <không chỉnh lại>--%>

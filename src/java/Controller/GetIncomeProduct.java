@@ -59,7 +59,10 @@ public class GetIncomeProduct extends HttpServlet {
             int totalSellQuantity = 0;
             int totalRentQuantity = 0;
 
-            if (timePeriod == null || timePeriod.equals("all")) {
+            if(timePeriod == null || timePeriod.isEmpty()){
+                timePeriod = "today";
+            }
+            if (timePeriod.equals("all")) {
                 productList = list;
 
                 for (Product product : productList) {
