@@ -144,4 +144,20 @@ public class PaymentDAO {
         return null;
     }
     
+    public boolean UpdatePDetail(int odid, float refundShop, float refundCus, float platformFee){
+        String sql = "UPDATE [PDetail] SET Refund_Shop = ?, Refund_Cus = ?, platform_fee = ? WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setFloat(1, refundShop);
+            ps.setFloat(2, refundCus);
+            ps.setFloat(3, platformFee);
+            ps.setInt(4, odid);
+            int rs = ps.executeUpdate();
+            if(rs > 0)
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
 }

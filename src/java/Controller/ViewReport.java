@@ -8,6 +8,7 @@ package Controller;
 import DAO.GetFeePolicy;
 import DAO.GetProductDAO;
 import DAO.OrderDAO;
+import DAO.PaymentDAO;
 import DAO.ReportDamageDAO;
 import Entity.DamageReport;
 import Entity.FeePolicy;
@@ -88,7 +89,9 @@ public class ViewReport extends HttpServlet {
                 }
                 
             }
-            
+            PaymentDAO pmd = new PaymentDAO();
+            float platformFee = rentFee*fp.getPlatform()/100;
+            pmd.UpdatePDetail(ODID, rentFee - platformFee + compensation, deposit - compensation, platformFee);
             request.setAttribute("ODID", ODID);
             request.setAttribute("damaged", damaged);
             request.setAttribute("compensation", compensation);
