@@ -7,43 +7,35 @@ package Controller;
 
 import DAO.GetFeePolicy;
 import DAO.GetProductDAO;
+import DAO.IncomeDAO;
 import DAO.OrderDAO;
 import DAO.PaymentDAO;
 import DAO.ReportDamageDAO;
 import Entity.DamageReport;
 import Entity.FeePolicy;
+import Entity.Income;
 import Entity.OrderDetail;
 import Entity.Product;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Quyền
- */
 @WebServlet(name = "ViewReport", urlPatterns = {"/ViewReport"})
 public class ViewReport extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String txtODID = request.getParameter("txtODID");
             int ODID = Integer.parseInt(txtODID);
-            if(txtODID.isEmpty()){
+            if (txtODID.isEmpty()) {
                 request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
             }
             ReportDamageDAO rdd = new ReportDamageDAO();
@@ -52,47 +44,57 @@ public class ViewReport extends HttpServlet {
             OrderDAO od = new OrderDAO();
             OrderDetail odetail = od.GetPIDByODID(ODID);
             GetProductDAO gpd = new GetProductDAO();
-            
+
             float compensation = 0;
             float rentFee = 0;
             float deposit = 0;
             int damaged = 0;
-            
+
             GetFeePolicy gfp = new GetFeePolicy();
             FeePolicy fp = gfp.getFeePolicy();
-            
+
             if (odetail != null) {
-                
+
                 Product p = gpd.getProductById(odetail.getPid());
-                rentFee = p.getPrice()/100*fp.getWeek();
-                deposit = p.getPrice()-rentFee;
-                
-                if(odetail.getRentTime()== 14){
-                    rentFee = p.getPrice()/100*fp.getBiWeek();
-                    deposit = p.getPrice()-rentFee;
-                    
-                }else if(odetail.getRentTime()== 30){
-                    rentFee = p.getPrice()/100*fp.getMonth();
-                    deposit = p.getPrice()-rentFee;
+                rentFee = p.getPrice() / 100 * fp.getWeek();
+                deposit = p.getPrice() - rentFee;
+
+                if (odetail.getRentTime() == 14) {
+                    rentFee = p.getPrice() / 100 * fp.getBiWeek();
+                    deposit = p.getPrice() - rentFee;
+
+                } else if (odetail.getRentTime() == 30) {
+                    rentFee = p.getPrice() / 100 * fp.getMonth();
+                    deposit = p.getPrice() - rentFee;
                 }
-                if(dr == null){
+                if (dr == null) {
                     request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
                 }
                 if (dr.getHalfDamage() > 0) {
                     damaged = 30;
-                    compensation = deposit/100*30;
-                }else if(dr.getFullDamege() > 0){
-                    
+                    compensation = deposit / 100 * 30;
+                } else if (dr.getFullDamege() > 0) {
+
                     damaged = 100;
                     compensation = deposit;
                 }
-                
+
             }
-            
+
             PaymentDAO pmd = new PaymentDAO();
-            float platformFee = rentFee*fp.getPlatform()/100;
+            float platformFee = rentFee * fp.getPlatform() / 100;
             pmd.UpdatePDetail(ODID, rentFee - platformFee + compensation, deposit - compensation, platformFee);
-            
+
+            IncomeDAO incomeDAO = new IncomeDAO();
+            LocalDate localDate = LocalDate.now();
+            Date date = Date.valueOf(localDate);
+            if (incomeDAO.checkExist(odetail.getSoid(), odetail.getPid(), date) == null) {
+                incomeDAO.insertIncome(odetail.getSoid(), odetail.getPid(), 0, 0, rentFee - platformFee + compensation, odetail.getQuantity(), date);
+            } else {
+                Income i = incomeDAO.checkExist(odetail.getSoid(), odetail.getPid(), date);
+                incomeDAO.updateIncome(odetail.getSoid(), odetail.getPid(), 0, 0, i.getIncRent() + rentFee - platformFee + compensation, i.getqRent() + odetail.getQuantity(), date);
+            }
+
             request.setAttribute("ODID", ODID);
             request.setAttribute("damaged", damaged);
             request.setAttribute("compensation", compensation);

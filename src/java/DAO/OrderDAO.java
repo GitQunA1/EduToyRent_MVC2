@@ -351,6 +351,22 @@ public class OrderDAO {
         }
         return null;
     }
-     
-     
+
+    public float getPriceByOrderId(int oid) {
+        String sql = "SELECT Price FROM [Order] WHERE OID = ?";
+        float price = 0;
+        try {
+            conn = DB.DBUtils.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, oid);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    price = rs.getFloat("Price");
+                }
+            }
+        } catch (Exception e) {
+        }
+        return price;
+    }
 }

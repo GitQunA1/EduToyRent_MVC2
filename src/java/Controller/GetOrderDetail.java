@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.GetProductDAO;
 import DAO.GetShopOwner;
+import DAO.IncomeDAO;
 import DAO.OrderDAO;
 import DAO.PaymentDAO;
 import Entity.OrderDetail;
@@ -15,6 +16,8 @@ import Entity.Product;
 import Entity.ShopOwner;
 import Entity.User;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -112,8 +115,8 @@ public class GetOrderDetail extends HttpServlet {
                 productIds.add(Detail.getPid());
             }            
             GetProductDAO productDAO = new GetProductDAO();
-            List<Product> product = productDAO.getProductsByIds(productIds);            
-            
+            List<Product> product = productDAO.getProductsByIds(productIds);
+
             request.setAttribute("product", product);
             request.setAttribute("pdetail", pdetail);
             request.setAttribute("shop", shopOwners);

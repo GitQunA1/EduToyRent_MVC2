@@ -5,10 +5,20 @@
  */
 package Controller;
 
+import DAO.GetFeePolicy;
+import DAO.GetProductDAO;
+import DAO.IncomeDAO;
 import DAO.OrderDAO;
+import DAO.PaymentDAO;
 import DAO.ReportDamageDAO;
+import Entity.FeePolicy;
+import Entity.Income;
+import Entity.OrderDetail;
+import Entity.Product;
 import Entity.ShopOwner;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,14 +68,36 @@ public class UpdateOrderDetail extends HttpServlet {
                     } catch (Exception e) {
                         option = 0;
                     }
-                    if(option>0){
-                        if(status == 9){
+                    if (option > 0) {
+                        if (status == 9) {
                             request.getRequestDispatcher("GetOrderDetail").forward(request, response);
+                        }
+
+                    }
+                    if (status == 9) {
+                        PaymentDAO pmd = new PaymentDAO();
+                        OrderDetail odetail = od.GetPIDByODID(odid);
+                        GetProductDAO gpd = new GetProductDAO();
+                        Product p = gpd.getProductById(odetail.getPid());
+                        GetFeePolicy gfp = new GetFeePolicy();
+                        FeePolicy fp = gfp.getFeePolicy();
+                        pmd.UpdatePDetail(odid, p.getPrice() * (100 - fp.getPlatform()) / 100, 0, p.getPrice() * fp.getPlatform() / 100);
+
+                        IncomeDAO incomeDAO = new IncomeDAO();
+                        LocalDate localDate = LocalDate.now();
+                        Date date = Date.valueOf(localDate);
+                        if (odetail.getRentTime() == 0) {
+                            if (incomeDAO.checkExist(odetail.getSoid(), odetail.getPid(), date) == null) {
+                                incomeDAO.insertIncome(odetail.getSoid(), odetail.getPid(), p.getPrice() * (100 - fp.getPlatform()) / 100, odetail.getQuantity(), 0, 0, date);
+                            } else {
+                                Income i = incomeDAO.checkExist(odetail.getSoid(), odetail.getPid(), date);
+                                incomeDAO.updateIncome(odetail.getSoid(), odetail.getPid(), i.getIncSell() + p.getPrice() * (100 - fp.getPlatform()) / 100, i.getqSell() + odetail.getQuantity(), 0, 0, date);
+                            }
                         }
                     }
                     request.getRequestDispatcher("Shipping").forward(request, response);
                 }
-                if(status == 6){
+                if (status == 6) {
                     String damaged = request.getParameter("damageStatus");
                     ReportDamageDAO rdd = new ReportDamageDAO();
                     HttpSession session = request.getSession();
