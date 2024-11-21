@@ -75,7 +75,8 @@ public class GetMainProduct extends HttpServlet {
             request.setAttribute("mainProductList", mainProductList);
             request.setAttribute("SecondHand", SecondHand);
             request.setAttribute("listRented", listRented);
-            request.getRequestDispatcher("MainPage.jsp").forward(request, response);
+            request.getRequestDispatcher("SendEmailProductRent").forward(request, response);
+            
         } catch (Exception e) {
 
         }

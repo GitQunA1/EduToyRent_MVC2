@@ -56,6 +56,4 @@ public class Shipper {
     public void setCitizenCode(String citizenCode) {
         this.citizenCode = citizenCode;
     }
-    
-    
 }

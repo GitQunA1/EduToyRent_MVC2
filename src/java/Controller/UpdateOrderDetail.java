@@ -44,11 +44,24 @@ public class UpdateOrderDetail extends HttpServlet {
             if(od.updateOrderDetail(odid, status)){
                 if(status == 3 || status == 9 || status == 4 || status == 5){
                     if(status == 3){
+                        
                         String txtRentTime = request.getParameter("txtRentTime");
                         int rentTime = Integer.parseInt(txtRentTime);
                         if(od.setRentTime(odid, rentTime)){
                             request.getRequestDispatcher("Shipping").forward(request, response);
                         }                        
+                    }
+                    int option = 0;
+                    try {
+                        String txtOption = request.getParameter("txtOption");
+                        option = Integer.parseInt(txtOption);
+                    } catch (Exception e) {
+                        option = 0;
+                    }
+                    if(option>0){
+                        if(status == 9){
+                            request.getRequestDispatcher("GetOrderDetail").forward(request, response);
+                        }
                     }
                     request.getRequestDispatcher("Shipping").forward(request, response);
                 }

@@ -17,13 +17,14 @@
         <style>
             body{
                 background-color: #efefef;
+                font-family: arial;
             }
             .Advertising{
                 background-color: white;
                 margin-left: 70px;
                 margin-right: 70px;
                 border-radius: 10px;                              
-                height: 500px;
+                height: auto;
                 display: flex;
                 margin-bottom: 20px;
                 margin-top: 10px;
@@ -38,20 +39,21 @@
                 padding-bottom: 30px;
             }
             .img_product img{
-                width: 380px;
-                height: 450px;
+                width: 300px;
+                height: 370px;
                 margin-left: 80px; 
                 margin-top: 25px;
                 border: 1px solid black; 
                 border-radius: 10px;
+                margin-bottom: 25px;
             }
             .body_product{          
                 margin-left: 70px; 
                 position: relative;
             }
             .body_product p{
-                font-size: 27px;
-                font-weight: bold; 
+                font-size: 25px;
+                
                 margin-right: 50px;
                 line-height: 1.3;
                 display: -webkit-box;
@@ -70,15 +72,16 @@
                 border: none;              
             } 
             .buttont_add input[type="submit"]{
-                margin-left: 150px;
+                margin-left: 100px;
                 background-color: #FFBD68;
+                
             }
             .Advertising_Content p{
                 padding-left: 20px;
                 margin-left: 50px;
                 line-height: 1.6;
                 margin-right: 100px;
-                font-size: 17px;
+                font-size: 15px;
             }
             .Advertising_Content a{
                 margin-left: 71px;
@@ -213,7 +216,7 @@
                 margin-left: 100px;
             }
             .quantity-container a{
-                font-size: 23px;
+                font-size: 17px;
 
             }
 
@@ -240,7 +243,6 @@
                 text-align: center;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-
             }
             #quantityRent{
                 width: 70px; 
@@ -257,8 +259,8 @@
             }
             .body_buy_product{
                 position: absolute;
-                bottom: 70px; 
-
+                bottom: 60px;
+                margin-left: 100px;
             }
             .duration-button {
                 margin: 5px; 
@@ -266,6 +268,7 @@
                 color: #333;
                 cursor: pointer;
                 border-radius: 5px;
+                
             }
             .duration-button.active {
                 background-color: #37A28F; 
@@ -279,7 +282,7 @@
             .rental-duration{
                 margin-left: 95px;
                 position: absolute;
-                bottom: 150px;
+                bottom: 90px;
                 display: flex;
                 height: 33px;
             }
@@ -295,20 +298,24 @@
 
             }
             .quantity-container-Rent a{
-                font-size: 23px;
+                font-size: 17px;
                 margin-left: 100px;
 
             }
-            .quantity-container-Rent button{
-                margin-top: 30px;
-                width: 40px;
+           
+            .quantity-container-Rent input[type="text"]{
+                width: 70px; 
                 height: 25px;
+                text-align: center;
+                border: 1px solid #ccc;
+                border-radius: 5px;
             }
             .Notification{
                 position: absolute;
-                bottom: 110px;
-                margin-left: 135px;
-                font-size: 17px;
+                bottom: 50px;
+                margin-left: 100px;
+                font-size: 14px;
+                margin-right: -50px;
             }
             .buyOrRent{
                 display: flex;
@@ -481,7 +488,7 @@
     <body>
         <%@include file="UserNavigation.jsp" %>
         <div class="history_page">
-                    <a onclick="window.history.back()">Quay lại trang trước đó</a>
+                    <a onclick="window.history.back()">< Quay lại</a>
         </div>
         
         <div class="Advertising">
@@ -492,7 +499,7 @@
                 <p>${productDetail.name}</p> 
                 <div class="body_and_buttom">
                     <c:choose>
-                        <c:when test="${productDetail.qRent > 0}">
+                        <c:when test="${productDetail.qRent > 0 and productDetail.type == 2}">
                             <div class="body_buy_product">
                                 <div class="rental-duration">
                                     <button class="duration-button active" onclick="selectDuration(this, '7')">1 Tuần</button>
@@ -502,17 +509,18 @@
 
                                 <form class="buttont_add" action="MainController" method="post">
 
-                                    <div class="quantity-container-Rent" style="margin-bottom: 135px;">
+                                    <div class="quantity-container-Rent" style="margin-bottom: 90px;">
                                         <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
                                             <a>Số lượng:</a>
 
-                                            
+
                                             <input type="text"  value="1" name="txtQuantity" readonly>
-                                            
+
                                             <input type="hidden" value="${productDetail.price}" name="txtPrice">
                                         <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
                                         <input type="hidden" id="selectedDuration" name="selectedDuration" value="7"> 
                                         <input type="hidden" value="AddToCart" name="action"/>
+                                        <input type="hidden" value="${productDetail.type}" name="txtType"/>
                                     </div>
                                     <a class="Notification">${success}</a>
                                     <input type="submit" value="Thêm vào giỏ hàng"/>
@@ -520,19 +528,38 @@
                             </div>
 
                         </c:when>
-                        <c:otherwise>
+                        <c:when test="${productDetail.qSell > 0 and productDetail.type == 2}" >
                             <div class="body_buy_product">
                                 <form class="buttont_add" action="MainController" method="post">
-                                    <div class="quantity-container" style="margin-bottom: 105px;">
+                                    <div class="quantity-container" style="margin-bottom: 50px;">
                                         <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
-                                            <a>Số lượng:</a>
-                                            <button type="button" class="quantity-btn" onclick="decreaseQuantity()">-</button>
-                                            <input type="text" id="quantity" value="1" name="txtQuantity" readonly>
-                                            <button type="button" class="quantity-btn" onclick="increaseQuantity()">+</button>
+                                            <a>Số lượng:</a> 
+                                            <input type="text" id="quantity" value="1" name="txtQuantity" readonly>                           
                                         </div>
                                         <input type="hidden" value="${productDetail.price}" name="txtPrice">
                                     <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
-                                    <input type="hidden" name="selectedDuration" value="0">  
+                                    <input type="hidden" name="selectedDuration" value="0">
+                                    <input type="hidden" value="${productDetail.type}" name="txtType"/>
+                                    <input type="hidden" value="AddToCart" name="action"/>
+                                    <a class="Notification">${success}</a>
+                                    <input type="submit" value="Thêm vào giỏ hàng"/>                              
+                                </form>
+                            </div>   
+                        </c:when>
+                        <c:otherwise>
+                            <div class="body_buy_product">
+                                <form class="buttont_add" action="MainController" method="post">
+                                    <div class="quantity-container" style="margin-bottom: 50px;">
+                                        <a>Giá: <fmt:formatNumber value="${productDetail.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
+                                            <a>Số lượng:</a>
+                                            <button type="button" class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                                            <input type="text" id="quantity" value="1" name="txtQuantity" >
+                                            <button type="button" class="quantity-btn" onclick="increaseQuantity()">+</button>
+                                    </div>
+                                        <input type="hidden" value="${productDetail.price}" name="txtPrice">
+                                    <input type="hidden" value="${productDetail.pid}" name="txtPID"/>
+                                    <input type="hidden" name="selectedDuration" value="0">
+                                    <input type="hidden" value="${productDetail.type}" name="txtType"/>
                                     <input type="hidden" value="AddToCart" name="action"/>
                                     <a class="Notification">${success}</a>
                                     <input type="submit" value="Thêm vào giỏ hàng"/>                              

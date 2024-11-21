@@ -6,7 +6,9 @@
 package Controller;
 
 import DAO.CartDAO;
+import DAO.GetProductDAO;
 import Entity.Cart;
+import Entity.Product;
 import Entity.User;
 import java.io.IOException;
 import java.util.List;
@@ -40,18 +42,39 @@ public class AddToCart extends HttpServlet {
             HttpSession ss = request.getSession();
             User user = (User) ss.getAttribute("UserAccount");
             if (user != null) {
+                
                 String pid = request.getParameter("txtPID");
                 String price = request.getParameter("txtPrice");
                 String quantity = request.getParameter("txtQuantity");
+                String txttype = request.getParameter("txtType");
                 String rentTime = request.getParameter("selectedDuration");
+                int txtQuantity = 0;
+                int type = 1;
+                
+                try {
+                    txtQuantity  = Integer.parseInt(quantity);
+                    type = Integer.parseInt(txttype);
+                } catch (Exception e) {
+                }
+           
+                GetProductDAO gpd = new GetProductDAO();
+                Product product = gpd.getProductById(Integer.parseInt(pid));
+                if (type == 1) {
+                    if (product.getqSell() < txtQuantity) {
+                        request.setAttribute("success", "Số lượng sản phẩm trong kho không đủ không đủ");
+                        request.setAttribute("txtPID", pid);
+                        request.getRequestDispatcher("GetProductDetail").forward(request, response);
+                        return;
+                    }
+                }
+                
                 CartDAO cdao = new CartDAO();
-
                 List<Cart> cartList = cdao.getCart(user);
                 boolean check = false;
                 for (Cart cart : cartList) {
                     if (cart.getPid() == Integer.parseInt(pid) && cart.getRentTime() == Integer.parseInt(rentTime)) {
-                        int newquantity = Integer.parseInt(quantity)+cart.getQuantity();
-                        cdao.UpdateCart(user.getUid(), String.valueOf(cart.getCaid()), String.valueOf(newquantity) , price, rentTime);
+                        int newquantity = Integer.parseInt(quantity) + cart.getQuantity();
+                        cdao.UpdateCart(user.getUid(), String.valueOf(cart.getCaid()), String.valueOf(newquantity), price, rentTime);
                         check = true;
                     }
                 }
@@ -65,6 +88,7 @@ public class AddToCart extends HttpServlet {
                 }
                 request.setAttribute("txtPID", pid);
                 request.getRequestDispatcher("GetProductDetail").forward(request, response);
+
 
             } else {
                 request.getRequestDispatcher("LoginPage.jsp").forward(request, response);

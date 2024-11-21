@@ -50,7 +50,9 @@ public class LoginControllers extends HttpServlet {
                     customer.setAttribute("Customer", cus);
 
                     if (user.getRole().equals("C")) {
+                        
                         request.getRequestDispatcher("ViewAdvertisingProducts").forward(request, response);
+                        
                     } else if (user.getRole().equals("O")) {
                         GetShopOwner shopDAO = new GetShopOwner();
                         List<ShopOwner> shop = shopDAO.getShopList();

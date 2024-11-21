@@ -76,16 +76,18 @@ public class Payment extends HttpServlet {
                     int paid = pd.insertPayment(oid, total, point, bank);
                     boolean check2 = pd.insertPDetail(paid, oid, cart);
                     if (check2) {
-                        boolean check3 = cd.deleteAllCart(user.getUid());
                         request.setAttribute("SuccessPayment", "Cảm ơn bạn đã thanh toán!");
+                        request.getRequestDispatcher("SendEmailPayment").forward(request, response);
                     } else {
                         request.setAttribute("ErrorPayment", ErrorPayment);
+                        request.getRequestDispatcher("LetToCart").forward(request, response);
                     }
                 } else {
                     request.setAttribute("ErrorPayment", ErrorPayment);
+                    request.getRequestDispatcher("LetToCart").forward(request, response);
                 }
 
-                request.getRequestDispatcher("LetToCart").forward(request, response);
+                
             }
         } catch (Exception e) {
         }

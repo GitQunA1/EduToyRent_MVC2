@@ -76,7 +76,6 @@
     </head>
     <body>
 
-        Shipper Here!<br>
         <c:if test="${not empty allODList}">
 
             <div class="SOD">

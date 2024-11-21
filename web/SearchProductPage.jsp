@@ -180,20 +180,21 @@
                 border-radius: 10px;
                 margin-bottom: 50px;
                 padding-bottom: 100px;
+                background-color: #FADED7;
             }
             .Show_product {
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
-                gap: 10px; /* Khoảng cách giữa các sản phẩm */
+                gap: 10px; 
                 padding: 10px;
-                
             }
 
             .Show_product img {
-                width: 157px;
+                width: 100%;
                 height: 180px; 
                 border-radius: 5px;
-                object-fit: cover; 
+                
+                
             }
 
             .Show_product .product-box {
@@ -204,43 +205,38 @@
                 border-radius: 10px;
                 padding: 13px;
                 text-align: center;
-                background-color: #f9f9f9;
+                background-color: white;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                height: 350px; 
+                height: 300px; 
             }
 
             
             .Show_product p {
                 margin: 10px 0;
-                font-weight: bold;
-                font-size: 15px;
+                font-family: Arial;
+                font-size: 14px;
                 display: -webkit-box;
-                -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+                -webkit-line-clamp: 2; 
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                text-overflow: ellipsis; 
+                text-overflow: ellipsis;
                 max-height: 40px; 
+                text-align: left;
+                color: #27272a;  
+                align-self: stretch;
+                text-transform: none;
+                line-height: 1.5;
             }
 
             .Show_product a {
-                
+                font-family: Arial;
                 display: block;
                 font-size: 17px;
                 color: #333;
+                text-decoration: none;
             }
             .Show_product form {
                 margin-top: 10px;
-            }
-
-            .product-box input[type="submit"] {
-                margin-top: 10px;
-                height: 25px;
-                background-color: #FFBD68;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                
             }
             .product-box{
                 margin-bottom: 20px;

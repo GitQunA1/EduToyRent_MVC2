@@ -12,16 +12,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-
+        
         <style>
             body{
                 background-color: #F5F5FA;
                 width: 100%;
                 height: 100%;
+                font-family: arial;
             }
             .content_order{
                 margin-top: 120.3px;
-                background-color: white;
+                background-color: white; 
                 box-shadow: 0 1px 0 2px rgba(0, 0, 0, 0.3);
                 padding-top: 15px;
                 height: 30px;
@@ -31,7 +32,7 @@
                 z-index: 500;
             }
             .content_order a{
-                margin-left: 100px;
+                margin-left: 90px;
                 font-size: 17px;
                 color: black;
                 text-decoration: none;
@@ -53,7 +54,7 @@
                 padding-bottom: 20px;
                 z-index: -100;
                 padding-top: 190px;
-
+                
             }
             .backgrount_product{
                 background-color: white;
@@ -68,7 +69,7 @@
                 display: flex;
                 position: relative;
             }
-
+            
             .Shop_Order_product img{
                 width: 40px;
                 height: 40px;
@@ -86,6 +87,7 @@
                 right: 45px;
                 position: absolute;
                 bottom: -20px;
+                font-size: 14px;
             }
             .line_order{
                 background-color: #333;
@@ -116,18 +118,17 @@
                 -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                text-overflow: ellipsis;
+                text-overflow: ellipsis; 
             }
             .order_PriceAndQuantity a{
-                font-size: 16px;
+                font-size: 14px;
                 margin-left: 200px;
                 margin-top: 20px;
             }
             .review_product{
                 position: absolute;
-                bottom: -70px;
                 margin-left: 600px;
-                z-index: 1000;
+                z-index: 100;
                 margin-right: -800px;
                 color: #209897;
             }
@@ -158,14 +159,63 @@
                 transform: scale(1.05); /* Phóng to nhẹ */
                 cursor: pointer; /* Con trỏ dạng bàn tay */
             }
-
+            .background_content_report h3{
+                display: flex;
+                justify-content: center;
+                font-size: 20px;
+                margin-bottom: 40px;    
+            }
+            .background_content_report a{
+                display: block;
+                font-size: 18px;
+                margin-left: 20px;
+                margin-bottom: 20px;
+            }
+            .background_content_report form{
+                display: flex;
+                justify-content: center;
+                
+            }
+            .view_Report{
+                margin-left: 600px;
+                z-index: 101;
+                margin-right: -800px;
+                position: absolute;
+            }
+            .report_info img{
+                width: 150px;
+                height: 180px;
+            }
+            .report_info{
+                display: flex;
+                margin-bottom: 30px;
+            }
+            .background_report{
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6); /* Màu đen mờ */
+                z-index: 2000;
+                display: flex;
+                align-items: center; 
+                justify-content: center;
+            }
+            .background_content_report{
+                background-color: white;
+                width: 500px;
+                height: 400px;
+                border-radius: 10px;
+                font-family: arial;
+            }
         </style>
-
+        
     </head>
     <body>
-
+       
         <%@include  file="UserNavigation.jsp" %>
-        <%--trạng thái đơn hàng xử lý txtcontent . xử lý MainController: action=InformationOrder --%>
+         <%--trạng thái đơn hàng xử lý txtcontent . xử lý MainController: action=InformationOrder --%>
         <div class="content_order">
             <a class="active" href="MainController?filter=all&action=InformationOrder&txtcontent=0">Tất cả</a>
             <a href="MainController?filter=pending&action=InformationOrder&txtcontent=1">Chờ vận chuyển</a>
@@ -176,24 +226,24 @@
             <a href="MainController?filter=canceled&action=InformationOrder&txtcontent=7">Hủy đơn</a>
             <a href="MainController?filter=history&action=InformationOrder&txtcontent=10">Lịch sử</a>
         </div>
-
-        <c:choose>
-            <c:when test="${ not empty orderDetail }">
+        
+         <c:choose>
+             <c:when test="${ not empty orderDetail }">
                 <div class="background_coler_Product">
-                    <c:forEach var="od" items="${orderDetail}">
-                        <c:forEach var="pd" items="${pdetail}">
-                            <c:if test="${od.odid == pd.odid}">
-                                <c:forEach var="pr" items="${product}">
-                                    <c:if test="${od.pid == pr.pid}">
-                                        <c:forEach var="so" items="${shop}">
-                                            <c:if test="${so.soid == od.soid}">
-                                                <div class="backgrount_product">
-                                                    <div class="Shop_Order_product">
+                     <c:forEach var="od" items="${orderDetail}">
+                         <c:forEach var="pd" items="${pdetail}">
+                             <c:if test="${od.odid == pd.odid}">
+                                 <c:forEach var="pr" items="${product}">
+                                     <c:if test="${od.pid == pr.pid}">
+                                         <c:forEach var="so" items="${shop}">
+                                             <c:if test="${so.soid == od.soid}">
+                                                 <div class="backgrount_product">
+                                                     <div class="Shop_Order_product">
 
-                                                        <img src="${so.avatar}" />
-                                                        <a>${so.name}</a>
-                                                        <p>
-                                                            <c:choose>
+                                                         <img src="${so.avatar}" />
+                                                         <a>${so.name}</a>
+                                                         <p>
+                                                             <c:choose>
                                                                 <c:when test="${od.status == 1}">
                                                                     Chờ vận chuyển
                                                                     <!-- Nút Hủy -->
@@ -205,20 +255,20 @@
                                                                 </form>
                                                                     </div>
                                                             </c:when>
-                                                            <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
-                                                            <c:when test="${od.status == 3}">Đang Thuê</c:when>
-                                                            <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
-                                                            <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
-                                                            <c:when test="${od.status == 7 || od.status == 8}">Hủy đơn</c:when>
-                                                        </c:choose>
-                                                        </p>
-                                                    </div>
-                                                    <div class="line_order"></div>
-                                                    <div class="product_order">
-                                                        <img src="${pr.image}" />
+                                                                 <c:when test="${od.status == 2}">Đang vận chuyển</c:when>
+                                                                 <c:when test="${od.status == 3}">Đang Thuê</c:when>
+                                                                 <c:when test="${od.status == 9 || od.status == 10}">Giao thành công</c:when>
+                                                                 <c:when test="${od.status == 4 || od.status == 5 || od.status == 6}">Đang trả hàng</c:when>
+                                                                 <c:when test="${od.status == 7 || od.status == 8}">Đơn đã hủy</c:when>
+                                                             </c:choose>
+                                                         </p>
+                                                     </div>
+                                                     <div class="line_order"></div>
+                                                     <div class="product_order">
+                                                         <img src="${pr.image}" />
                                                         <div class="content_product_order">
-                                                            <a>${pr.name}</a>
-                                                            <div class="order_PriceAndQuantity">
+                                                             <a>${pr.name}</a>
+                                                             <div class="order_PriceAndQuantity">
                                                                 <a>Giá: <fmt:formatNumber value="${pd.price}" pattern="#,###" /> đ</a>
                                                                 <a>Số lượng: ${od.quantity}</a>
                                                                 <c:choose>
@@ -232,33 +282,72 @@
                                                                         <a>Thời gian thuê: 1 tháng</a>
                                                                     </c:when>
                                                                 </c:choose>
-                                                            </div>
+                                                             </div>
                                                             <c:if test="${od.status == 9}">
-                                                                <a class="review_product" href="">Đánh giá sản phẩm</a>
+                                                                <a class="review_product" style="font-size: 14px;" href="">Đánh giá sản phẩm</a>
                                                             </c:if>
-                                                        </div>
-                                                    </div>
-                                                </div> 
-                                            </c:if>                                   
-                                        </c:forEach>
-                                    </c:if>
-                                </c:forEach>
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
+                                                            <c:if test="${od.status == 6}">
+                                                                <form action="MainController" method="post">
+                                                                    <input type="hidden" value="viewReport" name="action" />
+                                                                    <input type="hidden" value="${od.odid}" name="txtODID" />
+                                                                    <input class="view_Report" type="submit" value="Xem báo cáo" />
+                                                                </form>
+
+                                                            </c:if>
+                                                         </div>
+                                                     </div>
+                                                 </div> 
+                                             </c:if>                                   
+                                         </c:forEach>
+                                     </c:if>
+                                 </c:forEach>
+                             </c:if>
+                         </c:forEach>
+                     </c:forEach>
+                 </div>
+
+             </c:when>
+             <c:otherwise>
+                 <a style="margin-top: 500px; z-index: 100;">trống</a>
+             </c:otherwise>
+         </c:choose>
+        
+                 
+                
+                 
+        <c:forEach var="odi" items="${orderDetail}">
+            <c:if test="${not empty rentFee and ODID == odi.odid}">
+                <div class="background_report">
+                    <div class="background_content_report">
+                        <h3>Báo cáo thiệt hại</h3>
+                        <div class="report_info">
+                            <c:forEach var="prd" items="${product}">
+                                <c:if test="${odi.pid == prd.pid}">
+                                <img src="${prd.image}" />
+                                </c:if>
+                            </c:forEach>
+                        
+                        <div>
+                        <a>Giá thuê: <fmt:formatNumber value="${rentFee}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        <a>Tiền cọc: <fmt:formatNumber value="${deposit}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        <a>Thiệt hại: ${damaged}%</a>
+                        <a>Cần đền bù: <fmt:formatNumber value="${compensation}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        <a>Tiền trả lại: <fmt:formatNumber value="${deposit - compensation}" pattern="#,###"></fmt:formatNumber> đ </a>
+                        </div>
+                        </div>
+                        <form class="accept" action="MainController" method="post">
+                            <input type="hidden" value="UpdateOrder" name="action"/>
+                            <input type="hidden" value="${odi.odid}" name="txtODID" />
+                            <input type="hidden" value="9" name="txtStatusUpdate" />
+                            <input type="hidden" value="1" name="txtOption" />
+                            <input class="accept_Report" type="submit" value="Xác nhận"/>
+                        </form>
+                    </div>
                 </div>
 
-            </c:when>
-            <c:otherwise>
-                <a style="margin-top: 500px; z-index: 100;">trống</a>
-            </c:otherwise>
-        </c:choose>
-
-
-
-
-
+            </c:if>
+        </c:forEach>        
         <script src="JS/ButtonAuto.js"></script>
-
+       
     </body>
 </html>

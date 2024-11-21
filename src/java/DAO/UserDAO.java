@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -19,6 +21,10 @@ import javax.naming.NamingException;
  */
 public class UserDAO {
 
+    private Connection conn = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+    
     public boolean isExistemail(String email) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -68,4 +74,44 @@ public class UserDAO {
         }
         return -1;
     }
+    
+    public List<User> getUsersByUIDs(List<Integer> uidList) {
+        List<User> users = new ArrayList<>();
+
+        
+        if (uidList == null || uidList.isEmpty()) {
+            return users;
+        }
+        StringBuilder queryBuilder = new StringBuilder("SELECT DISTINCT UID, Email, Phone, Password, Role FROM [User] WHERE UID IN (");
+        for (int i = 0; i < uidList.size(); i++) {
+            queryBuilder.append("?");
+            if (i < uidList.size() - 1) {
+                queryBuilder.append(", ");
+            }
+        }
+        queryBuilder.append(")");
+
+        String query = queryBuilder.toString();
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(query);
+            for (int i = 0; i < uidList.size(); i++) {
+                ps.setInt(i + 1, uidList.get(i));
+            }
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int uid = rs.getInt("UID");
+                String email = rs.getString("Email");
+                String phone = rs.getString("Phone");
+                String password = rs.getString("Password");
+                String role = rs.getString("Role");
+
+                users.add(new User(uid, email, phone, password, role));
+            }
+            
+        } catch (Exception e) {
+        } 
+       return users;
+     }
 }

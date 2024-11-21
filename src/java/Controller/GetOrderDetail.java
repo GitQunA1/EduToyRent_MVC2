@@ -70,6 +70,7 @@ public class GetOrderDetail extends HttpServlet {
                 int odid = Integer.parseInt(odidToCancel);
                 od.updateOrderDetail(odid, 8);
             }
+            
             if (status == 4) {
                 for (int i = 4; i <= 6; i++) {
                     List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
@@ -81,8 +82,8 @@ public class GetOrderDetail extends HttpServlet {
                     List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
                     orderDetail.addAll(tempOrderDetails);
                 }
-            } else if(status == 7){
-                for (int i = 7; i<= 8; i++) {
+            } else if (status == 7) {
+                for (int i = 7; i <= 8; i++) {
                     List<OrderDetail> tempOrderDetails = od.GetOrderByStatus(user.getUid(), i);
                     orderDetail.addAll(tempOrderDetails);
                 }

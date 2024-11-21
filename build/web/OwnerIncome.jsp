@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -183,7 +184,7 @@
                 <div class="info-box">
                     <p>Doanh thu</p>
                     <h2>
-                        ${totalIncome} Đ
+                        <fmt:formatNumber value="${totalIncome}" pattern="#,###" /> Đ
                     </h2>
                 </div>
                 <!-- Tổng số lượng đã bán -->
@@ -219,10 +220,12 @@
                                         <div>
                                             <strong>Doanh thu:</strong> 
                                             <c:if test="${income.incSell > 0}">
-                                                ${income.incSell}
+                                                <fmt:formatNumber value="${income.incSell}" pattern="#,###" /> Đ
+                                                
                                             </c:if>
                                             <c:if test="${income.incSell <= 0 && income.incRent > 0}">
-                                                ${income.incRent}
+                                                <fmt:formatNumber value="${income.incRent}" pattern="#,###" /> Đ
+                                                
                                             </c:if>
                                         </div>
                                         <div><strong>Số lượng đã bán:</strong> ${income.qSell}</div>

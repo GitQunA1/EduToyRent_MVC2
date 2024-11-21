@@ -34,6 +34,7 @@
             }
             .toppic_content{
                 text-align: center;
+                font-family: Arial;
             }
             .Advertising_content_first{
                 display: flex;
@@ -50,6 +51,7 @@
                 margin-left: 50px;
                 font-size: 20px;
                 line-height: 1.5;
+                font-family: arial;
             }
             .Advertising_content_second{
                 display: flex;
@@ -62,6 +64,7 @@
                 font-size: 20px;
                 margin-right: 50px;
                 line-height: 1.5;
+                font-family: arial;
             } 
             
             .Advertising_content_second img{
@@ -73,7 +76,7 @@
             .Show_product {
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
-                gap: 10px; /* Khoảng cách giữa các sản phẩm */
+                gap: 10px; 
                 padding: 10px;
             }
 
@@ -101,36 +104,32 @@
             
             .Show_product p {
                 margin: 10px 0;
-                font-weight: bold;
-                font-size: 15px;
+                font-family: Arial;
+                font-size: 14px;
                 display: -webkit-box;
-                -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+                -webkit-line-clamp: 2; 
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                text-overflow: ellipsis; 
+                text-overflow: ellipsis;
                 max-height: 40px; 
+                text-align: left;
+                color: #27272a;  
+                align-self: stretch;
+                text-transform: none;
+                line-height: 1.5;
             }
 
             .Show_product a {
-                
+                font-family: Arial;
                 display: block;
-                font-size: 17px;
+                font-size: 15px;
                 color: #333;
+                text-decoration: none;
             }
             .Show_product form {
                 margin-top: 10px;
             }
 
-            .product-box input[type="submit"] {
-                margin-top: 10px;
-                height: 25px;
-                background-color: #41B6A2;
-                border: none;
-                color: white;
-                border-radius: 5px;
-                cursor: pointer;
-                
-            }
 
              /* ------------------------------------------- */
             
@@ -144,10 +143,10 @@
                  text-align: center;
                  justify-content: center;
                  display: flex; 
-                 font-size: 20px;
+                 font-size: 15px;
                  margin-top: 30px;
                  color: #333;
-                
+                font-family: Arial;
              }
              .background_second{
                 margin-top: 50px;
@@ -193,11 +192,12 @@
                 display: flex;
             }
             .topic_sort a{
-                font-size: 18px;
-                text-transform: uppercase;
+                font-size: 15px;
+                
                 padding-top: 54px;
                 color: black;
                 margin-left: 1010px;
+                font-family: Arial;
             }
             .menu_option img{
                 width: 130px;
@@ -214,7 +214,7 @@
             }
             
             .Description_content{
-                background-color: #FAF3DD;
+                background-color: #FADED7;
                 padding-top: 20px;
                 padding-bottom: 20px;
                 margin-bottom: 20px;
@@ -227,6 +227,7 @@
             }
             .Description_content h1{
                 text-align: center;
+                font-family: Arial;
             }
             .Description_content_center{
                 display: flex;
@@ -235,11 +236,15 @@
                 margin-left: 20px;
                 margin-right: 20px;
             }
-            .content p{
-                font-size: 19px; 
+            .content a{
+                font-size: 18px;
+                font-family: Arial;
+                gap: 1px;
+                margin-bottom: 5px;
+                line-height: 1.5;
             }
-            .background_slide{
-                background-color: rgb(160, 200, 190);
+        /*    .background_slide{
+                background-color: #FADED7;
                 width: 100%;
                 height: auto;
                 padding-top: 20px;
@@ -278,7 +283,7 @@
                 75% { margin-left: -3600px; } 
                 100% { margin-left: 0px; }    
             }
-            
+            */
         </style>
         
     </head>
@@ -288,7 +293,7 @@
  
 
         <div class="Advertising">
-            <div class="background_slide">
+           <%-- <div class="background_slide">
                 <div class="slideshow">
                     <div class="slide-wrapper">
                         <div class="slide"><img src="Image/banner1.jpeg"></div>
@@ -297,7 +302,7 @@
                         <div class="slide"><img src="Image/baner4.jpg"></div>
                     </div>
                 </div>
-            </div>
+            </div> --%>
             <div class="menu_option">
                 
                 <a href="MainController?action=ProductFilter&txtOption=1"><img src="Image/rented.jpg"/></a>
@@ -310,21 +315,21 @@
                 <div class="Description_content_center">
                     <img src="https://vnmedia2.monkeyuni.net/upload/web/img/1-Do-choi-giao-duc.jpg" />
                     <div class="content">
-                        <p>1. Tiết kiệm chi phí: Trẻ em thường nhanh chóng chán với các món đồ chơi 
+                        <a>1. Tiết kiệm chi phí: Trẻ em thường nhanh chóng chán với các món đồ chơi 
                         sau một thời gian ngắn. Thuê đồ chơi cho phép phụ huynh cung cấp nhiều 
                         loại đồ chơi phong phú cho con mà không phải chi một khoản lớn để mua chúng. 
-                        Điều này đặc biệt có lợi với những món đồ chơi giáo dục cao cấp, thường có giá thành khá cao.</p>
-                        <p>2. Khám phá và thử nghiệm: Khi thuê đồ chơi, phụ huynh có thể dễ dàng cho con thử 
+                        Điều này đặc biệt có lợi với những món đồ chơi giáo dục cao cấp, thường có giá thành khá cao.</a><br><br>
+                        <a>2. Khám phá và thử nghiệm: Khi thuê đồ chơi, phụ huynh có thể dễ dàng cho con thử 
                         nhiều loại đồ chơi khác nhau để khám phá sở thích và phát triển các kỹ năng cần thiết.
-                        Điều này giúp trẻ liên tục được kích thích sự tò mò và sáng tạo.</p>
-                        <p>3. Giảm thiểu lãng phí và bảo vệ môi trường: Thuê đồ chơi giúp giảm thiểu việc sản xuất
+                        Điều này giúp trẻ liên tục được kích thích sự tò mò và sáng tạo.</a><br><br>
+                        <a>3. Giảm thiểu lãng phí và bảo vệ môi trường: Thuê đồ chơi giúp giảm thiểu việc sản xuất
                         và thải bỏ đồ chơi cũ. Việc này không chỉ tiết kiệm tài nguyên mà còn giúp phụ huynh truyền 
-                        cảm hứng về lối sống bền vững cho con từ khi còn nhỏ.</p>
-                        <p>4. Tiện lợi và tiết kiệm không gian: Thuê đồ chơi giúp tránh tình trạng đồ chơi cũ tích tụ, chiếm 
+                        cảm hứng về lối sống bền vững cho con từ khi còn nhỏ.</a><br><br>
+                        <a>4. Tiện lợi và tiết kiệm không gian: Thuê đồ chơi giúp tránh tình trạng đồ chơi cũ tích tụ, chiếm 
                         nhiều không gian trong nhà. Phụ huynh có thể trả lại khi con không còn hứng thú và chọn những 
-                        món đồ chơi mới, tạo sự ngăn nắp và gọn gàng cho không gian sống.</p>
-                        <p> 5. Đồ chơi luôn được vệ sinh và an toàn: Các dịch vụ cho thuê đồ chơi luôn đảm bảo vệ sinh và kiểm 
-                        tra chất lượng các món đồ chơi trước khi đến tay khách hàng, giúp phụ huynh yên tâm về an toàn cho con.</p>
+                        món đồ chơi mới, tạo sự ngăn nắp và gọn gàng cho không gian sống.</a><br><br>
+                        <a> 5. Đồ chơi luôn được vệ sinh và an toàn: Các dịch vụ cho thuê đồ chơi luôn đảm bảo vệ sinh và kiểm 
+                        tra chất lượng các món đồ chơi trước khi đến tay khách hàng, giúp phụ huynh yên tâm về an toàn cho con.</a>
                     </div>
                 </div>
             </div>
@@ -332,7 +337,7 @@
             
             <div class="Rented_product">
                 <div class="topic_sort">
-                    <h2>Thuê đồ chơi</h2>
+                    <h2 style="font-family: Arial;">Thuê đồ chơi</h2>
                     <a href="MainController?action=ProductFilter&txtOption=1">Xem thêm</a>
                 </div>
                 <div class="Show_product">
@@ -353,7 +358,7 @@
             
             <div class="second-hand-product">
                 <div class="topic_sort">
-                    <h2>Mua lại đồ chơi cũ</h2>
+                    <h2 style="font-family: Arial;">Mua lại đồ chơi cũ</h2>
                     <a href="MainController?action=ProductFilter&txtOption=2" style="margin-left: 955px;">Xem thêm</a>
                 </div>
                 
@@ -365,8 +370,7 @@
                                     <img src="${SecondHand.image}"/>
                                     <p>${SecondHand.name}</p>
                                     <a>Giá: <fmt:formatNumber value="${SecondHand.price}" pattern="#,###"></fmt:formatNumber> đ </a>
-                                    </a>
-                                  
+                                </a> 
                             </div>
                         </c:forEach>                       
                     </div>

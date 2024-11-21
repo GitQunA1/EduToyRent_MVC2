@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/DAO/CustomerDAO.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Entity/User.java</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/DAO/OrderDAO.java</file>
             <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/MainController.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/LoginControllers.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/RegisterPage.jsp</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Entity/Customer.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/RegisterController.java</file>
-            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/DAO/UserDAO.java</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/Shipping.java</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/MainOrderPage.jsp</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/src/java/Controller/GetOrderDetail.java</file>
+            <file>file:/C:/Users/LENOVO/Desktop/swp/EduToyRend/web/ShipperPage.jsp</file>
         </group>
     </open-files>
 </project-private>

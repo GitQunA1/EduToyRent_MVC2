@@ -5,10 +5,16 @@
  */
 package Controller;
 
+import DAO.GetFeePolicy;
+import DAO.GetProductDAO;
+import DAO.OrderDAO;
+import DAO.PaymentDAO;
 import DAO.ReportDamageDAO;
 import Entity.DamageReport;
+import Entity.FeePolicy;
+import Entity.OrderDetail;
+import Entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,12 +41,63 @@ public class ViewReport extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            
-            int txtODID = Integer.parseInt(request.getParameter("txtODID"));
+            String txtODID = request.getParameter("txtODID");
+            int ODID = Integer.parseInt(txtODID);
+            if(txtODID.isEmpty()){
+                request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
+            }
             ReportDamageDAO rdd = new ReportDamageDAO();
+
+            DamageReport dr = rdd.getDMGReport(ODID);
+            OrderDAO od = new OrderDAO();
+            OrderDetail odetail = od.GetPIDByODID(ODID);
+            GetProductDAO gpd = new GetProductDAO();
             
-            DamageReport dr = rdd.getDMGReport(txtODID);
+            float compensation = 0;
+            float rentFee = 0;
+            float deposit = 0;
+            int damaged = 0;
             
+            GetFeePolicy gfp = new GetFeePolicy();
+            FeePolicy fp = gfp.getFeePolicy();
+            
+            if (odetail != null) {
+                
+                Product p = gpd.getProductById(odetail.getPid());
+                rentFee = p.getPrice()/100*fp.getWeek();
+                deposit = p.getPrice()-rentFee;
+                
+                if(odetail.getRentTime()== 14){
+                    rentFee = p.getPrice()/100*fp.getBiWeek();
+                    deposit = p.getPrice()-rentFee;
+                    
+                }else if(odetail.getRentTime()== 30){
+                    rentFee = p.getPrice()/100*fp.getMonth();
+                    deposit = p.getPrice()-rentFee;
+                }
+                if(dr == null){
+                    request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
+                }
+                if (dr.getHalfDamage() > 0) {
+                    damaged = 30;
+                    compensation = deposit/100*30;
+                }else if(dr.getFullDamege() > 0){
+                    
+                    damaged = 100;
+                    compensation = deposit;
+                }
+                
+            }
+            
+            PaymentDAO pmd = new PaymentDAO();
+            float platformFee = rentFee*fp.getPlatform()/100;
+            pmd.UpdatePDetail(ODID, rentFee - platformFee + compensation, deposit - compensation, platformFee);
+            
+            request.setAttribute("ODID", ODID);
+            request.setAttribute("damaged", damaged);
+            request.setAttribute("compensation", compensation);
+            request.setAttribute("deposit", deposit);
+            request.setAttribute("rentFee", rentFee);
             request.setAttribute("dr", dr);
             request.setAttribute("txtcontent", "6");
             request.getRequestDispatcher("GetOrderDetail").forward(request, response);

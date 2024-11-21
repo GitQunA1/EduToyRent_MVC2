@@ -120,7 +120,6 @@ public class GetIncomeProduct extends HttpServlet {
             session.setAttribute("totalIncome", totalIncome);
             session.setAttribute("totalSellQuantity", totalSellQuantity);
             session.setAttribute("totalRentQuantity", totalRentQuantity);
-
             session.setAttribute("incomeList", incomeList);
             session.setAttribute("productList", productList);
 

@@ -36,29 +36,30 @@ public class RegisterController extends HttpServlet {
             String password = request.getParameter("txtPassword");
             String confirmPassword = request.getParameter("confirmPassword");
             String name = request.getParameter("txtName");
+            
+            UserDAO userDAO = new UserDAO();
 
+            if (userDAO.isExistemail(email)) {
+                request.setAttribute("error", "Email đã tồn tại!");
+                request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
+                return;
+            }
+            
             if (!email.matches(emailRegex)) {
-                request.setAttribute("error", "Invalid email format!");
+                request.setAttribute("error", "Email không hợp lệ!");
                 request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
                 return;
             }
             if (!password.matches(passRegex)) {
-                request.setAttribute("error", "Password must be 8-20 characters long and contain no special characters.");
+                request.setAttribute("error", "Mật khẩu từ 8-20 kí tự không bao gồm các kí tự đặc biệt.");
                 request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
                 return;
             }
             if (!password.equals(confirmPassword)) {
-                request.setAttribute("error", "Passwords do not match!");
+                request.setAttribute("error", "Hai mật khẩu không khớp!");
                 request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
             }
 
-            UserDAO userDAO = new UserDAO();
-
-            if (userDAO.isExistemail(email)) {
-                request.setAttribute("error", "Email already exists!");
-                request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
-                return;
-            }
             User user = new User();
             user.setEmail(email);
             user.setPassword(password);

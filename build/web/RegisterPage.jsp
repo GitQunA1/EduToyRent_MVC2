@@ -19,6 +19,7 @@
             
             .register_content{
                 margin-top: 50px;
+                position: relative;
             }
             
             .img_register{
@@ -54,20 +55,26 @@
                 height: 30px;
                 border-radius: 5px;
                 background-color: #FFAB40;
-                margin-top: 30px;
+                margin-top: 40px;
                 margin-left: 80px;
+                position: absolute;
+                margin-bottom: 20px;
             }
             .register_content input[type="submit"]:hover{
                background-color: #209897;
                color: white;
             }
             .register{
-                margin-top: 60px;
+                margin-top: 100px;
             }
             .register a{
                 font-size: 18px;
             }
-            
+            .error_rigister{
+                position: absolute;
+                color: red;
+                margin-top: 10px;
+            }
         </style>
         
     </head>
@@ -84,12 +91,13 @@
                     <input type="text" name="txtEmail" placeholder="Email" required/><br>
                     <input type="text" name="txtName" placeholder="Họ và tên" required/><br>
                     <input type="text" name="txtPassword" placeholder="mật khẩu" required/><br>
-                    <a>Mật khẩu từ 3-20 kí tự không bao gồm các kí tự đặc biệt.</a><br>
+                    <a>Mật khẩu từ 8-20 kí tự không bao gồm các kí tự đặc biệt.</a><br>
                     <input type="text" name="confirmPassword" placeholder="Nhập lại mật khẩu" required/><br>
                     <input type="hidden" value="registerAccount" name="action"/>
-                    <input type="submit" value="Tạo tài khoản" /> 
+                    
+                    <input type="submit" value="Tạo tài khoản" />      
                 </form>
-                
+                <a class="error_rigister">${error}</a>
                 <%-- chuyển sang trang đăng kí <không chỉnh lại>--%>
                 <div class="register">
                     <a>Bạn đã có tài khoản!</a>

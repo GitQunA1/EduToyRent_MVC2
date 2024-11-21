@@ -217,4 +217,140 @@ public class OrderDAO {
         return false;
     }
     
+    public Order getNewOrder(int uid) {
+        String query = "SELECT TOP 1 OID, UID, CreationDate, Price FROM [Order] WHERE UID = ? ORDER BY CreationDate DESC";
+        try (Connection conn = new DBUtils().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, uid);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Order(
+                            rs.getInt("OID"),
+                            rs.getInt("UID"),
+                            rs.getString("CreationDate"),
+                            rs.getFloat("Price")
+                    );
+                }
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<OrderDetail> getOrderDetails(int oid) {
+        String sql = "SELECT * FROM [Order_Detail] WHERE OID = ?";
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        try (Connection conn = new DBUtils().getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, oid);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    orderDetails.add(new OrderDetail(
+                            rs.getInt("ODID"),
+                            rs.getInt("OID"),
+                            rs.getInt("SOID"),
+                            rs.getInt("PID"),
+                            rs.getInt("Quantity"),
+                            rs.getInt("TimeRent"),
+                            rs.getString("DateStart"),
+                            rs.getString("DateEnd"),
+                            rs.getInt("Status")
+                    ));
+                }
+            }
+        } catch (Exception e) {
+        }
+        return orderDetails;
+    }
+    
+    
+    public List<OrderDetail> getProductRentOD(){
+        List<OrderDetail> orderDD = new ArrayList<>();
+        try {
+            String query = "  SELECT *FROM Order_Detail WHERE TimeRent > 0 AND DATEDIFF(DAY, GETDATE(), DateEnd) <= 2 AND DATEDIFF(DAY, GETDATE(), DateEnd) >= 0";
+            conn = new DBUtils().getConnection();
+            ps= conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                int odid = rs.getInt("ODID");
+                int oid = rs.getInt("OID");
+                int soid = rs.getInt("SOID");
+                int pid = rs.getInt("PID");
+                int quantity = rs.getInt("Quantity");
+                int rentTime = rs.getInt("TimeRent");
+                String dateStart = rs.getString("DateStart");
+                String dateEnd = rs.getString("DateEnd");
+                int status = rs.getInt("Status");
+                OrderDetail od = new OrderDetail(odid, oid, soid, pid, quantity, rentTime, dateStart, dateEnd, status);
+                orderDD.add(od);
+            }
+        } catch (Exception e) {
+        }
+        return orderDD;
+    }
+
+    
+    
+     public List<Order> getOrdersByOIDs(List<Integer> oidList) {
+        List<Order> orders = new ArrayList<>();
+        
+         try {
+             if (oidList == null || oidList.isEmpty()) {
+                 return orders;
+             }
+            StringBuilder queryBuilder = new StringBuilder("SELECT  *FROM [Order] WHERE OID IN (");
+            for (int i = 0; i < oidList.size(); i++) {
+                queryBuilder.append("?");
+                if (i < oidList.size() - 1) {
+                    queryBuilder.append(", ");
+                }
+             }
+            queryBuilder.append(")");
+
+            String query = queryBuilder.toString();
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(query);
+            for (int i = 0; i < oidList.size(); i++) {
+                ps.setInt(i + 1, oidList.get(i));
+            }
+            rs = ps.executeQuery();
+             while (rs.next()) {
+                    int oid = rs.getInt("OID");
+                    int uid = rs.getInt("UID");
+                    String creationDate = rs.getString("CreationDate");
+                    float price = rs.getFloat("Price");
+
+                    orders.add(new Order(oid, uid, creationDate, price));
+                }
+
+         } catch (Exception e) {
+         }
+         return orders;
+     }
+     
+    public OrderDetail GetPIDByODID(int odid){
+        String sql = "SELECT * FROM [Order_Detail] WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, odid);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                int oid = rs.getInt("OID");
+                int soid = rs.getInt("SOID");
+                int pid = rs.getInt("PID");
+                int quantity = rs.getInt("Quantity");
+                int rentTime = rs.getInt("TimeRent");
+                String dateStart = rs.getString("DateStart");
+                String dateEnd = rs.getString("DateEnd");
+                int status = rs.getInt("Status");
+                OrderDetail od = new OrderDetail(odid, oid, soid, pid, quantity, rentTime, dateStart, dateEnd, status);
+                return od;
+            }   
+        } catch (Exception e) {
+        }
+        return null;
+    }
+     
+     
 }

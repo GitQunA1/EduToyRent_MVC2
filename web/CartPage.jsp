@@ -15,6 +15,9 @@
         <title>JSP Page</title>
         
         <style>
+            body{
+                font-family: arial;
+            }
             .Background_cart{
                 background-color: white;
                 width: 80%;
@@ -117,7 +120,7 @@
                 cursor: pointer;
             }
             .Price_total_Product{
-                font-size: 17px;
+                font-size: 15px;
                 margin-left: 50px;
                 margin-bottom: 20px;
             }
@@ -138,7 +141,7 @@
                 display: flex;
             }
             .price_cart_rent{
-                font-size: 17px;
+                font-size: 15px;
                 margin-left: 50px;
                 margin-right: 50px;
             }
@@ -265,13 +268,13 @@
             }
             .topic_address{
                 display: flex;
-                margin-left: 10px;               
+                margin-left: 15px;
             }
             .topic_address a{
                 font-size: 17px;
             }
             .change_address{
-                margin-left: 400px;
+                margin-left: 360px;
                 color: black;
             }
             .address_order{
@@ -323,6 +326,11 @@
                margin-top: 10px;
                font-size: 14px;
                position: absolute;
+               display: -webkit-box;
+                -webkit-line-clamp: 2; 
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .content_product_order_price{
                margin-top: 70px;
@@ -482,43 +490,81 @@
                                         <c:forEach var="shopOwners" items="${shopOwners}">
                                             <c:if test="${p.soid == shopOwners.soid}">
                                                 <c:set var="o" value="${shopOwners}"></c:set>
-                                                    
-                                                    <div class="background_product_cart">
-                                                        <div class="shopOwner_cart">
-                                                            <img src="${o.avatar}"/>
-                                                            <a>${o.name}</a>
-                                                        </div>
-                                                        <div class="channel"></div>
-                                                        <div class="product_cart">
-                                                            <img class="img_product_cart" src="${p.image}"/>   
-                                                            <div class="content_product_cart">
-                                                                <a class="name_product_cart">${p.name}</a>
+                                                <c:choose>
+                                                    <c:when test="${p.type == 1}">
+                                                        <div class="background_product_cart">
+                                                            <div class="shopOwner_cart">
+                                                                <img src="${o.avatar}"/>
+                                                                <a>${o.name}</a>
+                                                            </div>
+                                                            <div class="channel"></div>
+                                                            <div class="product_cart">
+                                                                <img class="img_product_cart" src="${p.image}"/>   
+                                                                <div class="content_product_cart">
+                                                                    <a class="name_product_cart">${p.name}</a>
 
-                                                                <div class="content_product_Change_cart">
-                                                                    <a class="price_cart_rent">Giá: <fmt:formatNumber value="${p.price}" pattern="#,###"></fmt:formatNumber> đ</a>
-                                                                    <form id="updateFormBuy${c.caid}" action="MainController" method="post">
-                                                                        <button type="button" class="quantity-btn" onclick="changeQuantity(-1, 'updateFormBuy${c.caid}', 'buyQuantity${c.caid}')">-</button>
-                                                                        <input class="quantity-btn-text" type="text" id="buyQuantity${c.caid}" name="txtQuantity" value="${c.quantity}" readonly>
-                                                                        <button type="button" class="quantity-btn" onclick="changeQuantity(1, 'updateFormBuy${c.caid}', 'buyQuantity${c.caid}')">+</button>
-                                                                        <input type="hidden" name="txtTimeRent" value="0">
-                                                                        <input type="hidden" name="txtPrice" value="${p.price}">
-                                                                        <input type="hidden" name="txtCAID" value="${c.caid}">
-                                                                        <input type="hidden" name="action" value="updateCart">
-                                                                    </form>
-                                                                        
-                                                                </div> 
-                                                                <a class="Price_total_Product">Cần thanh toán: <fmt:formatNumber value="${c.total}" pattern="#,###"></fmt:formatNumber> đ</a>  
-                                                                <div class="button_delete_cart">
-                                                                    <form action="MainController" method="post">
-                                                                        <input type="hidden" value="${c.caid}" name="txtCAID"/>
-                                                                        <input type="hidden" value="DeleteCart" name="action"/>
-                                                                        <input type="submit" value="Xóa" />
-                                                                    </form>
+                                                                    <div class="content_product_Change_cart">
+                                                                        <a class="price_cart_rent">Giá: <fmt:formatNumber value="${p.price}" pattern="#,###"></fmt:formatNumber> đ</a>
+                                                                        <form id="updateFormBuy${c.caid}" action="MainController" method="post">
+                                                                            <a>Số lượng: </a>
+                                                                            <button type="button" class="quantity-btn" onclick="changeQuantity(-1, 'updateFormBuy${c.caid}', 'buyQuantity${c.caid}')">-</button>
+                                                                            <input class="quantity-btn-text" type="text" id="buyQuantity${c.caid}" name="txtQuantity" value="${c.quantity}" readonly>
+                                                                            <button type="button" class="quantity-btn" onclick="changeQuantity(1, 'updateFormBuy${c.caid}', 'buyQuantity${c.caid}')">+</button>
+                                                                            <input type="hidden" name="txtTimeRent" value="0">
+                                                                            <input type="hidden" name="txtPrice" value="${p.price}">
+                                                                            <input type="hidden" name="txtCAID" value="${c.caid}">
+                                                                            <input type="hidden" name="action" value="updateCart">
+                                                                        </form>
+
+                                                                    </div> 
+                                                                    <a class="Price_total_Product">Cần thanh toán: <fmt:formatNumber value="${c.total}" pattern="#,###"></fmt:formatNumber> đ</a>  
+                                                                        <div class="button_delete_cart">
+                                                                            <form action="MainController" method="post">
+                                                                                <input type="hidden" value="${c.caid}" name="txtCAID"/>
+                                                                            <input type="hidden" value="DeleteCart" name="action"/>
+                                                                            <input type="submit" value="Xóa" />
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="background_product_cart">
+                                                            <div class="shopOwner_cart">
+                                                                <img src="${o.avatar}"/>
+                                                                <a>${o.name}</a>
+                                                            </div>
+                                                            <div class="channel"></div>
+                                                            <div class="product_cart">
+                                                                <img class="img_product_cart" src="${p.image}"/>   
+                                                                <div class="content_product_cart">
+                                                                    <a class="name_product_cart">${p.name}</a>
+
+                                                                    <div class="content_product_Change_cart">
+                                                                        <a class="price_cart_rent">Giá: <fmt:formatNumber value="${p.price}" pattern="#,###"></fmt:formatNumber> đ</a>
+                                                                        <form id="updateFormBuy${c.caid}" action="MainController" method="post"> 
+                                                                            <a>Số lượng: <input class="quantity-btn-text" style="margin-top: 11px; border: none; background-color: #F5F5FA; font-size: 14px;" type="text" id="buyQuantity${c.caid}" name="txtQuantity" value="${c.quantity}" readonly /> </a>                                                   
+                                                                            <input type="hidden" name="txtTimeRent" value="0">
+                                                                            <input type="hidden" name="txtPrice" value="${p.price}">
+                                                                            <input type="hidden" name="txtCAID" value="${c.caid}">
+                                                                            <input type="hidden" name="action" value="updateCart">
+                                                                        </form>
+                                                                    </div> 
+                                                                    <a class="Price_total_Product">Cần thanh toán: <fmt:formatNumber value="${c.total}" pattern="#,###"></fmt:formatNumber> đ</a>  
+                                                                        <div class="button_delete_cart">
+                                                                            <form action="MainController" method="post">
+                                                                                <input type="hidden" value="${c.caid}" name="txtCAID"/>
+                                                                            <input type="hidden" value="DeleteCart" name="action"/>
+                                                                            <input type="submit" value="Xóa" />
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            
                                                         </div>
-                                                    </div>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:if>                                                       
                                         </c:forEach>
                                     </c:if>
@@ -546,7 +592,7 @@
                                                                         <a class="price_cart">Giá: <fmt:formatNumber value="${p.price}" pattern="#,###"></fmt:formatNumber> đ</a><br>
                                                                         <form id="updateFormRent${c.caid}" action="MainController" method="post" class="botton_cart_rent">
                                                                             
-                                                                            <input class="quantity-btn-text" style="margin-top: 10px;" type="text" name="txtQuantity" value="${c.quantity}" readonly>
+                                                                            <a> Số lượng: <input class="quantity-btn-text" style="margin-top: 10px; border: none; background-color: #F5F5FA; font-size: 14px;" type="text" name="txtQuantity" value="${c.quantity}" readonly> </a>
                                                                             
                                                                             <input type="hidden" name="txtPrice" value="${p.price}">
                                                                             <input type="hidden" name="txtCAID" value="${c.caid}">

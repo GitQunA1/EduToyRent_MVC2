@@ -159,7 +159,7 @@ public class GetProductDAO {
 
         connection = DBUtils.getConnection();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, pid);
+            stmt.setInt(1, pid); 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -181,37 +181,6 @@ public class GetProductDAO {
             }
         }
         return product;
-    }
-
-    public List<Product> getListProductBySoid(int soid) throws ClassNotFoundException, SQLException {
-        List<Product> productList = new ArrayList<>();
-        String sql = "SELECT * FROM [Product] WHERE [SOID] = ?";
-
-        connection = DBUtils.getConnection();
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, soid);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Product product = new Product();
-                product.setPid(rs.getInt("PID"));
-                product.setSoid(rs.getInt("SOID"));
-                product.setImage(rs.getString("Image"));
-                product.setName(rs.getString("Name"));
-                product.setPrice(rs.getFloat("Price"));
-                product.setqSell(rs.getInt("QSell"));
-                product.setqRent(rs.getInt("QRent"));
-                product.setAge(rs.getInt("Age"));
-                product.setBrand(rs.getString("Brand"));
-                product.setOrigin(rs.getString("Origin"));
-                product.setDescription(rs.getString("Description"));
-                product.setCategory(rs.getString("Category"));
-                product.setType(rs.getInt("Type"));
-                product.setStatus(rs.getString("Status"));
-                productList.add(product);
-            }
-        }
-        return productList;
     }
 
     public List<Product> getProductByShopandStatus(int soid, String status) {
@@ -266,8 +235,41 @@ public class GetProductDAO {
     public List<Product> getFreezeProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Đóng băng");
     }
-
+    
     public List<Product> getfewProductsByShop(int soid) {
         return getProductByShopandStatus(soid, "Còn ít");
+    }
+    
+    
+    
+    public List<Product> getListProductBySoid(int soid) throws ClassNotFoundException, SQLException {
+        List<Product> productList = new ArrayList<>();
+        String sql = "SELECT * FROM [Product] WHERE [SOID] = ?";
+
+        connection = DBUtils.getConnection();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, soid);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product();
+                product.setPid(rs.getInt("PID"));
+                product.setSoid(rs.getInt("SOID"));
+                product.setImage(rs.getString("Image"));
+                product.setName(rs.getString("Name"));
+                product.setPrice(rs.getFloat("Price"));
+                product.setqSell(rs.getInt("QSell"));
+                product.setqRent(rs.getInt("QRent"));
+                product.setAge(rs.getInt("Age"));
+                product.setBrand(rs.getString("Brand"));
+                product.setOrigin(rs.getString("Origin"));
+                product.setDescription(rs.getString("Description"));
+                product.setCategory(rs.getString("Category"));
+                product.setType(rs.getInt("Type"));
+                product.setStatus(rs.getString("Status"));
+                productList.add(product);
+            }
+        }
+        return productList;
     }
 }

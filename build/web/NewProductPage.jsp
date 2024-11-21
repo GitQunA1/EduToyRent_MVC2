@@ -167,7 +167,7 @@
             .Show_product {
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
-                gap: 10px; /* Khoảng cách giữa các sản phẩm */
+                gap: 10px; 
                 padding: 10px;
             }
 
@@ -195,40 +195,35 @@
             
             .Show_product p {
                 margin: 10px 0;
-                font-weight: bold;
-                font-size: 15px;
+                font-family: Arial;
+                font-size: 14px;
                 display: -webkit-box;
-                -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+                -webkit-line-clamp: 2; 
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                text-overflow: ellipsis; 
+                text-overflow: ellipsis;
                 max-height: 40px; 
+                text-align: left;
+                color: #27272a;  
+                align-self: stretch;
+                text-transform: none;
+                line-height: 1.5;
             }
 
             .Show_product a {
-                
+                font-family: Arial;
                 display: block;
                 font-size: 17px;
                 color: #333;
+                text-decoration: none;
             }
             .Show_product form {
                 margin-top: 10px;
             }
 
-            .product-box input[type="submit"] {
-                margin-top: 10px;
-                height: 25px;
-                background-color: #41B6A2;
-                border: none;
-                color: white;
-                border-radius: 5px;
-                cursor: pointer;
-                
-            }
-
              /* ------------------------------------------- */
              .Advertising{
-                background-color: #71D6FF;
+                background-color: #FADED7;
                 margin-left: 70px;
                 margin-right: 70px;
                 border-radius: 10px;

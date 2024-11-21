@@ -23,12 +23,15 @@
             }
             
             .header_content p{
-                font-size: 18px;
-                text-transform: uppercase;
+                font-size: 20px;
+                
+                font-family: arial;
             }
             .header_content a{
                 display: block;
                 margin-bottom: 1px;
+                font-family: arial;
+                font-size: 13px;
             }
         </style>
     </head>

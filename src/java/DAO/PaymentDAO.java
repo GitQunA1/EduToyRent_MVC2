@@ -8,6 +8,7 @@ package DAO;
 import DB.DBUtils;
 import Entity.Cart;
 import Entity.FeePolicy;
+import Entity.Payment;
 import Entity.PaymentDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -143,5 +144,45 @@ public class PaymentDAO {
         }
         return null;
     }
-    
+  
+    public Payment getPaymentByOID(int oid) {
+        String sql = "SELECT * FROM [Payment] WHERE OID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, oid); 
+
+            rs = ps.executeQuery();  
+            if (rs.next()) {
+                int paid = rs.getInt("PAID");
+                float amount = rs.getFloat("Amount");
+                float points = rs.getFloat("points");
+                String method = rs.getString("Method");
+                String date = rs.getString("Date");
+                Payment p = new Payment(paid, oid, amount, points, method, date);
+                return p;
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        }
+        return null; 
+    }
+
+    public boolean UpdatePDetail(int odid, float refundShop, float refundCus, float platformFee){
+        String sql = "UPDATE [PDetail] SET Refund_Shop = ?, Refund_Cus = ?, platform_fee = ? WHERE ODID = ?";
+        try {
+            conn = new DBUtils().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setFloat(1, refundShop);
+            ps.setFloat(2, refundCus);
+            ps.setFloat(3, platformFee);
+            ps.setInt(4, odid);
+            int rs = ps.executeUpdate();
+            if(rs > 0)
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
 }
