@@ -281,7 +281,7 @@ INSERT INTO [User] (Email, Phone, Password, Role) VALUES
 (N'owner2@shop.com', N'0922345678', N'1', N'O'),
 (N'owner3@shop.com', N'0932345678', N'1', N'O'),
 (N'quyentrinh040@gmail.com', N'', N'1', N'C'),
-(N'quannhqe180121@fpt.edu.vn', N'0952345678', N'1', N'C'),
+(N'emtenhoang012@gmail.com', N'0952345678', N'1', N'C'),
 (N'staff1@shop.com', N'0962345678', N'1', N'S'),
 (N'shipper@shop.com', N'0372314523', N'1', N'SH');
 
@@ -406,8 +406,11 @@ update [Product] set QSell = 7 where PID = 17
 update [Product] set QSell = 5 where PID = 18
 
 select * from [Product]
-
+select * from [Customer]
+select * from [User]
+select * from [Shop_Owner]
 select * from [Payment]
+
 select * from [PDetail]
 select * from [Order]
 select * from [Order_Detail]
@@ -426,3 +429,6 @@ WHERE TimeRent > 0
   AND DATEDIFF(DAY, GETDATE(), DateEnd) >= 0;
 
   SELECT  *FROM [Order] WHERE OID IN (1, 2)
+
+
+  
