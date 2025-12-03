@@ -1,1 +1,41 @@
+# Build artifacts
+/build/
+/dist/
+build/
+build/*
+
+# IDE folders
+.idea/
+.vscode/
+*.iml
+
+# Compiled Java classes and packages
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database files
+*.db
+*.sqlite
+
+# Tomcat temporary files
+/work/
+/temp/
+
+# Ignore generated web build output (NetBeans)
+/build/web/
+/build/classes/
+
+# Do not ignore source files, SQL scripts or configuration files containing non-secret config
+# NOTE: secrets are intentionally not excluded by default per request. Move secrets to a secure store when ready.
 /dist/
